@@ -1,0 +1,92 @@
+fullstack-skills/*
+
+# ============================================
+# OS / System
+# ============================================
+.DS_Store
+Thumbs.db
+
+# ============================================
+# Environment (GLOBAL)
+# ============================================
+.env
+.env.*
+!.env.example
+
+# ============================================
+# Logs
+# ============================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============================================
+# Node / Next.js (dyventory-web)
+# ============================================
+dyventory-web/node_modules/
+dyventory-web/.next/
+dyventory-web/out/
+dyventory-web/build/
+dyventory-web/dist/
+dyventory-web/coverage/
+
+# Turbopack / cache (Next.js 16+)
+dyventory-web/.turbo/
+dyventory-web/.vercel/
+
+# ============================================
+# Laravel (dyventory-api backend)
+# ============================================
+dyventory-api/vendor/
+dyventory-api/node_modules/
+
+# Laravel env
+dyventory-api/.env
+dyventory-api/.env.*
+
+# Laravel storage (keep structure, ignore content)
+dyventory-api/storage/*.key
+dyventory-api/storage/logs/*
+dyventory-api/storage/framework/cache/*
+dyventory-api/storage/framework/sessions/*
+dyventory-api/storage/framework/views/*
+dyventory-api/storage/framework/testing/*
+
+# Laravel cache/bootstrap
+dyventory-api/bootstrap/cache/*.php
+
+# Public build assets
+dyventory-api/public/build
+dyventory-api/public/storage
+
+# PHPUnit
+dyventory-api/.phpunit.result.cache
+
+# ============================================
+# Database
+# ============================================
+*.sqlite
+
+# ============================================
+# Redis / Queue
+# ============================================
+dump.rdb
+
+# ============================================
+# IDE / Editors
+# ============================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ============================================
+# Misc
+# ============================================
+*.bak
+*.tmp
+*.swp
