@@ -1,0 +1,97 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [prod, develop]
+    paths: ["dyventory-api/**"]
+  pull_request:
+    branches: [prod, develop]
+    paths: ["dyventory-api/**"]
+
+jobs:
+  test:
+    name: PHPUnit + Pint
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: stoky_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: secret
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: pdo_pgsql, redis, bcmath, gd, zip, pcntl
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: dyventory-api/vendor
+          key: composer-${{ hashFiles('dyventory-api/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install dependencies
+        working-directory: backend
+        run: composer install --prefer-dist --no-progress --no-scripts
+
+      - name: Copy .env
+        working-directory: backend
+        run: cp .env.example .env
+
+      - name: Generate app key
+        working-directory: backend
+        run: php artisan key:generate
+
+      - name: Run migrations
+        working-directory: backend
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: stoky_test
+          DB_USERNAME: postgres
+          DB_PASSWORD: secret
+        run: php artisan migrate --force
+
+      - name: Run PHPUnit
+        working-directory: backend
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: stoky_test
+          DB_USERNAME: postgres
+          DB_PASSWORD: secret
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+          CACHE_DRIVER: array
+          QUEUE_CONNECTION: sync
+          SESSION_DRIVER: array
+        run: vendor/bin/phpunit --testdox
+
+      - name: Run Laravel Pint (code style)
+        working-directory: backend
+        run: vendor/bin/pint --test
