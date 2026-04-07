@@ -27,3 +27,5 @@ export function Badge({ className, variant, children, ...props }: BadgeProps) {
     </span>
   );
 }
+
+export type BadgeVariant = VariantProps<typeof badgeVariants>["variant"];

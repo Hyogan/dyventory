@@ -18,7 +18,7 @@ import { routing } from "@/i18n/routing";
 
 /** Name of the httpOnly cookie that stores the Sanctum token. */
 export const AUTH_COOKIE = "auth-token" as const;
-
+export const COOKIE_NAME = "dyventory-auth-token";
 /** Default locale used in redirect paths when no locale is resolved. */
 export const DEFAULT_LOCALE = routing.defaultLocale;
 

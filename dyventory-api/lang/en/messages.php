@@ -33,4 +33,33 @@ return [
         'overdue_credit' => 'Sale :number from :client is overdue by :days days.',
         'mortality'      => 'High mortality rate recorded for :product.',
     ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Messages généraux de l'application
+    |--------------------------------------------------------------------------
+    |
+    | Utilisés par les gestionnaires d'exceptions et les services.
+    |
+    */
+
+    // Réponses des gestionnaires d'exceptions
+    'validation_failed'   => 'Les données soumises sont invalides.',
+    'resource_not_found'  => 'La ressource demandée est introuvable.',
+    'action_unauthorized' => 'Vous n\'êtes pas autorisé à effectuer cette action.',
+    'server_error'        => 'Une erreur inattendue s\'est produite. Veuillez réessayer.',
+
+    // Réponses CRUD génériques
+    'created'   => ':resource créé(e) avec succès.',
+    'updated'   => ':resource mis(e) à jour avec succès.',
+    'deleted'   => ':resource supprimé(e) avec succès.',
+    'restored'  => ':resource restauré(e) avec succès.',
+
+    // Stock
+    'insufficient_stock' => 'Stock insuffisant pour cette opération.',
+    'batch_expired'      => 'Le lot sélectionné est périmé et ne peut pas être utilisé.',
+
+    // Audit
+    'audit_immutable'    => 'Les entrées du journal d\'audit ne peuvent pas être modifiées ou supprimées.',
 ];

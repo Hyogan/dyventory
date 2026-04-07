@@ -41,16 +41,16 @@ services:
     restart: unless-stopped
     working_dir: /var/www/html
     volumes:
-      - ./backend:/var/www/html
-      - ./backend/storage:/var/www/html/storage
+      - ./dyventory-api:/var/www/html
+      - ./dyventory-api/storage:/var/www/html/storage
     environment:
       - APP_ENV=local
-      - DB_HOST=db
+      - DB_HOST=dyventory_db
       - DB_PORT=5432
-      - DB_DATABASE=stoky
+      - DB_DATABASE=dyventory
       - DB_USERNAME=postgres
       - DB_PASSWORD=secret
-      - REDIS_HOST=redis
+      - REDIS_HOST=dyventory_redis
       - CACHE_DRIVER=redis
       - QUEUE_CONNECTION=redis
       - SESSION_DRIVER=redis
@@ -68,7 +68,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./backend:/var/www/html
+      - ./dyventory-api:/var/www/html
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - dyventory_api
@@ -82,11 +82,11 @@ services:
     working_dir: /var/www/html
     command: php artisan horizon
     volumes:
-      - ./backend:/var/www/html
+      - ./dyventory-api:/var/www/html
     environment:
       - APP_ENV=local
-      - DB_HOST=db
-      - REDIS_HOST=redis
+      - DB_HOST=dyventory_db
+      - REDIS_HOST=dyventory_redis
       - QUEUE_CONNECTION=redis
     depends_on:
       - dyventory_api
@@ -102,11 +102,11 @@ services:
     command: >
       sh -c "while true; do php artisan schedule:run --verbose --no-interaction & sleep 60; done"
     volumes:
-      - ./backend:/var/www/html
+      - ./dyventory-api:/var/www/html
     environment:
       - APP_ENV=local
-      - DB_HOST=db
-      - REDIS_HOST=redis
+      - DB_HOST=dyventory_db
+      - REDIS_HOST=dyventory_redis
     depends_on:
       - dyventory_api
 
@@ -119,13 +119,13 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - ./dyventory-web:/app
       - /app/node_modules
       - /app/.next
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
-      - API_INTERNAL_URL=http://nginx
+      - NEXT_PUBLIC_API_URL=http://localhost:8000 # browser → Nginx (via published port)
+      - API_INTERNAL_URL=http://dyventory_nginx:80 # server → Nginx (internal Docker network)
     depends_on:
       - dyventory_nginx
 

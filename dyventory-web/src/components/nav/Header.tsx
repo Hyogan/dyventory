@@ -8,8 +8,8 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AUTH_COOKIE } from "@/lib/auth";
+import { LanguageSwitcher } from "../shared/LanguageSwitcher";
 
 export function Header() {
   const t = useTranslations("common");

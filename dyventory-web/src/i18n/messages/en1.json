@@ -1,0 +1,545 @@
+{
+  "common": {
+    "appName": "Stoky",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "archive": "Archive",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset filters",
+    "export": "Export",
+    "print": "Print",
+    "view": "View",
+    "actions": "Actions",
+    "yes": "Yes",
+    "no": "No",
+    "status": "Status",
+    "date": "Date",
+    "total": "Total",
+    "quantity": "Quantity",
+    "price": "Price",
+    "noResults": "No results found",
+    "noData": "No data to display",
+    "required": "Required",
+    "optional": "Optional",
+    "active": "Active",
+    "inactive": "Inactive",
+    "archived": "Archived",
+    "all": "All",
+    "perPage": "{count} per page",
+    "showing": "Showing {from}–{to} of {total}",
+    "of": "of",
+    "page": "Page",
+    "previous": "Previous",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "language": "Language",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "profile": "Profile",
+    "logout": "Log out",
+    "deleteConfirm": "Are you sure you want to delete this? This action cannot be undone.",
+    "archiveConfirm": "Are you sure you want to archive this?",
+    "error": "An error occurred. Please try again.",
+    "success": "Operation completed successfully.",
+    "kg": "kg",
+    "piece": "piece",
+    "litre": "litre"
+  },
+
+  "auth": {
+    "login": "Log in",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your Stoky account",
+    "email": "Email address",
+    "password": "Password",
+    "emailPlaceholder": "you@company.com",
+    "passwordPlaceholder": "Enter your password",
+    "loginButton": "Sign in",
+    "loggingIn": "Signing in...",
+    "logoutSuccess": "You have been logged out.",
+    "invalidCredentials": "Invalid email or password.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "unauthorized": "You are not authorized to access this page.",
+    "forgotPassword": "Forgot password?"
+  },
+
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "stock": "Stock",
+    "sales": "Sales",
+    "clients": "Clients",
+    "suppliers": "Suppliers",
+    "reports": "Reports",
+    "promotions": "Promotions",
+    "admin": "Admin",
+    "settings": "Settings",
+    "users": "Users",
+    "audit": "Audit trail",
+    "categories": "Categories",
+    "forecast": "Forecast",
+    "inventory": "Inventory",
+    "history": "History"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "revenueToday": "Revenue today",
+    "revenueWeek": "This week",
+    "revenueMonth": "This month",
+    "salesCount": "Sales today",
+    "stockValue": "Stock value",
+    "lowStockAlerts": "Low stock alerts",
+    "expiryAlerts": "Expiring soon",
+    "overdueCredits": "Overdue credits",
+    "recentSales": "Recent sales",
+    "vsLastPeriod": "vs last period",
+    "noRecentSales": "No recent sales"
+  },
+
+  "products": {
+    "title": "Products",
+    "create": {
+      "title": "Add product",
+      "subtitle": "Create a new product in the catalogue"
+    },
+    "edit": {
+      "title": "Edit product",
+      "subtitle": "Update product details"
+    },
+    "detail": {
+      "title": "Product details"
+    },
+    "fields": {
+      "name": "Product name",
+      "sku": "SKU / Reference",
+      "category": "Category",
+      "unitOfMeasure": "Unit of measure",
+      "priceBuy": "Purchase price (excl. tax)",
+      "priceSell": "Selling price (incl. tax)",
+      "vatRate": "VAT rate",
+      "barcode": "Barcode / QR code",
+      "alertThreshold": "Low stock threshold",
+      "description": "Description",
+      "images": "Product photos",
+      "hasVariants": "This product has variants",
+      "attributes": "Additional fields",
+      "status": "Status"
+    },
+    "namePlaceholder": "e.g. Giant African Land Snails",
+    "skuPlaceholder": "e.g. SNL-GAL-001",
+    "descriptionPlaceholder": "Optional product description...",
+    "filters": {
+      "allCategories": "All categories",
+      "allStatuses": "All statuses",
+      "lowStockOnly": "Low stock only",
+      "searchPlaceholder": "Search by name, SKU or barcode..."
+    },
+    "table": {
+      "name": "Product",
+      "sku": "SKU",
+      "category": "Category",
+      "stock": "Stock",
+      "price": "Price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "empty": "No products found. Add your first product to get started.",
+    "archiveSuccess": "Product archived successfully.",
+    "createSuccess": "Product created successfully.",
+    "updateSuccess": "Product updated successfully.",
+    "barcodes": {
+      "title": "Barcodes",
+      "printLabels": "Print label sheet",
+      "generate": "Generate barcode"
+    },
+    "variants": {
+      "title": "Variants",
+      "add": "Add variant",
+      "sku": "Variant SKU",
+      "attributes": "Variant attributes",
+      "priceOverride": "Price override (incl. tax)",
+      "empty": "No variants defined"
+    }
+  },
+
+  "categories": {
+    "title": "Categories",
+    "create": { "title": "Add category" },
+    "edit": { "title": "Edit category" },
+    "fields": {
+      "name": "Category name",
+      "parent": "Parent category",
+      "description": "Description",
+      "isActive": "Active"
+    },
+    "schema": {
+      "title": "Field schema",
+      "subtitle": "Define custom fields for products in this category",
+      "addField": "Add field",
+      "fieldKey": "Field key",
+      "fieldLabel": "Label (EN)",
+      "fieldLabelFr": "Label (FR)",
+      "fieldType": "Field type",
+      "required": "Required",
+      "appliesTo": "Applies to",
+      "appliesToProduct": "Product form",
+      "appliesToBatch": "Batch / lot form",
+      "options": "Options (one per line)",
+      "min": "Minimum value",
+      "max": "Maximum value",
+      "keyImmutable": "Field keys cannot be changed after saving.",
+      "noFields": "No custom fields defined for this category.",
+      "types": {
+        "text": "Text",
+        "number": "Number",
+        "date": "Date",
+        "select": "Dropdown",
+        "checkbox": "Checkbox",
+        "radio": "Radio group",
+        "textarea": "Multiline text"
+      }
+    },
+    "empty": "No categories yet.",
+    "deleteConfirm": "Deleting this category will affect all products in it. Are you sure?"
+  },
+
+  "stock": {
+    "title": "Stock",
+    "overview": "Stock overview",
+    "entry": {
+      "title": "Stock entry",
+      "subtitle": "Record a new stock reception"
+    },
+    "exit": {
+      "title": "Stock exit",
+      "subtitle": "Record a stock exit or loss"
+    },
+    "fields": {
+      "product": "Product",
+      "variant": "Variant",
+      "quantity": "Quantity",
+      "quantityKg": "Quantity (kg)",
+      "batch": "Batch / lot",
+      "newBatch": "Create new batch",
+      "existingBatch": "Use existing batch",
+      "batchNumber": "Batch number",
+      "receivedAt": "Reception date",
+      "reason": "Reason",
+      "notes": "Notes"
+    },
+    "movements": {
+      "title": "Movement history",
+      "in_purchase": "Purchase entry",
+      "in_return": "Customer return",
+      "out_sale": "Sale exit",
+      "out_loss": "Loss / damage",
+      "out_expiry": "Expiry removal",
+      "out_mortality": "Mortality",
+      "adjustment": "Inventory adjustment"
+    },
+    "inventory": {
+      "title": "Inventory",
+      "start": "Start inventory session",
+      "count": "Count products",
+      "discrepancy": "Discrepancy report",
+      "validate": "Validate & apply adjustments",
+      "inProgress": "Inventory in progress",
+      "theoretical": "Theoretical stock",
+      "counted": "Counted stock",
+      "difference": "Difference"
+    },
+    "alerts": {
+      "lowStock": "Low stock",
+      "outOfStock": "Out of stock",
+      "expiryImminent": "Expiry imminent",
+      "expired": "Expired"
+    },
+    "expiresIn": "Expires in {days} days",
+    "expired": "Expired",
+    "empty": "No stock data found."
+  },
+
+  "sales": {
+    "title": "Sales",
+    "create": {
+      "title": "New sale",
+      "subtitle": "Create a new sale"
+    },
+    "detail": { "title": "Sale details" },
+    "return": { "title": "Process return" },
+    "fields": {
+      "saleNumber": "Sale number",
+      "client": "Client",
+      "date": "Date",
+      "status": "Status",
+      "paymentStatus": "Payment status",
+      "paymentMethod": "Payment method",
+      "subtotalHt": "Subtotal (excl. tax)",
+      "totalVat": "VAT",
+      "totalTtc": "Total (incl. tax)",
+      "discount": "Discount",
+      "amountPaid": "Amount paid",
+      "amountDue": "Amount due",
+      "dueDate": "Due date",
+      "notes": "Notes"
+    },
+    "paymentMethods": {
+      "cash": "Cash",
+      "mobile_money": "Mobile money",
+      "bank_transfer": "Bank transfer",
+      "credit": "Credit"
+    },
+    "status": {
+      "draft": "Draft",
+      "confirmed": "Confirmed",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "returned": "Returned"
+    },
+    "paymentStatus": {
+      "pending": "Pending",
+      "partial": "Partial",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "refunded": "Refunded"
+    },
+    "cart": {
+      "title": "Cart",
+      "addProduct": "Add product",
+      "searchProducts": "Search products...",
+      "empty": "No items in cart",
+      "quantity": "Qty",
+      "unitPrice": "Unit price",
+      "lineTotal": "Total",
+      "remove": "Remove"
+    },
+    "invoice": "Invoice",
+    "deliveryNote": "Delivery note",
+    "creditNote": "Credit note",
+    "addPayment": "Add payment",
+    "cancelSale": "Cancel sale",
+    "confirmCancel": "Are you sure you want to cancel this sale?",
+    "filters": {
+      "allStatuses": "All statuses",
+      "allPaymentStatuses": "All payment statuses",
+      "searchPlaceholder": "Search by sale number or client..."
+    },
+    "table": {
+      "number": "Sale #",
+      "client": "Client",
+      "date": "Date",
+      "total": "Total",
+      "paymentStatus": "Payment",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "empty": "No sales found.",
+    "returnReasons": {
+      "defect": "Defective product",
+      "wrong_item": "Wrong item delivered",
+      "expiry": "Expired product",
+      "customer_change": "Customer changed mind",
+      "other": "Other"
+    },
+    "returnResolutions": {
+      "refund": "Cash refund",
+      "credit_note": "Credit note",
+      "exchange": "Product exchange"
+    }
+  },
+
+  "clients": {
+    "title": "Clients",
+    "create": { "title": "Add client" },
+    "edit": { "title": "Edit client" },
+    "detail": { "title": "Client profile" },
+    "fields": {
+      "name": "Full name / Company",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "type": "Client type",
+      "creditLimit": "Credit limit",
+      "notes": "Notes"
+    },
+    "types": {
+      "individual": "Individual",
+      "reseller": "Reseller",
+      "wholesaler": "Wholesaler",
+      "retailer": "Retailer"
+    },
+    "stats": {
+      "totalRevenue": "Total revenue",
+      "totalOrders": "Total orders",
+      "outstandingBalance": "Outstanding balance"
+    },
+    "empty": "No clients found.",
+    "purchaseHistory": "Purchase history"
+  },
+
+  "suppliers": {
+    "title": "Suppliers",
+    "create": { "title": "Add supplier" },
+    "edit": { "title": "Edit supplier" },
+    "detail": { "title": "Supplier profile" },
+    "fields": {
+      "name": "Supplier name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "contactPerson": "Contact person",
+      "leadTimeDays": "Lead time (days)",
+      "minimumOrder": "Minimum order amount",
+      "notes": "Notes"
+    },
+    "orders": {
+      "title": "Purchase orders",
+      "create": "Create order",
+      "orderNumber": "Order #",
+      "status": "Status",
+      "expectedAt": "Expected",
+      "receive": "Receive order"
+    },
+    "empty": "No suppliers found."
+  },
+
+  "reports": {
+    "title": "Reports",
+    "sales": "Sales report",
+    "stock": "Stock report",
+    "losses": "Loss report",
+    "vat": "VAT report",
+    "credits": "Credit report",
+    "filters": {
+      "dateFrom": "From",
+      "dateTo": "To",
+      "groupBy": "Group by",
+      "groupByDay": "Day",
+      "groupByWeek": "Week",
+      "groupByMonth": "Month"
+    },
+    "export": {
+      "pdf": "Export PDF",
+      "excel": "Export Excel",
+      "preparing": "Preparing export..."
+    },
+    "forecast": {
+      "title": "Stock forecast",
+      "daysToStockout": "Days to stockout",
+      "avgDailyConsumption": "Avg. daily consumption",
+      "reorderQty": "Suggested reorder qty",
+      "urgency": {
+        "critical": "Critical",
+        "warning": "Warning",
+        "ok": "OK"
+      }
+    }
+  },
+
+  "promotions": {
+    "title": "Promotions",
+    "create": { "title": "Add promotion" },
+    "edit": { "title": "Edit promotion" },
+    "fields": {
+      "name": "Promotion name",
+      "type": "Type",
+      "value": "Value",
+      "startsAt": "Start date",
+      "endsAt": "End date",
+      "isActive": "Active"
+    },
+    "types": {
+      "percentage": "Percentage (%)",
+      "fixed_value": "Fixed amount",
+      "bundle": "Bundle offer"
+    },
+    "empty": "No promotions found."
+  },
+
+  "admin": {
+    "title": "Administration",
+    "users": {
+      "title": "User management",
+      "create": "Add user",
+      "fields": {
+        "name": "Full name",
+        "email": "Email address",
+        "role": "Role",
+        "phone": "Phone number",
+        "password": "Password",
+        "isActive": "Active"
+      },
+      "roles": {
+        "admin": "Administrator",
+        "manager": "Manager",
+        "vendor": "Vendor",
+        "warehouse": "Warehouse",
+        "accountant": "Accountant"
+      },
+      "empty": "No users found."
+    },
+    "settings": {
+      "title": "System settings",
+      "company": "Company information",
+      "companyName": "Company name",
+      "companyAddress": "Address",
+      "companyPhone": "Phone",
+      "companyEmail": "Email",
+      "companyLogo": "Logo",
+      "uploadLogo": "Upload logo",
+      "vatRates": "VAT rates",
+      "alertThresholds": "Alert thresholds",
+      "expiryAlertDays": "Expiry alert (days before)",
+      "lowStockDefault": "Default low stock threshold"
+    },
+    "audit": {
+      "title": "Audit trail",
+      "user": "User",
+      "action": "Action",
+      "entity": "Entity",
+      "date": "Date",
+      "changes": "Changes",
+      "oldValue": "Before",
+      "newValue": "After",
+      "empty": "No audit records found.",
+      "filters": {
+        "allUsers": "All users",
+        "allActions": "All actions"
+      }
+    }
+  },
+
+  "errors": {
+    "required": "This field is required.",
+    "email": "Please enter a valid email address.",
+    "minLength": "Must be at least {min} characters.",
+    "maxLength": "Must be at most {max} characters.",
+    "min": "Must be at least {min}.",
+    "max": "Must be at most {max}.",
+    "invalidDate": "Please enter a valid date.",
+    "invalidNumber": "Please enter a valid number.",
+    "uniqueSku": "This SKU is already in use.",
+    "insufficientStock": "Insufficient stock available.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "notFound": "The requested resource was not found.",
+    "serverError": "A server error occurred. Please try again.",
+    "networkError": "Network error. Please check your connection.",
+    "somethingWrong": "Something went wrong. Please try again."
+  }
+}

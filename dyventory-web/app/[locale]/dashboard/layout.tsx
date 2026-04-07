@@ -1,13 +1,25 @@
-import { Sidebar } from "@/components/shared/Sidebar";
-import { Header } from "@/components/shared/Header";
 import { SessionProvider } from "@/providers/SessionProvider";
 import { getCurrentUser } from "@/lib/auth";
+import { Sidebar } from "@/components/nav/Sidebar";
+import { Header } from "@/components/nav/Header";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s — Dyventory",
+    default: "Dashboard — Dyventory",
+  },
+};
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Fetch the authenticated user server-side.
+  // getCurrentUser() redirects to /login if the token is missing or invalid.
+  // React cache() ensures this is called only once per request even if
+  // multiple child Server Components also call getCurrentUser().
   const user = await getCurrentUser();
 
   return (

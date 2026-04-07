@@ -1,0 +1,62 @@
+# # ─────────────────────────────────────────────────────────────────────────────
+# # Stoky — Next.js 16 production Docker image
+# # Multi-stage: deps → builder → runner
+# # ─────────────────────────────────────────────────────────────────────────────
+
+# # Stage 1 — Install dependencies
+# FROM node:20-alpine AS deps
+# RUN apk add --no-cache libc6-compat
+# WORKDIR /app
+
+# COPY package.json package-lock.json* ./
+# RUN npm ci --frozen-lockfile
+
+# # ─────────────────────────────────────────────────────────────────────────────
+# # Stage 2 — Build
+# FROM node:20-alpine AS builder
+# WORKDIR /app
+
+# COPY --from=deps /app/node_modules ./node_modules
+# COPY . .
+
+# # Build-time env vars (public only — baked into the bundle)
+# ARG NEXT_PUBLIC_API_URL
+# ARG NEXT_PUBLIC_APP_NAME=Stoky
+
+# ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+# ENV NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME
+
+# # Disable Next.js telemetry during build
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+# RUN npm run build
+
+# # ─────────────────────────────────────────────────────────────────────────────
+# # Stage 3 — Production runner (minimal image)
+# FROM node:20-alpine AS runner
+# WORKDIR /app
+
+# ENV NODE_ENV=production
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+# # Add non-root user for security
+# RUN addgroup --system --gid 1001 nodejs && \
+#     adduser  --system --uid 1001 nextjs
+
+# # Copy only what's needed to run
+# COPY --from=builder /app/public         ./public
+# COPY --from=builder /app/src/i18n/messages      ./messages
+
+# # Leverage Next.js standalone output for minimal footprint
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/static    ./.next/static
+
+# USER nextjs
+
+# EXPOSE 3000
+
+# ENV PORT=3000
+# ENV HOSTNAME=0.0.0.0
+
+# # Use the standalone server.js produced by Next.js output: 'standalone'
+# CMD ["node", "server.js"]

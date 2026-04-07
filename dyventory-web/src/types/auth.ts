@@ -22,6 +22,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role: UserRole;
+  role_label: string;
   phone: string | null;
   is_active: boolean;
 }
@@ -32,6 +33,19 @@ export interface AuthUser {
 export interface LoginResponse {
   token: string;
   user: AuthUser;
+}
+
+export interface AuthSession {
+  user: AuthUser;
+  token: string;
+}
+
+export interface LoginFormState {
+  error?: {
+    email?: string[];
+    password?: string[];
+    _form?: string[];
+  } | null;
 }
 
 /** Shape of the POST /auth/logout response body (204 = no body). */
@@ -64,6 +78,97 @@ export const REPORT_ROLES: UserRole[] = ["admin", "manager", "accountant"];
 
 /** Roles that can access the admin panel. */
 export const ADMIN_ROLES: UserRole[] = ["admin"];
+
+/**
+ * Permissions derived from role — used to gate UI elements.
+ * Mirrors the backend permissions matrix exactly.
+ */
+export const ROLE_PERMISSIONS: Record<UserRole, string[]> = {
+  admin: ["*"],
+
+  manager: [
+    "products:view",
+    "products:create",
+    "products:update",
+    "products:archive",
+    "categories:manage",
+    "stock:view",
+    "stock:entry",
+    "stock:exit",
+    "stock:inventory",
+    "sales:view",
+    "sales:create",
+    "sales:cancel",
+    "sales:return",
+    "sales:payment",
+    "sales:invoice",
+    "promotions:manage",
+    "clients:view",
+    "clients:create",
+    "clients:update",
+    "suppliers:view",
+    "suppliers:create",
+    "suppliers:update",
+    "suppliers:orders",
+    "reports:sales",
+    "reports:stock",
+    "reports:tva",
+    "reports:credit",
+    "reports:loss",
+    "reports:export",
+    "dashboard:view",
+    "alerts:configure",
+  ],
+
+  vendor: [
+    "products:view",
+    "stock:view",
+    "sales:view",
+    "sales:create",
+    "sales:payment",
+    "sales:invoice",
+    "clients:view",
+    "clients:create",
+    "clients:update",
+    "dashboard:view",
+  ],
+
+  warehouse: [
+    "products:view",
+    "stock:view",
+    "stock:entry",
+    "stock:exit",
+    "stock:inventory",
+    "suppliers:view",
+    "suppliers:create",
+    "suppliers:update",
+    "suppliers:orders",
+    "reports:stock",
+    "reports:loss",
+    "dashboard:view",
+  ],
+
+  accountant: [
+    "sales:view",
+    "sales:payment",
+    "sales:invoice",
+    "clients:view",
+    "reports:sales",
+    "reports:tva",
+    "reports:credit",
+    "reports:export",
+    "dashboard:view",
+  ],
+};
+
+/**
+ * Check whether a role has a given permission.
+ * Admins always pass (wildcard '*').
+ */
+export function hasPermission(role: UserRole, permission: string): boolean {
+  const perms = ROLE_PERMISSIONS[role];
+  return perms.includes("*") || perms.includes(permission);
+}
 
 /**
  * Check if a user has one of the specified roles.

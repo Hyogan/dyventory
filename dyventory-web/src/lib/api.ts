@@ -7,6 +7,53 @@
  * - Works with authFetch wrapper
  */
 
+// const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Server-side uses the internal Docker URL, browser uses the public URL
+
+const API_BASE =
+  typeof window === "undefined"
+    ? (process.env.API_INTERNAL_URL ?? "http://localhost:8000")
+    : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000");
+const API_PREFIX = "/api/v1";
+
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    message: string,
+    public readonly data?: {
+      errors?: Record<string, string[]>;
+      message?: string;
+    },
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+
+  get validationErrors(): Record<string, string[]> {
+    return this.data?.errors ?? {};
+  }
+
+  get isUnauthorized(): boolean {
+    return this.status === 401;
+  }
+
+  get isForbidden(): boolean {
+    return this.status === 403;
+  }
+
+  get isNotFound(): boolean {
+    return this.status === 404;
+  }
+
+  get isValidation(): boolean {
+    return this.status === 422;
+  }
+
+  get isServerError(): boolean {
+    return this.status >= 500;
+  }
+}
+
 export type FetchOptions = RequestInit & {
   params?: Record<string, string | number | boolean | undefined>;
 
@@ -25,22 +72,22 @@ export type FetchOptions = RequestInit & {
   tags?: string[];
 };
 
-export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-    public data?: unknown,
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
+// export class ApiError extends Error {
+//   constructor(
+//     public status: number,
+//     message: string,
+//     public data?: unknown,
+//   ) {
+//     super(message);
+//     this.name = "ApiError";
+//   }
+// }
 
 // ── Helpers ─────────────────────────────────────────────────────
 
 function buildUrl(path: string, params?: FetchOptions["params"]) {
-  const base = process.env.NEXT_PUBLIC_API_URL;
-
+  const base = API_BASE;
+  console.log(base);
   if (!base) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined");
   }
@@ -96,12 +143,18 @@ export async function apiFetch<T>(
   }
 
   if (!res.ok) {
+    let errorData: { message?: string; errors?: Record<string, string[]> } = {};
+    try {
+      errorData = await res.json();
+    } catch {
+      // Non-JSON error body — ignore
+    }
+
     throw new ApiError(
       res.status,
-      (data as any)?.message ?? "Request failed",
-      data,
+      errorData.message ?? `Request failed with status ${res.status}`,
+      errorData,
     );
   }
-
   return data as T;
 }

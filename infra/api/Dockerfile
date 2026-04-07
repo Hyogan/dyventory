@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 # ── System dependencies ─────────────────────────────────────────────
 RUN apk add --no-cache \
@@ -11,7 +11,14 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     linux-headers \
+    icu-dev \
     $PHPIZE_DEPS
+
+# ── Install Redis (ONLY ONCE) ───────────────────────────────────────
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .build-deps
 
 # ── PHP extensions ──────────────────────────────────────────────────
 RUN docker-php-ext-install \
@@ -23,10 +30,11 @@ RUN docker-php-ext-install \
     bcmath \
     gd \
     zip \
-    sockets
+    sockets \
+    intl
 
 # ── Redis extension ─────────────────────────────────────────────────
-RUN pecl install redis && docker-php-ext-enable redis
+# RUN pecl install redis && docker-php-ext-enable redis
 
 # ── OPcache (production performance) ────────────────────────────────
 RUN docker-php-ext-install opcache

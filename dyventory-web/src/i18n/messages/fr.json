@@ -1,77 +1,57 @@
 {
+  "auth": {
+    "sign_in": "Se connecter",
+    "signing_in": "Connexion en cours…",
+    "sign_out": "Se déconnecter",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "login_subtitle": "Gestion des stocks et des ventes",
+    "login_footer": "L'accès est réservé au personnel autorisé.",
+    "invalid_credentials": "Email ou mot de passe invalide. Veuillez réessayer.",
+    "session_expired": "Votre session a expiré. Veuillez vous reconnecter.",
+    "unauthenticated": "Vous devez être connecté pour accéder à cette page."
+  },
+
   "common": {
-    "appName": "Stoky",
-    "loading": "Chargement...",
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
     "edit": "Modifier",
     "create": "Créer",
     "update": "Mettre à jour",
-    "archive": "Archiver",
     "confirm": "Confirmer",
-    "close": "Fermer",
     "back": "Retour",
-    "next": "Suivant",
-    "search": "Rechercher",
+    "search": "Rechercher…",
     "filter": "Filtrer",
-    "reset": "Réinitialiser les filtres",
+    "clear": "Effacer",
     "export": "Exporter",
     "print": "Imprimer",
-    "view": "Voir",
+    "loading": "Chargement…",
+    "no_results": "Aucun résultat trouvé.",
+    "showing": "{from}–{to} sur {total}",
     "actions": "Actions",
-    "yes": "Oui",
-    "no": "Non",
     "status": "Statut",
     "date": "Date",
-    "total": "Total",
-    "quantity": "Quantité",
-    "price": "Prix",
-    "noResults": "Aucun résultat",
-    "noData": "Aucune donnée à afficher",
-    "required": "Obligatoire",
-    "optional": "Facultatif",
+    "notes": "Notes",
+    "yes": "Oui",
+    "no": "Non",
+    "view": "Voir",
     "active": "Actif",
-    "inactive": "Inactif",
     "archived": "Archivé",
-    "all": "Tous",
-    "perPage": "{count} par page",
-    "showing": "{from}–{to} sur {total}",
-    "of": "sur",
-    "page": "Page",
+    "required": "Obligatoire",
+    "optional": "Optionnel",
     "previous": "Précédent",
-    "darkMode": "Mode sombre",
-    "lightMode": "Mode clair",
-    "language": "Langue",
-    "notifications": "Notifications",
-    "markAllRead": "Tout marquer comme lu",
-    "noNotifications": "Aucune notification",
-    "profile": "Profil",
-    "logout": "Se déconnecter",
-    "deleteConfirm": "Êtes-vous sûr(e) de vouloir supprimer ceci ? Cette action est irréversible.",
-    "archiveConfirm": "Êtes-vous sûr(e) de vouloir archiver ceci ?",
-    "error": "Une erreur est survenue. Veuillez réessayer.",
-    "success": "Opération effectuée avec succès.",
-    "kg": "kg",
-    "piece": "pièce",
-    "litre": "litre"
+    "next": "Suivant",
+    "page_of": "Page {current} sur {total}"
   },
 
-  "auth": {
-    "login": "Connexion",
-    "loginTitle": "Bon retour",
-    "loginSubtitle": "Connectez-vous à votre compte Stoky",
-    "email": "Adresse e-mail",
-    "password": "Mot de passe",
-    "emailPlaceholder": "vous@entreprise.com",
-    "passwordPlaceholder": "Entrez votre mot de passe",
-    "loginButton": "Se connecter",
-    "loggingIn": "Connexion...",
-    "logoutSuccess": "Vous avez été déconnecté(e).",
-    "invalidCredentials": "E-mail ou mot de passe invalide.",
-    "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
-    "unauthorized": "Vous n'êtes pas autorisé(e) à accéder à cette page.",
-    "forgotPassword": "Mot de passe oublié ?"
+  "errors": {
+    "not_found": "Cette page est introuvable.",
+    "forbidden": "Vous n'avez pas la permission d'accéder à cette ressource.",
+    "server_error": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+    "validation_failed": "Veuillez corriger les erreurs ci-dessous.",
+    "network_error": "Impossible de se connecter. Vérifiez votre connexion.",
+    "try_again": "Réessayer"
   },
 
   "nav": {
@@ -83,299 +63,203 @@
     "suppliers": "Fournisseurs",
     "reports": "Rapports",
     "promotions": "Promotions",
-    "admin": "Administration",
-    "settings": "Paramètres",
-    "users": "Utilisateurs",
-    "audit": "Journal d'audit",
     "categories": "Catégories",
-    "forecast": "Prévisions",
-    "inventory": "Inventaire",
-    "history": "Historique"
+    "admin": "Administration",
+    "users": "Utilisateurs",
+    "settings": "Paramètres",
+    "audit": "Journal d'audit"
   },
 
   "dashboard": {
     "title": "Tableau de bord",
-    "revenueToday": "Chiffre d'affaires aujourd'hui",
-    "revenueWeek": "Cette semaine",
-    "revenueMonth": "Ce mois",
-    "salesCount": "Ventes aujourd'hui",
-    "stockValue": "Valeur du stock",
-    "lowStockAlerts": "Alertes stock faible",
-    "expiryAlerts": "Expiration imminente",
-    "overdueCredits": "Créances en retard",
-    "recentSales": "Ventes récentes",
-    "vsLastPeriod": "vs période précédente",
-    "noRecentSales": "Aucune vente récente"
+    "revenue_today": "CA aujourd'hui",
+    "revenue_week": "CA cette semaine",
+    "revenue_month": "CA ce mois",
+    "sales_today": "Ventes aujourd'hui",
+    "stock_value": "Valeur totale du stock",
+    "low_stock_alerts": "Alertes stock faible",
+    "expiry_alerts": "Expirations proches",
+    "overdue_credits": "Créances en retard",
+    "recent_sales": "Ventes récentes",
+    "vs_prior": "vs. période précédente",
+    "see_all": "Voir tout"
   },
 
   "products": {
     "title": "Produits",
     "create": {
-      "title": "Ajouter un produit",
-      "subtitle": "Créer un nouveau produit dans le catalogue"
+      "title": "Nouveau produit",
+      "description": "Ajouter un nouveau produit au catalogue."
     },
     "edit": {
       "title": "Modifier le produit",
-      "subtitle": "Mettre à jour les informations du produit"
-    },
-    "detail": {
-      "title": "Détails du produit"
+      "description": "Mettre à jour les informations de ce produit."
     },
     "fields": {
       "name": "Nom du produit",
       "sku": "SKU / Référence",
       "category": "Catégorie",
-      "unitOfMeasure": "Unité de mesure",
-      "priceBuy": "Prix d'achat (HT)",
-      "priceSell": "Prix de vente (TTC)",
-      "vatRate": "Taux de TVA",
-      "barcode": "Code-barres / QR code",
-      "alertThreshold": "Seuil d'alerte stock",
+      "unit": "Unité de mesure",
+      "buy_price": "Prix d'achat (HT)",
+      "sell_price": "Prix de vente (TTC)",
+      "vat_rate": "Taux de TVA",
+      "barcode": "Code-barres",
+      "threshold": "Seuil d'alerte stock",
       "description": "Description",
-      "images": "Photos du produit",
-      "hasVariants": "Ce produit a des variantes",
-      "attributes": "Champs supplémentaires",
-      "status": "Statut"
-    },
-    "namePlaceholder": "ex. Escargots géants d'Afrique",
-    "skuPlaceholder": "ex. SNL-GAL-001",
-    "descriptionPlaceholder": "Description facultative...",
-    "filters": {
-      "allCategories": "Toutes les catégories",
-      "allStatuses": "Tous les statuts",
-      "lowStockOnly": "Stock faible uniquement",
-      "searchPlaceholder": "Rechercher par nom, SKU ou code-barres..."
-    },
-    "table": {
-      "name": "Produit",
-      "sku": "SKU",
-      "category": "Catégorie",
-      "stock": "Stock",
-      "price": "Prix",
       "status": "Statut",
-      "actions": "Actions"
+      "images": "Photos du produit"
     },
     "status": {
       "active": "Actif",
       "archived": "Archivé"
     },
-    "empty": "Aucun produit trouvé. Ajoutez votre premier produit.",
-    "archiveSuccess": "Produit archivé avec succès.",
-    "createSuccess": "Produit créé avec succès.",
-    "updateSuccess": "Produit mis à jour avec succès.",
-    "barcodes": {
-      "title": "Codes-barres",
-      "printLabels": "Imprimer les étiquettes",
-      "generate": "Générer le code-barres"
+    "actions": {
+      "archive": "Archiver le produit",
+      "restore": "Restaurer le produit",
+      "print_labels": "Imprimer les étiquettes codes-barres",
+      "view_variants": "Voir les variantes"
     },
-    "variants": {
-      "title": "Variantes",
-      "add": "Ajouter une variante",
-      "sku": "SKU variante",
-      "attributes": "Attributs de la variante",
-      "priceOverride": "Prix spécifique (TTC)",
-      "empty": "Aucune variante définie"
-    }
+    "empty": "Aucun produit trouvé. Créez votre premier produit pour commencer.",
+    "low_stock": "Stock faible"
   },
 
   "categories": {
     "title": "Catégories",
-    "create": { "title": "Ajouter une catégorie" },
+    "create": { "title": "Nouvelle catégorie" },
     "edit": { "title": "Modifier la catégorie" },
     "fields": {
       "name": "Nom de la catégorie",
       "parent": "Catégorie parente",
-      "description": "Description",
-      "isActive": "Active"
+      "slug": "Identifiant (slug)"
     },
     "schema": {
       "title": "Schéma de champs",
-      "subtitle": "Définir les champs personnalisés pour les produits de cette catégorie",
-      "addField": "Ajouter un champ",
-      "fieldKey": "Clé du champ",
-      "fieldLabel": "Libellé (EN)",
-      "fieldLabelFr": "Libellé (FR)",
-      "fieldType": "Type de champ",
-      "required": "Obligatoire",
-      "appliesTo": "S'applique à",
-      "appliesToProduct": "Fiche produit",
-      "appliesToBatch": "Fiche lot",
-      "options": "Options (une par ligne)",
-      "min": "Valeur minimale",
-      "max": "Valeur maximale",
-      "keyImmutable": "Les clés de champ ne peuvent pas être modifiées après enregistrement.",
-      "noFields": "Aucun champ personnalisé pour cette catégorie.",
-      "types": {
-        "text": "Texte",
-        "number": "Nombre",
-        "date": "Date",
-        "select": "Liste déroulante",
-        "checkbox": "Case à cocher",
-        "radio": "Boutons radio",
-        "textarea": "Texte multiligne"
-      }
+      "description": "Définissez les champs personnalisés qui apparaissent sur les formulaires produit et lot pour cette catégorie.",
+      "add_field": "Ajouter un champ",
+      "field_key": "Clé du champ (unique, immuable)",
+      "field_label": "Libellé (anglais)",
+      "field_label_fr": "Libellé (français)",
+      "field_type": "Type de champ",
+      "field_required": "Obligatoire",
+      "applies_to": "S'applique à",
+      "applies_to_product": "Formulaire produit",
+      "applies_to_batch": "Formulaire lot",
+      "key_immutable_warning": "Les clés de champ ne peuvent pas être renommées une fois enregistrées."
     },
-    "empty": "Aucune catégorie trouvée.",
-    "deleteConfirm": "La suppression de cette catégorie affectera tous ses produits. Confirmer ?"
+    "empty": "Aucune catégorie trouvée."
   },
 
   "stock": {
     "title": "Stock",
-    "overview": "Vue d'ensemble du stock",
     "entry": {
       "title": "Entrée de stock",
-      "subtitle": "Enregistrer une nouvelle réception"
+      "description": "Enregistrer une réception de marchandise."
     },
     "exit": {
       "title": "Sortie de stock",
-      "subtitle": "Enregistrer une sortie ou une perte"
+      "description": "Enregistrer un mouvement de sortie de stock."
+    },
+    "history": { "title": "Historique des mouvements" },
+    "inventory": {
+      "title": "Inventaire physique",
+      "start": "Démarrer une session d'inventaire",
+      "confirm": "Valider l'inventaire",
+      "discrepancy": "Rapport d'écarts"
     },
     "fields": {
       "product": "Produit",
-      "variant": "Variante",
       "quantity": "Quantité",
-      "quantityKg": "Quantité (kg)",
+      "quantity_kg": "Quantité (kg)",
       "batch": "Lot",
-      "newBatch": "Créer un nouveau lot",
-      "existingBatch": "Utiliser un lot existant",
-      "batchNumber": "Numéro de lot",
-      "receivedAt": "Date de réception",
+      "movement_type": "Type de mouvement",
       "reason": "Motif",
-      "notes": "Notes"
+      "date": "Date"
     },
-    "movements": {
-      "title": "Historique des mouvements",
-      "in_purchase": "Entrée — Achat",
-      "in_return": "Entrée — Retour client",
-      "out_sale": "Sortie — Vente",
-      "out_loss": "Sortie — Perte / Dommage",
-      "out_expiry": "Sortie — Péremption",
-      "out_mortality": "Sortie — Mortalité",
+    "movement_types": {
+      "in_purchase": "Entrée achat",
+      "in_return": "Retour client",
+      "out_sale": "Sortie vente",
+      "out_loss": "Perte / Dommage",
+      "out_expiry": "Périmé",
+      "out_mortality": "Mortalité (escargots)",
       "adjustment": "Ajustement inventaire"
     },
-    "inventory": {
-      "title": "Inventaire",
-      "start": "Démarrer une session d'inventaire",
-      "count": "Compter les produits",
-      "discrepancy": "Rapport d'écarts",
-      "validate": "Valider et appliquer les ajustements",
-      "inProgress": "Inventaire en cours",
-      "theoretical": "Stock théorique",
-      "counted": "Stock compté",
-      "difference": "Écart"
-    },
     "alerts": {
-      "lowStock": "Stock faible",
-      "outOfStock": "Rupture de stock",
-      "expiryImminent": "Expiration imminente",
-      "expired": "Expiré"
+      "low_stock": "Stock faible",
+      "out_of_stock": "Rupture de stock",
+      "expiry_soon": "Expiration proche",
+      "mortality": "Mortalité anormale"
     },
-    "expiresIn": "Expire dans {days} jours",
-    "expired": "Expiré",
-    "empty": "Aucune donnée de stock trouvée."
+    "empty": "Aucun mouvement de stock trouvé."
   },
 
   "sales": {
     "title": "Ventes",
     "create": {
       "title": "Nouvelle vente",
-      "subtitle": "Créer une nouvelle vente"
+      "description": "Créer une nouvelle transaction de vente."
     },
-    "detail": { "title": "Détails de la vente" },
-    "return": { "title": "Traiter un retour" },
     "fields": {
-      "saleNumber": "Numéro de vente",
+      "sale_number": "Numéro de vente",
       "client": "Client",
-      "date": "Date",
-      "status": "Statut",
-      "paymentStatus": "Statut de paiement",
-      "paymentMethod": "Mode de paiement",
-      "subtotalHt": "Sous-total HT",
-      "totalVat": "TVA",
-      "totalTtc": "Total TTC",
+      "date": "Date de vente",
+      "payment_method": "Mode de paiement",
+      "subtotal": "Sous-total (HT)",
       "discount": "Remise",
-      "amountPaid": "Montant payé",
-      "amountDue": "Reste dû",
-      "dueDate": "Date d'échéance",
+      "vat": "TVA",
+      "total": "Total (TTC)",
+      "amount_paid": "Montant payé",
+      "amount_due": "Reste à payer",
+      "due_date": "Date d'échéance",
       "notes": "Notes"
     },
-    "paymentMethods": {
+    "payment_methods": {
       "cash": "Espèces",
       "mobile_money": "Mobile Money",
       "bank_transfer": "Virement bancaire",
       "credit": "Crédit"
     },
     "status": {
-      "draft": "Brouillon",
-      "confirmed": "Confirmée",
-      "delivered": "Livrée",
-      "cancelled": "Annulée",
-      "returned": "Retournée"
-    },
-    "paymentStatus": {
       "pending": "En attente",
+      "confirmed": "Confirmé",
+      "delivered": "Livré",
+      "cancelled": "Annulé",
+      "returned": "Retourné"
+    },
+    "payment_status": {
+      "unpaid": "Non payé",
       "partial": "Partiel",
-      "paid": "Payée",
-      "overdue": "En retard",
-      "refunded": "Remboursée"
+      "paid": "Payé",
+      "overdue": "En retard"
+    },
+    "actions": {
+      "confirm": "Confirmer la vente",
+      "cancel": "Annuler la vente",
+      "return": "Traiter le retour",
+      "add_payment": "Enregistrer un paiement",
+      "print_invoice": "Imprimer la facture",
+      "print_delivery_note": "Imprimer le bon de livraison"
     },
     "cart": {
       "title": "Panier",
-      "addProduct": "Ajouter un produit",
-      "searchProducts": "Rechercher des produits...",
-      "empty": "Panier vide",
-      "quantity": "Qté",
-      "unitPrice": "Prix unitaire",
-      "lineTotal": "Total ligne",
-      "remove": "Retirer"
+      "empty": "Le panier est vide. Recherchez un produit pour l'ajouter.",
+      "search_products": "Rechercher par nom, référence ou code-barres…",
+      "quantity_label": "Qté",
+      "remove": "Retirer du panier"
     },
-    "invoice": "Facture",
-    "deliveryNote": "Bon de livraison",
-    "creditNote": "Avoir",
-    "addPayment": "Ajouter un paiement",
-    "cancelSale": "Annuler la vente",
-    "confirmCancel": "Êtes-vous sûr(e) de vouloir annuler cette vente ?",
-    "filters": {
-      "allStatuses": "Tous les statuts",
-      "allPaymentStatuses": "Tous les statuts de paiement",
-      "searchPlaceholder": "Rechercher par numéro de vente ou client..."
-    },
-    "table": {
-      "number": "Vente n°",
-      "client": "Client",
-      "date": "Date",
-      "total": "Total",
-      "paymentStatus": "Paiement",
-      "status": "Statut",
-      "actions": "Actions"
-    },
-    "empty": "Aucune vente trouvée.",
-    "returnReasons": {
-      "defect": "Produit défectueux",
-      "wrong_item": "Mauvais article livré",
-      "expiry": "Produit périmé",
-      "customer_change": "Changement d'avis client",
-      "other": "Autre"
-    },
-    "returnResolutions": {
-      "refund": "Remboursement en espèces",
-      "credit_note": "Avoir",
-      "exchange": "Échange de produit"
-    }
+    "empty": "Aucune vente trouvée."
   },
 
   "clients": {
     "title": "Clients",
-    "create": { "title": "Ajouter un client" },
+    "create": { "title": "Nouveau client" },
     "edit": { "title": "Modifier le client" },
-    "detail": { "title": "Fiche client" },
     "fields": {
-      "name": "Nom complet / Entreprise",
-      "email": "E-mail",
+      "name": "Nom / Entreprise",
       "phone": "Téléphone",
+      "email": "E-mail",
       "address": "Adresse",
       "type": "Type de client",
-      "creditLimit": "Limite de crédit",
       "notes": "Notes"
     },
     "types": {
@@ -384,110 +268,85 @@
       "wholesaler": "Grossiste",
       "retailer": "Détaillant"
     },
-    "stats": {
-      "totalRevenue": "Chiffre d'affaires total",
-      "totalOrders": "Commandes totales",
-      "outstandingBalance": "Solde dû"
+    "summary": {
+      "total_revenue": "Chiffre d'affaires total",
+      "credit_balance": "Solde impayé",
+      "purchases": "Achats totaux"
     },
-    "empty": "Aucun client trouvé.",
-    "purchaseHistory": "Historique d'achats"
+    "empty": "Aucun client trouvé."
   },
 
   "suppliers": {
     "title": "Fournisseurs",
-    "create": { "title": "Ajouter un fournisseur" },
+    "create": { "title": "Nouveau fournisseur" },
     "edit": { "title": "Modifier le fournisseur" },
-    "detail": { "title": "Fiche fournisseur" },
     "fields": {
       "name": "Nom du fournisseur",
-      "email": "E-mail",
+      "contact": "Personne de contact",
       "phone": "Téléphone",
+      "email": "E-mail",
       "address": "Adresse",
-      "contactPerson": "Personne de contact",
-      "leadTimeDays": "Délai de livraison (jours)",
-      "minimumOrder": "Commande minimum",
-      "notes": "Notes"
+      "lead_time": "Délai de livraison (jours)",
+      "min_order": "Commande minimum"
     },
-    "orders": {
-      "title": "Bons de commande",
-      "create": "Créer une commande",
-      "orderNumber": "Commande n°",
-      "status": "Statut",
-      "expectedAt": "Attendue le",
-      "receive": "Réceptionner"
+    "order_status": {
+      "draft": "Brouillon",
+      "sent": "Envoyé",
+      "confirmed": "Confirmé",
+      "partial": "Partiellement reçu",
+      "received": "Reçu",
+      "cancelled": "Annulé"
     },
     "empty": "Aucun fournisseur trouvé."
   },
 
   "reports": {
     "title": "Rapports",
-    "sales": "Rapport des ventes",
-    "stock": "Rapport de stock",
-    "losses": "Rapport des pertes",
-    "vat": "Rapport TVA",
-    "credits": "Rapport créances",
+    "nav": {
+      "sales": "Rapport des ventes",
+      "stock": "Rapport de stock",
+      "tva": "Rapport TVA",
+      "credits": "Rapport des créances",
+      "losses": "Rapport des pertes"
+    },
     "filters": {
-      "dateFrom": "Du",
-      "dateTo": "Au",
-      "groupBy": "Grouper par",
-      "groupByDay": "Jour",
-      "groupByWeek": "Semaine",
-      "groupByMonth": "Mois"
+      "period": "Période",
+      "from": "Du",
+      "to": "Au",
+      "group_by": "Regrouper par",
+      "vendor": "Vendeur",
+      "category": "Catégorie",
+      "client": "Client"
+    },
+    "periods": {
+      "today": "Aujourd'hui",
+      "week": "Cette semaine",
+      "month": "Ce mois-ci",
+      "quarter": "Ce trimestre",
+      "year": "Cette année",
+      "custom": "Période personnalisée"
     },
     "export": {
-      "pdf": "Exporter PDF",
-      "excel": "Exporter Excel",
-      "preparing": "Préparation de l'export..."
-    },
-    "forecast": {
-      "title": "Prévisions de stock",
-      "daysToStockout": "Jours avant rupture",
-      "avgDailyConsumption": "Consommation moy. journalière",
-      "reorderQty": "Qté de réappro. suggérée",
-      "urgency": {
-        "critical": "Critique",
-        "warning": "Attention",
-        "ok": "OK"
-      }
+      "pdf": "Exporter en PDF",
+      "excel": "Exporter en Excel",
+      "preparing": "Préparation de l'export…"
     }
   },
 
-  "promotions": {
-    "title": "Promotions",
-    "create": { "title": "Ajouter une promotion" },
-    "edit": { "title": "Modifier la promotion" },
-    "fields": {
-      "name": "Nom de la promotion",
-      "type": "Type",
-      "value": "Valeur",
-      "startsAt": "Date de début",
-      "endsAt": "Date de fin",
-      "isActive": "Active"
-    },
-    "types": {
-      "percentage": "Pourcentage (%)",
-      "fixed_value": "Montant fixe",
-      "bundle": "Offre groupée"
-    },
-    "empty": "Aucune promotion trouvée."
-  },
-
   "admin": {
-    "title": "Administration",
     "users": {
       "title": "Gestion des utilisateurs",
-      "create": "Ajouter un utilisateur",
+      "create": "Créer un utilisateur",
       "fields": {
         "name": "Nom complet",
         "email": "Adresse e-mail",
         "role": "Rôle",
-        "phone": "Téléphone",
         "password": "Mot de passe",
-        "isActive": "Actif"
+        "password_confirmation": "Confirmer le mot de passe"
       },
       "roles": {
         "admin": "Administrateur",
-        "manager": "Gestionnaire",
+        "manager": "Responsable",
         "vendor": "Vendeur",
         "warehouse": "Magasinier",
         "accountant": "Comptable"
@@ -497,49 +356,30 @@
     "settings": {
       "title": "Paramètres système",
       "company": "Informations de l'entreprise",
-      "companyName": "Nom de l'entreprise",
-      "companyAddress": "Adresse",
-      "companyPhone": "Téléphone",
-      "companyEmail": "E-mail",
-      "companyLogo": "Logo",
-      "uploadLogo": "Télécharger le logo",
-      "vatRates": "Taux de TVA",
-      "alertThresholds": "Seuils d'alerte",
-      "expiryAlertDays": "Alerte expiration (jours avant)",
-      "lowStockDefault": "Seuil de stock faible par défaut"
+      "vat_rates": "Taux de TVA",
+      "alert_thresholds": "Seuils d'alerte",
+      "fields": {
+        "company_name": "Nom de l'entreprise",
+        "company_address": "Adresse",
+        "company_phone": "Téléphone",
+        "company_email": "E-mail",
+        "company_logo": "Logo de l'entreprise",
+        "low_stock_days": "Alerte stock faible (jours de stock restants)",
+        "expiry_days": "Alerte expiration (jours avant péremption)"
+      }
     },
     "audit": {
       "title": "Journal d'audit",
-      "user": "Utilisateur",
-      "action": "Action",
-      "entity": "Entité",
-      "date": "Date",
-      "changes": "Modifications",
-      "oldValue": "Avant",
-      "newValue": "Après",
-      "empty": "Aucun enregistrement d'audit.",
-      "filters": {
-        "allUsers": "Tous les utilisateurs",
-        "allActions": "Toutes les actions"
-      }
+      "fields": {
+        "user": "Utilisateur",
+        "action": "Action",
+        "entity": "Entité",
+        "old_value": "Avant",
+        "new_value": "Après",
+        "ip": "Adresse IP",
+        "date": "Date et heure"
+      },
+      "empty": "Aucune entrée d'audit trouvée."
     }
-  },
-
-  "errors": {
-    "required": "Ce champ est obligatoire.",
-    "email": "Veuillez entrer une adresse e-mail valide.",
-    "minLength": "Doit contenir au moins {min} caractères.",
-    "maxLength": "Doit contenir au plus {max} caractères.",
-    "min": "Doit être au moins {min}.",
-    "max": "Doit être au plus {max}.",
-    "invalidDate": "Veuillez entrer une date valide.",
-    "invalidNumber": "Veuillez entrer un nombre valide.",
-    "uniqueSku": "Ce SKU est déjà utilisé.",
-    "insufficientStock": "Stock insuffisant.",
-    "unauthorized": "Vous n'êtes pas autorisé(e) à effectuer cette action.",
-    "notFound": "La ressource demandée est introuvable.",
-    "serverError": "Une erreur serveur est survenue. Veuillez réessayer.",
-    "networkError": "Erreur réseau. Vérifiez votre connexion.",
-    "somethingWrong": "Une erreur est survenue. Veuillez réessayer."
   }
 }

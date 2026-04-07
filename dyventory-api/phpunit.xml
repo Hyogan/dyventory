@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.0/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnTestsThatTriggerErrors="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    failOnDeprecation="true"
+    failOnEmptyTestSuite="true"
+    failOnNotice="true"
+    failOnRisky="true"
+    failOnWarning="true"
 >
+    
+    <!-- 
+    |_________________________________________________________________
+    | Test Suites
+    |__________________________________________________________________
+    -->
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
@@ -12,25 +28,60 @@
             <directory>tests/Feature</directory>
         </testsuite>
     </testsuites>
+
+  
+    <!-- |**********************************************************
+    | Source Coverage
+    |********************************************************** -->
+    
     <source>
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <directory>app/Console</directory>
+        </exclude>
     </source>
+
+   
+    <!--**********************************************************
+    | Environment Variables — PostgreSQL test database
+    | **********************************************************
+    |
+    | Uses a separate PostgreSQL database for tests so that
+    | RefreshDatabase never touches the development database.
+    |
+    | Create the database first:
+    |   psql -c "CREATE DATABASE stoky_test;"
+    |
+     kfdsop -->
+    
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="BROADCAST_CONNECTION" value="null"/>
-        <env name="CACHE_STORE" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
-        <env name="DB_URL" value=""/>
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="PULSE_ENABLED" value="false"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
-        <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="APP_ENV"               value="testing"/>
+        <env name="APP_KEY"               value="base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="/>
+        <env name="APP_DEBUG"             value="true"/>
+
+        <!-- PostgreSQL test database -->
+        <env name="DB_CONNECTION"         value="pgsql"/>
+        <env name="DB_HOST"               value="127.0.0.1"/>
+        <env name="DB_PORT"               value="5432"/>
+        <env name="DB_DATABASE"           value="stoky_test"/>
+        <env name="DB_USERNAME"           value="postgres"/>
+        <env name="DB_PASSWORD"           value=""/>
+
+        <!-- Use sync queue so jobs execute inline during tests -->
+        <env name="QUEUE_CONNECTION"      value="sync"/>
+
+        <!-- Use array cache so Redis is not required in CI -->
+        <env name="CACHE_STORE"           value="array"/>
+
+        <!-- Use array session driver -->
+        <env name="SESSION_DRIVER"        value="array"/>
+
+        <!-- Sanctum stateful domains for test environment -->
+        <env name="SANCTUM_STATEFUL_DOMAINS" value="localhost:3000"/>
+
+        <!-- Disable rate limiting in tests -->
+        <env name="THROTTLE_ENABLED"      value="false"/>
     </php>
 </phpunit>
