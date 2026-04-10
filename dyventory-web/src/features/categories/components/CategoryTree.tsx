@@ -169,7 +169,7 @@ function CategoryNode({ category, allCategories, depth }: CategoryNodeProps) {
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
           {/* Schema builder link */}
           <Link
-            href={`/${locale}/dashboard/categories/${category.id}/schema`}
+            href={`/${locale}/categories/${category.id}`}
             className="p-1.5 rounded text-fg-muted hover:text-primary-600 hover:bg-primary-50 transition-colors"
             title="Manage field schema"
           >

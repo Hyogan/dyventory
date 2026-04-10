@@ -154,7 +154,7 @@ class CategoryController extends Controller implements HasMiddleware
         UpdateCategoryFieldSchemaRequest $request,
         Category $category,
     ): CategoryResource {
-        $this->authorize('update', $category);
+        $this->authorize('manageSchema', $category);
 
         $schema = $request->validated('schema');
 

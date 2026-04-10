@@ -31,10 +31,9 @@ export default async function CategorySchemaPage({ params }: PageProps) {
         title={t("categories.schema.title")}
         description={t("categories.schema.description")}
         breadcrumb={[
-          { label: t("nav.dashboard"), href: "../../../dashboard" },
-          { label: t("categories.title"), href: "../../categories" },
-          { label: category.name, href: `../` },
-          { label: t("categories.schema.title") },
+          { label: t("nav.dashboard"), href: "../../dashboard" },
+          { label: t("categories.title"), href: ".." },
+          { label: `${category.name} — ${t("categories.schema.title")}` },
         ]}
       />
 

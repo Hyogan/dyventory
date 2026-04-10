@@ -11,7 +11,6 @@ import { FIELD_TYPE_LABELS, type FieldDefinition } from "@/types/field-schema";
 import { FieldTypeIcon } from "./FieldTypeIcon";
 import { FieldConfigPanel } from "./FieldConfigPanel";
 import { updateCategorySchema } from "../schema/_schema";
-// import { updateCategorySchema } from "../schema/_schema";
 
 // ── Props ─────────────────────────────────────────────────────────────────────
 
