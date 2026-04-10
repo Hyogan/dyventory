@@ -42,7 +42,7 @@ export function CardTitle({
 }) {
   return (
     <h3
-      className={cn("text-base font-semibold text-(--text-primary)", className)}
+      className={cn("text-base font-semibold text-fg", className)}
     >
       {children}
     </h3>
@@ -68,7 +68,7 @@ export function CardFooter({
 }) {
   return (
     <div
-      className={cn("mt-4 pt-4 border-t border-(--border-default)", className)}
+      className={cn("mt-4 pt-4 border-t border-border", className)}
     >
       {children}
     </div>

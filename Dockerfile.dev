@@ -1,5 +1,5 @@
 # # ─────────────────────────────────────────────────────────────────────────────
-# # Stoky — Next.js 16 production Docker image
+# # Dyventory — Next.js 16 production Docker image
 # # Multi-stage: deps → builder → runner
 # # ─────────────────────────────────────────────────────────────────────────────
 
@@ -21,7 +21,7 @@
 
 # # Build-time env vars (public only — baked into the bundle)
 # ARG NEXT_PUBLIC_API_URL
-# ARG NEXT_PUBLIC_APP_NAME=Stoky
+# ARG NEXT_PUBLIC_APP_NAME=dyventory
 
 # ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 # ENV NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME

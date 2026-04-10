@@ -22,7 +22,6 @@ export function SearchInput({
   const [localValue, setLocalValue] = useState(externalValue);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Sync external changes
   useEffect(() => {
     setLocalValue(externalValue);
   }, [externalValue]);
@@ -45,7 +44,7 @@ export function SearchInput({
 
   return (
     <div className={cn("relative", className)}>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-(--text-muted) pointer-events-none" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-fg-muted pointer-events-none" />
       <input
         type="search"
         value={localValue}
@@ -58,7 +57,7 @@ export function SearchInput({
         <button
           type="button"
           onClick={handleClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-(--text-muted) hover:text-(--text-primary) transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted hover:text-fg transition-colors"
           aria-label="Clear search"
         >
           <X className="size-4" />

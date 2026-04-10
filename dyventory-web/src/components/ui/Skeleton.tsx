@@ -7,7 +7,7 @@ interface SkeletonProps {
 export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse rounded bg-(--border-default)", className)}
+      className={cn("animate-pulse rounded bg-border", className)}
       aria-hidden="true"
     />
   );
@@ -34,8 +34,8 @@ export function TableSkeleton({
   cols?: number;
 }) {
   return (
-    <div className="space-y-0 border border-(--border-default) rounded-lg overflow-hidden">
-      <div className="bg-(--surface-muted) px-4 py-3 flex gap-4">
+    <div className="space-y-0 border border-border rounded-lg overflow-hidden">
+      <div className="bg-surface-muted px-4 py-3 flex gap-4">
         {Array.from({ length: cols }).map((_, i) => (
           <Skeleton key={i} className="h-4 flex-1" />
         ))}
@@ -43,7 +43,7 @@ export function TableSkeleton({
       {Array.from({ length: rows }).map((_, i) => (
         <div
           key={i}
-          className="px-4 py-3 flex gap-4 border-t border-(--border-default)"
+          className="px-4 py-3 flex gap-4 border-t border-border"
         >
           {Array.from({ length: cols }).map((_, j) => (
             <Skeleton

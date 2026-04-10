@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Stoky",
+    "appName": "Dyventory",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
@@ -60,7 +60,7 @@
   "auth": {
     "login": "Log in",
     "loginTitle": "Welcome back",
-    "loginSubtitle": "Sign in to your Stoky account",
+    "loginSubtitle": "Sign in to your Dyventory account",
     "email": "Email address",
     "password": "Password",
     "emailPlaceholder": "you@company.com",

@@ -17,7 +17,8 @@ import { routing } from "@/i18n/routing";
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 /** Name of the httpOnly cookie that stores the Sanctum token. */
-export const AUTH_COOKIE = "auth-token" as const;
+export const AUTH_COOKIE = "dyventory-auth-token-cookie" as const;
+// export const AUTH_COOKIE = "auth-token" as const;
 export const COOKIE_NAME = "dyventory-auth-token";
 /** Default locale used in redirect paths when no locale is resolved. */
 export const DEFAULT_LOCALE = routing.defaultLocale;
@@ -61,15 +62,25 @@ export const getAuthToken = cache(async (): Promise<string> => {
  * Usage in Dashboard layout (passed down as a prop to SessionProvider):
  *   <SessionProvider user={user}>...</SessionProvider>
  */
+// export const getCurrentUser = cache(async (): Promise<AuthUser> => {
+//   const token = await getAuthToken();
+
+//   return apiFetch<AuthUser>("/auth/me", {
+//     method: "GET",
+//     headers: { Authorization: `Bearer ${token}` },
+//     // Always fetch fresh — never cache the user object at CDN/ISR level
+//     // revalidate: false,
+//   });
+// });
 export const getCurrentUser = cache(async (): Promise<AuthUser> => {
   const token = await getAuthToken();
 
-  return apiFetch<AuthUser>("/auth/me", {
+  const res = await apiFetch<{ data: { user: AuthUser } }>("/auth/me", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
-    // Always fetch fresh — never cache the user object at CDN/ISR level
-    // revalidate: false,
   });
+
+  return res.data.user; // ✅ THIS is the fix
 });
 
 // ── Authenticated fetch ───────────────────────────────────────────────────────

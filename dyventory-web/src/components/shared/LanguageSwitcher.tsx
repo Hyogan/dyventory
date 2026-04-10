@@ -16,14 +16,13 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
 
   const switchLocale = (newLocale: string) => {
-    // Replace current locale prefix in path
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.push(newPath);
   };
 
   return (
-    <div className="flex items-center gap-1 p-1 rounded-md bg-(--surface-muted)">
-      <Globe className="size-3.5 text-(--text-muted) ml-1 shrink-0" />
+    <div className="flex items-center gap-1 p-1 rounded-md bg-surface-muted">
+      <Globe className="size-3.5 text-fg-muted ml-1 shrink-0" />
       {locales.map((l) => (
         <button
           key={l.code}
@@ -32,8 +31,8 @@ export function LanguageSwitcher() {
           className={cn(
             "px-2 py-0.5 text-xs font-medium rounded transition-colors",
             locale === l.code
-              ? "bg-white text-(--text-primary) shadow-xs"
-              : "text-(--text-muted) hover:text-(--text-primary)",
+              ? "bg-white text-fg shadow-xs"
+              : "text-fg-muted hover:text-fg",
           )}
         >
           {l.label}

@@ -18,7 +18,7 @@ export function Pagination({ meta, onPageChange }: PaginationProps) {
   return (
     <div className="flex items-center justify-between gap-4 flex-wrap">
       {/* Count info */}
-      <p className="text-sm text-(--text-muted) shrink-0">
+      <p className="text-sm text-fg-muted shrink-0">
         {from !== null && to !== null
           ? `Showing ${from}–${to} of ${total}`
           : `${total} total`}
@@ -39,7 +39,7 @@ export function Pagination({ meta, onPageChange }: PaginationProps) {
           page === "..." ? (
             <span
               key={`ellipsis-${i}`}
-              className="px-2 text-(--text-muted) text-sm"
+              className="px-2 text-fg-muted text-sm"
             >
               …
             </span>
@@ -50,8 +50,8 @@ export function Pagination({ meta, onPageChange }: PaginationProps) {
               className={cn(
                 "h-8 w-8 text-sm rounded font-medium transition-colors",
                 page === current_page
-                  ? "bg-(--color-primary-500) text-white"
-                  : "text-(--text-secondary) hover:bg-(--surface-muted)",
+                  ? "bg-primary-500 text-white"
+                  : "text-fg-subtle hover:bg-surface-muted",
               )}
               aria-current={page === current_page ? "page" : undefined}
             >

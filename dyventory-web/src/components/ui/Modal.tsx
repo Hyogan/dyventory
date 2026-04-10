@@ -92,18 +92,18 @@ export function Modal({
         )}
       >
         {/* Header */}
-        <div className="flex items-start justify-between p-5 border-b border-(--border-default) shrink-0">
+        <div className="flex items-start justify-between p-5 border-b border-border shrink-0">
           <div>
             <h2
               id="modal-title"
-              className="text-base font-semibold text-(--text-primary)"
+              className="text-base font-semibold text-fg"
             >
               {title}
             </h2>
             {description && (
               <p
                 id="modal-description"
-                className="text-sm text-(--text-muted) mt-0.5"
+                className="text-sm text-fg-muted mt-0.5"
               >
                 {description}
               </p>
@@ -111,7 +111,7 @@ export function Modal({
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1.5 hover:bg-(--surface-muted) transition-colors text-(--text-muted) hover:text-(--text-primary) ml-4 shrink-0"
+            className="rounded-md p-1.5 hover:bg-surface-muted transition-colors text-fg-muted hover:text-fg ml-4 shrink-0"
             aria-label="Close dialog"
           >
             <X className="size-4" />
@@ -123,7 +123,7 @@ export function Modal({
 
         {/* Footer */}
         {footer && (
-          <div className="px-5 py-4 border-t border-(--border-default) flex items-center justify-end gap-3 shrink-0">
+          <div className="px-5 py-4 border-t border-border flex items-center justify-end gap-3 shrink-0">
             {footer}
           </div>
         )}

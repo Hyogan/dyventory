@@ -47,7 +47,7 @@ COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # ── PHP-FPM config ───────────────────────────────────────────────────
-COPY infra/api/php.ini /usr/local/etc/php/conf.d/stoky.ini
+COPY infra/api/php.ini /usr/local/etc/php/conf.d/dyventory.ini
 
 EXPOSE 9000
 

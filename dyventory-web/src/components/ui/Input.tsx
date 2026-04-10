@@ -20,10 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <label htmlFor={inputId} className="label">
             {label}
             {required && (
-              <span
-                className="text-(--color-danger-500) ml-1"
-                aria-hidden="true"
-              >
+              <span className="text-danger-500 ml-1" aria-hidden="true">
                 *
               </span>
             )}
@@ -48,14 +45,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {suffix && (
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-(--text-muted) text-sm">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-fg-muted text-sm">
               {suffix}
             </div>
           )}
         </div>
 
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-xs text-(--text-muted)">
+          <p id={`${inputId}-hint`} className="text-xs text-fg-muted">
             {hint}
           </p>
         )}
@@ -63,7 +60,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <p
             id={`${inputId}-error`}
             role="alert"
-            className="text-xs text-(--color-danger-600)"
+            className="text-xs text-danger-600"
           >
             {error}
           </p>

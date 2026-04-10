@@ -14,6 +14,7 @@ interface UseSessionReturn {
 
 export function useSession(): UseSessionReturn {
   const { user } = useSessionContext();
+  //   console.log("HERE_IS_THE_USE_SESSION_USER", user);
 
   return {
     user,

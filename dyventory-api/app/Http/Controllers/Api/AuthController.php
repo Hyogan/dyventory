@@ -108,7 +108,9 @@ class AuthController extends Controller implements HasMiddleware
     public function me(Request $request): JsonResponse
     {
         return response()->json([
-            'data' => new UserResource($request->user()),
+            'data' => [
+                'user' => new UserResource($request->user()),
+            ],
         ]);
     }
 }

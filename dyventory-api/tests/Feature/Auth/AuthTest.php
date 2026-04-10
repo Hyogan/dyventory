@@ -31,13 +31,13 @@ class AuthTest extends TestCase
     public function login_returns_token_and_user_on_valid_credentials(): void
     {
         $user = User::factory()->create([
-            'email'    => 'admin@stoky.app',
+            'email'    => 'admin@dyventory.app',
             'password' => bcrypt('secret123'),
             'role'     => UserRole::Admin,
         ]);
 
         $response = $this->postJson('/api/v1/auth/login', [
-            'email'    => 'admin@stoky.app',
+            'email'    => 'admin@dyventory.app',
             'password' => 'secret123',
         ]);
 
@@ -57,7 +57,7 @@ class AuthTest extends TestCase
                 ],
             ])
             ->assertJsonPath('data.user.id', $user->id)
-            ->assertJsonPath('data.user.email', 'admin@stoky.app')
+            ->assertJsonPath('data.user.email', 'admin@dyventory.app')
             ->assertJsonPath('data.user.role', 'admin')
             ->assertJsonPath('data.user.role_label', 'Administrator')
             ->assertJsonPath('data.user.role_label_fr', 'Administrateur');
@@ -70,12 +70,12 @@ class AuthTest extends TestCase
     public function login_returns_401_on_wrong_password(): void
     {
         User::factory()->create([
-            'email'    => 'user@stoky.app',
+            'email'    => 'user@dyventory.app',
             'password' => bcrypt('correct-password'),
         ]);
 
         $this->postJson('/api/v1/auth/login', [
-            'email'    => 'user@stoky.app',
+            'email'    => 'user@dyventory.app',
             'password' => 'wrong-password',
         ])->assertUnauthorized()
             ->assertJsonPath('message', __('auth.failed'));
@@ -85,7 +85,7 @@ class AuthTest extends TestCase
     public function login_returns_401_on_unknown_email(): void
     {
         $this->postJson('/api/v1/auth/login', [
-            'email'    => 'nobody@stoky.app',
+            'email'    => 'nobody@dyventory.app',
             'password' => 'anypassword',
         ])->assertUnauthorized();
     }
@@ -103,7 +103,7 @@ class AuthTest extends TestCase
     public function login_returns_422_when_password_is_missing(): void
     {
         $this->postJson('/api/v1/auth/login', [
-            'email' => 'user@stoky.app',
+            'email' => 'user@dyventory.app',
         ])->assertUnprocessable()
             ->assertJsonValidationErrors(['password']);
     }
@@ -122,7 +122,7 @@ class AuthTest extends TestCase
     public function login_returns_422_when_password_is_too_short(): void
     {
         $this->postJson('/api/v1/auth/login', [
-            'email'    => 'user@stoky.app',
+            'email'    => 'user@dyventory.app',
             'password' => 'short',
         ])->assertUnprocessable()
             ->assertJsonValidationErrors(['password']);
@@ -159,12 +159,12 @@ class AuthTest extends TestCase
     public function login_response_does_not_expose_password(): void
     {
         User::factory()->create([
-            'email'    => 'user@stoky.app',
+            'email'    => 'user@dyventory.app',
             'password' => bcrypt('secret123'),
         ]);
 
         $response = $this->postJson('/api/v1/auth/login', [
-            'email'    => 'user@stoky.app',
+            'email'    => 'user@dyventory.app',
             'password' => 'secret123',
         ])->assertOk();
 

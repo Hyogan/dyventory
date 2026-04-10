@@ -151,7 +151,7 @@ return [
     'ulid'                 => 'Le champ :attribute doit être un ULID valide.',
     'uuid'                 => 'Le champ :attribute doit être un UUID valide.',
 
-    // ── Règles Stoky personnalisées ────────────────────────────────────
+    // ── Règles Dyventory personnalisées ────────────────────────────────────
     'custom' => [
         'sku' => [
             'unique' => 'Cette référence SKU est déjà utilisée.',

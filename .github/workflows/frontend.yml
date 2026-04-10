@@ -39,5 +39,5 @@ jobs:
         working-directory: frontend
         env:
           NEXT_PUBLIC_API_URL: http://localhost:8000
-          NEXT_PUBLIC_APP_NAME: Stoky
+          NEXT_PUBLIC_APP_NAME: dyventory
         run: npm run build

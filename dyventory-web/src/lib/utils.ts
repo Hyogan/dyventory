@@ -192,7 +192,8 @@ export function truncate(str: string, max: number = 50): string {
  *   initials('Steve Tchingang') → "ST"
  *   initials('Admin')           → "A"
  */
-export function initials(name: string): string {
+export function initials(name?: string): string {
+  if (!name) return "";
   return name
     .trim()
     .split(/\s+/)
@@ -201,6 +202,9 @@ export function initials(name: string): string {
     .join("");
 }
 
+// export function initials2(data: any): void {
+//   console.log(data);
+// }
 /**
  * Convert a string to a URL-safe slug.
  *
@@ -297,9 +301,9 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
  * Green > 14 days
  */
 export function stockUrgencyClass(daysToStockout: number): string {
-  if (daysToStockout < 7) return "text-(--color-danger-600)";
-  if (daysToStockout < 14) return "text-(--color-warning-600)";
-  return "text-(--color-success-600)";
+  if (daysToStockout < 7) return "text-danger-600";
+  if (daysToStockout < 14) return "text-warning-600";
+  return "text-success-600";
 }
 
 /**
@@ -310,11 +314,8 @@ export function stockUrgencyClass(daysToStockout: number): string {
  * Green > 7 days
  */
 export function expiryUrgencyClass(daysUntilExpiry: number): string {
-  if (daysUntilExpiry <= 0)
-    return "bg-(--color-danger-100) text-(--color-danger-700)";
-  if (daysUntilExpiry < 3)
-    return "bg-(--color-danger-50)  text-(--color-danger-600)";
-  if (daysUntilExpiry < 7)
-    return "bg-(--color-warning-50) text-(--color-warning-600)";
-  return "bg-(--color-success-50) text-(--color-success-700)";
+  if (daysUntilExpiry <= 0) return "bg-danger-100 text-danger-700";
+  if (daysUntilExpiry < 3) return "bg-danger-50 text-danger-600";
+  if (daysUntilExpiry < 7) return "bg-warning-50 text-warning-600";
+  return "bg-success-50 text-success-700";
 }

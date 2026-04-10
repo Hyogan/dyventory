@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->command->table(
             ['Role', 'Email', 'Password'],
             [
-                ['Admin',      'admin@stoky.app',      'password'],
-                ['Manager',    'manager@stoky.app',    'password'],
-                ['Vendor',     'vendor@stoky.app',     'password'],
-                ['Warehouse',  'warehouse@stoky.app',  'password'],
-                ['Accountant', 'accountant@stoky.app', 'password'],
+                ['Admin',      'admin@dyventory.app',      'password'],
+                ['Manager',    'manager@dyventory.app',    'password'],
+                ['Vendor',     'vendor@dyventory.app',     'password'],
+                ['Warehouse',  'warehouse@dyventory.app',  'password'],
+                ['Accountant', 'accountant@dyventory.app', 'password'],
             ]
         );
     }

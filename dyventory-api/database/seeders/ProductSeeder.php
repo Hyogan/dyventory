@@ -16,10 +16,10 @@ class ProductSeeder extends Seeder
         $vat     = VatRate::where('is_default', true)->firstOrFail();
         $vatZero = VatRate::where('rate', 0)->first() ?? $vat;
 
-        $perishable = Category::where('slug', 'food-perishable')->firstOrFail();
-        $snails     = Category::where('slug', 'snails')->firstOrFail();
-        $clothing   = Category::where('slug', 'clothing')->firstOrFail();
-        $electronics = Category::where('slug', 'electronics')->firstOrFail();
+        $perishable = CategoryResource::where('slug', 'food-perishable')->firstOrFail();
+        $snails     = CategoryResource::where('slug', 'snails')->firstOrFail();
+        $clothing   = CategoryResource::where('slug', 'clothing')->firstOrFail();
+        $electronics = CategoryResource::where('slug', 'electronics')->firstOrFail();
 
         $products = [
             // ── Perishable ───────────────────────────────────────────

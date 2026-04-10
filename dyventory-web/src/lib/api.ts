@@ -87,7 +87,7 @@ export type FetchOptions = RequestInit & {
 
 function buildUrl(path: string, params?: FetchOptions["params"]) {
   const base = API_BASE;
-  console.log(base);
+  //   console.log(base);
   if (!base) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined");
   }

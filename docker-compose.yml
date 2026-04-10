@@ -126,6 +126,9 @@ services:
       - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:8000 # browser → Nginx (via published port)
       - API_INTERNAL_URL=http://dyventory_nginx:80 # server → Nginx (internal Docker network)
+      # Windows host + Docker: Turbopack's Rust watcher uses inotify (no events from Windows FS).
+      # dev:docker runs webpack instead, which uses watchpack — polling is respected below.
+      - WATCHPACK_POLLING=true
     depends_on:
       - dyventory_nginx
 

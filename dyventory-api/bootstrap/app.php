@@ -27,7 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->middleware('api')
                 ->group(static function (): void {
                     require __DIR__ . '/../routes/api/v1/auth.php';
-                    // require __DIR__ . '/../routes/api/v1/categories.php';
+                    require __DIR__ . '/../routes/api/v1/categories.php';
                     // require __DIR__ . '/../routes/api/v1/products.php';
                     // require __DIR__ . '/../routes/api/v1/stock.php';
                     // require __DIR__ . '/../routes/api/v1/sales.php';

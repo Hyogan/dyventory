@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         // ── Food (parent) ────────────────────────────────────────────────
-        $food = Category::updateOrCreate(
+        $food = CategoryResource::updateOrCreate(
             ['slug' => 'food'],
             [
                 'name'         => 'Food',
@@ -26,7 +26,7 @@ class CategorySeeder extends Seeder
         );
 
         // ── Food — Perishable ─────────────────────────────────────────────
-        Category::updateOrCreate(
+        CategoryResource::updateOrCreate(
             ['slug' => 'food-perishable'],
             [
                 'parent_id'   => $food->id,
@@ -66,7 +66,7 @@ class CategorySeeder extends Seeder
         );
 
         // ── Snails (Living) ────────────────────────────────────────────────
-        Category::updateOrCreate(
+        CategoryResource::updateOrCreate(
             ['slug' => 'snails'],
             [
                 'parent_id'    => $food->id,
@@ -108,7 +108,7 @@ class CategorySeeder extends Seeder
         );
 
         // ── Clothing ───────────────────────────────────────────────────────
-        $clothing = Category::updateOrCreate(
+        $clothing = CategoryResource::updateOrCreate(
             ['slug' => 'clothing'],
             [
                 'name'         => 'Clothing',
@@ -154,7 +154,7 @@ class CategorySeeder extends Seeder
         );
 
         // ── Electronics ───────────────────────────────────────────────────
-        Category::updateOrCreate(
+        CategoryResource::updateOrCreate(
             ['slug' => 'electronics'],
             [
                 'name'         => 'Electronics',

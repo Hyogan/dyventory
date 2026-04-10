@@ -1,4 +1,5 @@
 import { SessionProvider } from "@/providers/SessionProvider";
+import { SidebarProvider } from "@/providers/SidebarProvider";
 import { getCurrentUser } from "@/lib/auth";
 import { Sidebar } from "@/components/nav/Sidebar";
 import { Header } from "@/components/nav/Header";
@@ -24,15 +25,17 @@ export default async function DashboardLayout({
 
   return (
     <SessionProvider user={user}>
-      <div className="flex h-screen overflow-hidden bg-(--surface-bg)">
-        <Sidebar />
-        <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-          <Header />
-          <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-            {children}
-          </main>
+      <SidebarProvider>
+        <div className="flex h-screen overflow-hidden bg-surface-bg">
+          <Sidebar />
+          <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+            <Header />
+            <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+              {children}
+            </main>
+          </div>
         </div>
-      </div>
+      </SidebarProvider>
     </SessionProvider>
   );
 }

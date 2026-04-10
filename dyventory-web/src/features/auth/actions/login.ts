@@ -3,11 +3,12 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { apiFetch, ApiError } from "@/lib/api";
-import { COOKIE_NAME } from "@/lib/auth";
+import { AUTH_COOKIE, COOKIE_NAME } from "@/lib/auth";
 import type { AuthSession, LoginFormState } from "@/types/auth";
 import { z } from "zod";
 const LoginSchema = z.object({
   email: z
+    .string()
     .email("Please enter a valid email address.")
     .min(1, "Email is required."),
 
@@ -41,7 +42,6 @@ export async function loginAction(
       method: "POST",
       body: JSON.stringify(parsed.data),
     });
-    console.log(res);
     session = res.data;
   } catch (error) {
     if (error instanceof ApiError) {
@@ -85,7 +85,7 @@ export async function loginAction(
 
   // 3. Store token in httpOnly cookie — never exposed to client JavaScript
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, session.token, {
+  cookieStore.set(AUTH_COOKIE, session.token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

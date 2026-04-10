@@ -16,6 +16,8 @@ export function SessionProvider({
   user: AuthUser | null;
   children: React.ReactNode;
 }) {
+  //   console.log("HERE_IS_THE_SESSION_PROVIDER_USER", user);
+
   return (
     <SessionContext.Provider value={{ user }}>
       {children}

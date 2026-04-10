@@ -34,7 +34,7 @@ export function LoginForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="email"
-          className="text-sm font-medium text-(--text-primary)"
+          className="text-sm font-medium text-fg"
         >
           {t("email")}
           <span className="text-red-500 ml-1" aria-hidden="true">
@@ -68,7 +68,7 @@ export function LoginForm() {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="password"
-          className="text-sm font-medium text-(--text-primary)"
+          className="text-sm font-medium text-fg"
         >
           {t("password")}
           <span className="text-red-500 ml-1" aria-hidden="true">
@@ -106,9 +106,9 @@ export function LoginForm() {
         disabled={isPending}
         className={cn(
           "w-full h-10 px-4 rounded font-medium text-sm text-white",
-          "bg-(--color-primary) hover:opacity-90 active:scale-[0.99]",
+          "bg-primary hover:opacity-90 active:scale-[0.99]",
           "transition-all duration-150",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--color-primary)",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           "inline-flex items-center justify-center gap-2",
         )}

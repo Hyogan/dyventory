@@ -26,7 +26,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   void searchParams; // consumed by the action via the form's hidden field if needed
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-(--surface-bg) px-4">
+    <div className="flex min-h-screen items-center justify-center bg-surface-bg px-4">
       <div className="w-full max-w-sm">
         {/* ── Brand mark ─────────────────────────────────────────────── */}
         <div className="mb-8 text-center">
@@ -51,10 +51,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-(--text-primary)">
-            Stoky
+          <h1 className="text-2xl font-semibold tracking-tight text-fg">
+            Dyventory
           </h1>
-          <p className="mt-1 text-sm text-(--text-muted)">
+          <p className="mt-1 text-sm text-fg-muted">
             {t("login_subtitle")}
           </p>
         </div>
@@ -68,7 +68,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         </div>
 
         {/* ── Footer note ─────────────────────────────────────────────── */}
-        <p className="mt-6 text-center text-xs text-(--text-muted)">
+        <p className="mt-6 text-center text-xs text-fg-muted">
           {t("login_footer")}
         </p>
       </div>
