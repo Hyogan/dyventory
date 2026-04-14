@@ -31,7 +31,7 @@ export async function createCategory(
       body: JSON.stringify(payload),
     });
 
-    revalidateTag("categories");
+    revalidateTag("categories", "seconds");
     return { ok: true };
   } catch (err) {
     if (err instanceof ApiError) {
@@ -56,7 +56,7 @@ export async function updateCategory(
       body: JSON.stringify(payload),
     });
 
-    revalidateTag("categories");
+    revalidateTag("categories", "seconds");
     return { ok: true };
   } catch (err) {
     if (err instanceof ApiError) {
@@ -75,7 +75,7 @@ export async function deleteCategory(id: number): Promise<ActionResult> {
   try {
     await authFetch(`/categories/${id}`, { method: "DELETE" });
 
-    revalidateTag("categories");
+    revalidateTag("categories", "seconds");
     return { ok: true };
   } catch (err) {
     if (err instanceof ApiError) {

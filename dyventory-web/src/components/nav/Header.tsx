@@ -8,8 +8,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
+import { useAlerts } from "@/hooks/useAlerts";
 import { useSidebar } from "@/providers/SidebarProvider";
 import { LanguageSwitcher } from "../shared/LanguageSwitcher";
+import { AlertDropdown } from "../shared/AlertDropdown";
 
 export function Header() {
   const t = useTranslations("common");
@@ -19,6 +21,8 @@ export function Header() {
   const { user } = useSession();
   const { toggle } = useSidebar();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const { unreadCount } = useAlerts();
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -44,13 +48,24 @@ export function Header() {
         {/* Language switcher */}
         <LanguageSwitcher />
 
-        {/* Notification bell — wired up in Phase 4 */}
-        <button
-          className="relative p-2 rounded-md text-fg-muted hover:text-fg hover:bg-surface-muted transition-colors"
-          aria-label={t("notifications")}
-        >
-          <Bell className="size-4.5" />
-        </button>
+        {/* Notification bell */}
+        <div className="relative">
+          <button
+            onClick={() => setAlertOpen((v) => !v)}
+            className="relative p-2 rounded-md text-fg-muted hover:text-fg hover:bg-surface-muted transition-colors"
+            aria-label={t("notifications")}
+            aria-expanded={alertOpen}
+          >
+            <Bell className="size-4.5" />
+            {unreadCount > 0 && (
+              <span className="absolute top-1 right-1 size-2 rounded-full bg-danger-500" />
+            )}
+          </button>
+
+          {alertOpen && (
+            <AlertDropdown onClose={() => setAlertOpen(false)} />
+          )}
+        </div>
 
         {/* User menu */}
         <div className="relative">

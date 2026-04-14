@@ -132,9 +132,15 @@ export interface Batch {
   current_quantity: string;
   attributes: Record<string, unknown>;
   status: "active" | "depleted" | "expired";
+  // Computed by BatchResource
+  expiry_date: string | null;
+  days_until_expiry: number | null;
+  is_expired: boolean;
+  is_depleted: boolean;
   product?: Product;
   supplier?: Supplier;
   created_at: string;
+  updated_at: string;
 }
 
 export interface StockMovement {

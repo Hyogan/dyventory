@@ -143,17 +143,11 @@ export async function apiFetch<T>(
   }
 
   if (!res.ok) {
-    let errorData: { message?: string; errors?: Record<string, string[]> } = {};
-    try {
-      errorData = await res.json();
-    } catch {
-      // Non-JSON error body — ignore
-    }
-
+    const errorData = data as { message?: string; errors?: Record<string, string[]> } | null;
     throw new ApiError(
       res.status,
-      errorData.message ?? `Request failed with status ${res.status}`,
-      errorData,
+      errorData?.message ?? `Request failed with status ${res.status}`,
+      errorData ?? undefined,
     );
   }
   return data as T;

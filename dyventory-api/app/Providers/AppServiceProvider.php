@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Batch;
 use App\Models\Category;
+use App\Models\InventorySession;
 use App\Models\Product;
+use App\Models\StockMovement;
+use App\Policies\BatchPolicy;
 use App\Policies\CategoryPolicy;
+use App\Policies\InventorySessionPolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\StockMovementPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -30,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Category::class, CategoryPolicy::class);
         Gate::policy(Product::class, ProductPolicy::class);
+        Gate::policy(Batch::class, BatchPolicy::class);
+        Gate::policy(StockMovement::class, StockMovementPolicy::class);
+        Gate::policy(InventorySession::class, InventorySessionPolicy::class);
 
         Model::preventLazyLoading(! app()->isProduction());
 

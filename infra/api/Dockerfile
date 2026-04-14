@@ -51,4 +51,8 @@ COPY infra/api/php.ini /usr/local/etc/php/conf.d/dyventory.ini
 
 EXPOSE 9000
 
+COPY infra/api/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]

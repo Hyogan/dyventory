@@ -142,7 +142,7 @@ stocky/
 - Backend: CategoryService, FieldSchemaService (validate schema/attributes/build rules), CategoryController, CategoryResource
 - Frontend: CategoryTree, CategoryModal, FieldSchemaBuilder, FieldConfigPanel, FieldTypeIcon, DynamicFieldRenderer, schema-to-zod.ts
 
-### Phase 3 — Product Catalogue 🔶 IN PROGRESS
+### Phase 3 — Product Catalogue ✅ COMPLETE
 
 **3.1 Backend — Products: ✅ COMPLETE**
 
@@ -150,13 +150,42 @@ stocky/
 - 3.1.2 ProductController + ProductResource (conditional financials by role) ✅
 - 3.1.3 Variants, Barcodes & Images ✅
 
-**3.2 Frontend — Products: ❌ NOT STARTED ← NEXT**
+**3.2 Frontend — Products: ✅ COMPLETE**
 
-- 3.2.1 Product list page (DataTable, filters, search)
-- 3.2.2 Product create/edit form (DynamicFieldRenderer for category fields)
-- 3.2.3 Variants, detail page, barcodes
+- 3.2.1 Product list page (DataTable, filters, search) ✅
+- 3.2.2 Product create/edit form (DynamicFieldRenderer for category fields) ✅
+- 3.2.3 Variants, detail page, barcodes, image gallery ✅
 
-### Phase 4–9: Stock, Sales, Clients/Suppliers, Reports, Dashboard, Deployment — NOT STARTED
+### Phase 4 — Stock Management
+
+**4.1 Backend — Stock: ✅ COMPLETE**
+
+- 4.1.1 StockMovementService (FEFO exits, entries, adjustments) + StockMovementRecorded event ✅
+- 4.1.2 BatchService + BatchController + BatchResource (dynamic batch-field validation via FieldSchemaService) ✅
+- 4.1.2 StockMovementController (entry / exit / adjustment endpoints) + StockMovementResource ✅
+- 4.1.2 InventoryService (start → counts → discrepancies → validate) + InventoryController ✅
+- 4.1.2 Policies: BatchPolicy, StockMovementPolicy, InventorySessionPolicy (registered in AppServiceProvider) ✅
+- 4.1.2 routes/api/v1/stock.php (batches, stock movements, inventory) — wired in bootstrap/app.php ✅
+- 4.1.3 AlertService (low stock, zero stock, batch expiry, mortality) + CheckStockAlerts job ✅
+- 4.1.3 CheckStockAlerts scheduled daily at 06:00 in routes/console.php ✅
+
+**4.2 Frontend — Stock: ✅ COMPLETE**
+
+- 4.2.1 Stock overview page (RSC, batch table, expiry badges, stock level bars, alert summary bar) ✅
+- 4.2.1 StockFilters (category, status, expiry_warning toggle) ✅
+- 4.2.2 Stock entry page + StockEntryForm (product select, decimal qty, batch creation, DynamicFieldRenderer for batch fields) ✅
+- 4.2.2 BatchFieldsSection component ✅
+- 4.2.3 Stock exit page + StockExitForm (FEFO hint, loss reason select, confirm dialog) ✅
+- 4.2.3 Stock history page + MovementHistoryTable (type/date filters, signed quantities) ✅
+- 4.2.3 Inventory flow page: start session → InventoryCountForm (scanner-friendly) → DiscrepancyReport → validate ✅
+- 4.2.4 useAlerts hook (polling 60s, mark read) ✅
+- 4.2.4 AlertDropdown component (unread badge, categorised alerts) ✅
+- 4.2.4 Header.tsx updated with live notification bell ✅
+- API route handlers: /api/auth/logout, /api/notifications/* ✅
+- Backend: notifications.php routes (list, read, read-all) ✅
+- types/index.ts: Batch extended with expiry computed fields ✅
+
+### Phase 5–9: Sales, Clients/Suppliers, Reports, Dashboard, Deployment — NOT STARTED ← NEXT
 
 ---
 

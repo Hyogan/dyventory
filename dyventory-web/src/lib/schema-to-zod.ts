@@ -59,7 +59,7 @@ function buildFieldValidator(field: FieldDefinition): z.ZodTypeAny {
 
     case "number": {
       let num = z.coerce.number({
-        invalid_type_error: `${field.label} must be a number.`,
+        error: `${field.label} must be a number.`,
       });
       if (field.min != null) {
         num = num.min(field.min, `${field.label} must be at least ${field.min}.`);
@@ -83,9 +83,7 @@ function buildFieldValidator(field: FieldDefinition): z.ZodTypeAny {
       const options = field.options ?? [];
       if (options.length > 0) {
         validator = z.enum(options as [string, ...string[]], {
-          errorMap: () => ({
-            message: `${field.label} must be one of: ${options.join(", ")}.`,
-          }),
+          error: `${field.label} must be one of: ${options.join(", ")}.`,
         });
       } else {
         validator = z.string();

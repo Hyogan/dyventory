@@ -71,7 +71,7 @@ export function proxy(request: NextRequest): NextResponse {
 
 export const config = {
   matcher: [
-    // Match all routes except Next.js internals and static assets
-    "/((?!_next/static|_next/image|_next/data|favicon\\.ico|icons|images|fonts|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)).*)",
+    // Match all routes except Next.js internals, static assets, and API routes
+    "/((?!api|_next/static|_next/image|_next/data|favicon\\.ico|icons|images|fonts|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)).*)",
   ],
 };

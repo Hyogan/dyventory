@@ -1,4 +1,6 @@
-import { Badge, type BadgeVariant } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
+
+type BadgeVariant = "default" | "primary" | "success" | "warning" | "danger" | "secondary";
 
 type KnownStatus =
   | "active"
@@ -17,15 +19,6 @@ type KnownStatus =
   | "received"
   | "partially_received";
 
-// type BadgeVariant =
-//   | "default"
-//   | "primary"
-//   | "success"
-//   | "warning"
-//   | "danger"
-//   | "secondary";
-
-//   import { Badge, type BadgeVariant } from "@/components/ui/Badge";
 const statusMap: Record<KnownStatus, { label: string; variant: BadgeVariant }> =
   {
     // Product
