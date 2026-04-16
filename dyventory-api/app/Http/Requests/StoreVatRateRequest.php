@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreVatRateRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name'       => ['required', 'string', 'max:100', Rule::unique('vat_rates', 'name')],
+            'rate'       => ['required', 'numeric', 'min:0', 'max:100'],
+            'is_default' => ['nullable', 'boolean'],
+            'is_active'  => ['nullable', 'boolean'],
+        ];
+    }
+}

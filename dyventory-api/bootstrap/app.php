@@ -31,12 +31,12 @@ return Application::configure(basePath: dirname(__DIR__))
                     require __DIR__ . '/../routes/api/v1/products.php';
                     require __DIR__ . '/../routes/api/v1/stock.php';
                     require __DIR__ . '/../routes/api/v1/notifications.php';
-                    // require __DIR__ . '/../routes/api/v1/sales.php';
-                    // require __DIR__ . '/../routes/api/v1/clients.php';
-                    // require __DIR__ . '/../routes/api/v1/suppliers.php';
-                    // require __DIR__ . '/../routes/api/v1/reports.php';
-                    // require __DIR__ . '/../routes/api/v1/users.php';
-                    // require __DIR__ . '/../routes/api/v1/settings.php';
+                    require __DIR__ . '/../routes/api/v1/sales.php';
+                    require __DIR__ . '/../routes/api/v1/clients.php';
+                    require __DIR__ . '/../routes/api/v1/suppliers.php';
+                    // require __DIR__ . '/../routes/api/v1/reports.php'; // Phase 7
+                    require __DIR__ . '/../routes/api/v1/users.php';
+                    require __DIR__ . '/../routes/api/v1/settings.php';
                 });
         },
     )

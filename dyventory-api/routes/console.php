@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\CheckOverdueCredits;
 use App\Jobs\CheckStockAlerts;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -22,5 +23,20 @@ Artisan::command('inspire', function () {
 Schedule::job(new CheckStockAlerts)
     ->dailyAt('06:00')
     ->name('stock:check-alerts')
+    ->withoutOverlapping()
+    ->onOneServer();
+
+/*
+|--------------------------------------------------------------------------
+| Overdue Credit Check — run daily at 07:00
+|--------------------------------------------------------------------------
+|
+| CheckOverdueCredits marks credit sales whose due_date has passed
+| and are still pending or partially paid as 'overdue'.
+|
+*/
+Schedule::job(new CheckOverdueCredits)
+    ->dailyAt('07:00')
+    ->name('sales:check-overdue-credits')
     ->withoutOverlapping()
     ->onOneServer();

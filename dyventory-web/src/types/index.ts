@@ -160,18 +160,30 @@ export interface StockMovement {
 
 // ── Client ────────────────────────────────────────────────────────────────────
 
+export type ClientType = "individual" | "company" | "reseller" | "wholesaler" | "retailer";
+
 export interface Client {
   id: number;
   name: string;
   email: string | null;
   phone: string | null;
   address: string | null;
-  type: "individual" | "reseller" | "wholesaler" | "retailer";
-  credit_limit: string;
-  outstanding_balance: string;
+  type: ClientType;
+  credit_limit: number;
+  outstanding_balance: number;
   notes: string | null;
   is_active: boolean;
   created_at: string;
+  updated_at: string;
+}
+
+export interface ClientSummary {
+  sale_count: number;
+  total_revenue: number;
+  total_paid: number;
+  outstanding_balance: number;
+  credit_limit: number;
+  available_credit: number;
 }
 
 // ── Supplier ──────────────────────────────────────────────────────────────────
@@ -184,8 +196,79 @@ export interface Supplier {
   address: string | null;
   contact_person: string | null;
   lead_time_days: number;
-  minimum_order_amount: string;
+  minimum_order_amount: number;
+  notes: string | null;
   is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SupplierSummary {
+  order_count: number;
+  received_count: number;
+  pending_count: number;
+  total_spend: number;
+  lead_time_days: number;
+  minimum_order_amount: number;
+}
+
+export interface SupplierOrder {
+  id: number;
+  supplier_id: number;
+  user_id: number;
+  order_number: string;
+  status: SupplierOrderStatus;
+  status_label?: string;
+  total_amount: number;
+  expected_at: string | null;
+  received_at: string | null;
+  notes: string | null;
+  supplier?: Supplier;
+  user?: { id: number; name: string };
+  items?: SupplierOrderItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SupplierOrderItem {
+  id: number;
+  product_id: number;
+  variant_id: number | null;
+  quantity_ordered: number;
+  quantity_received: number;
+  quantity_remaining: number;
+  unit_price_ht: number;
+  line_total_ht: number;
+  product?: { id: number; name: string; sku: string | null };
+  variant?: { id: number; name: string } | null;
+}
+
+// ── Setting ───────────────────────────────────────────────────────────────────
+
+export interface Setting {
+  key: string;
+  value: string | number | boolean | null;
+  group: string;
+  type: "string" | "integer" | "float" | "boolean" | "json";
+  label: string | null;
+  updated_at: string;
+}
+
+// ── Audit Log ─────────────────────────────────────────────────────────────────
+
+export interface AuditLog {
+  id: number;
+  user_id: number;
+  user?: { id: number; name: string };
+  action: string;
+  entity_type: string | null;
+  entity_id: number | null;
+  old_values: Record<string, unknown> | null;
+  new_values: Record<string, unknown> | null;
+  ip_address: string | null;
+  route: string | null;
+  http_method: string;
+  status_code: number;
   created_at: string;
 }
 
@@ -197,7 +280,9 @@ export interface Sale {
   user_id: number;
   sale_number: string;
   status: SaleStatus;
+  status_label?: string;
   payment_status: PaymentStatus;
+  payment_status_label?: string;
   payment_method: string | null;
   subtotal_ht: string;
   total_vat: string;
@@ -211,6 +296,34 @@ export interface Sale {
   client?: Client;
   user?: User;
   items?: SaleItem[];
+  payments?: SalePayment[];
+  returns?: SaleReturn[];
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface SalePayment {
+  id: number;
+  sale_id: number;
+  user_id: number;
+  amount: string;
+  payment_method: string;
+  reference: string | null;
+  notes: string | null;
+  paid_at: string;
+  created_at: string;
+}
+
+export interface SaleReturn {
+  id: number;
+  sale_id: number;
+  user_id: number;
+  reason: string;
+  resolution: "refund" | "credit_note" | "exchange";
+  refund_amount: string;
+  restock: boolean;
+  items: Array<{ product_id: number; quantity: number; batch_id: number | null }>;
+  notes: string | null;
   created_at: string;
 }
 

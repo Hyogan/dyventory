@@ -254,7 +254,8 @@
       "confirmed": "Confirmed",
       "delivered": "Delivered",
       "cancelled": "Cancelled",
-      "returned": "Returned"
+      "returned": "Returned",
+      "draft": "Draft"
     },
     "payment_status": {
       "unpaid": "Unpaid",
@@ -277,39 +278,118 @@
       "quantity_label": "Qty",
       "remove": "Remove from cart"
     },
+    "new": {
+      "order_summary": "Order summary",
+      "client_placeholder": "Select a client (optional)",
+      "no_client": "Anonymous / Walk-in",
+      "save_draft": "Save as draft",
+      "confirm_sale": "Confirm sale",
+      "discount_amount": "Order discount (TTC)",
+      "due_date_hint": "Required for credit payment",
+      "add_to_cart": "Add to cart",
+      "stock_available": "{qty} available",
+      "out_of_stock": "Out of stock",
+      "kg_hint": "Quantity in kg (e.g. 2.500)",
+      "items_count": "{count} item",
+      "items_count_plural": "{count} items"
+    },
+    "detail": {
+      "items_title": "Items",
+      "payment_history": "Payment history",
+      "returns_title": "Returns",
+      "no_payments": "No payments recorded yet.",
+      "no_returns": "No returns recorded.",
+      "financials": "Financials",
+      "print_invoice": "Print invoice"
+    },
+    "return": {
+      "title": "Process Return",
+      "description": "Select the items to return and choose how to resolve them.",
+      "items_title": "Items to return",
+      "reason": "Reason for return",
+      "resolution": "Resolution",
+      "restock": "Restore items to stock",
+      "refund_amount": "Refund amount (TTC)",
+      "notes": "Internal notes",
+      "resolutions": {
+        "refund": "Refund to client",
+        "credit_note": "Issue credit note",
+        "exchange": "Exchange for other goods"
+      },
+      "submit": "Process return"
+    },
+    "filters": {
+      "all_statuses": "All statuses",
+      "all_payment_statuses": "All payment statuses",
+      "date_from": "From date",
+      "date_to": "To date"
+    },
+    "stats": {
+      "revenue": "Revenue (TTC)",
+      "overdue": "Overdue",
+      "pending": "Pending",
+      "confirmed": "Confirmed"
+    },
     "empty": "No sales found."
   },
 
   "clients": {
     "title": "Clients",
+    "description": "Manage your client portfolio and track purchase history.",
     "create": { "title": "New Client" },
     "edit": { "title": "Edit Client" },
+    "actions": {
+      "new": "New Client"
+    },
     "fields": {
       "name": "Name / Company",
       "phone": "Phone",
       "email": "Email",
       "address": "Address",
       "type": "Client type",
-      "notes": "Notes"
+      "notes": "Notes",
+      "credit_limit": "Credit limit",
+      "is_active": "Active account"
     },
     "types": {
       "individual": "Individual",
+      "company": "Company",
       "reseller": "Reseller",
       "wholesaler": "Wholesaler",
       "retailer": "Retailer"
     },
+    "filters": {
+      "all_types": "All types",
+      "active_only": "Active only"
+    },
     "summary": {
       "total_revenue": "Total revenue",
+      "total_paid": "Total paid",
+      "outstanding": "Outstanding",
+      "sale_count": "{count} purchases",
       "credit_balance": "Outstanding balance",
-      "purchases": "Total purchases"
+      "purchases": "Total purchases",
+      "available_credit": "Available credit"
     },
+    "contact_info": "Contact Information",
+    "credit_info": "Credit Information",
+    "purchase_history": "Purchase History",
     "empty": "No clients found."
   },
 
   "suppliers": {
     "title": "Suppliers",
+    "description": "Manage your supplier relationships and purchase orders.",
     "create": { "title": "New Supplier" },
     "edit": { "title": "Edit Supplier" },
+    "actions": {
+      "new": "New Supplier",
+      "new_order": "New Order",
+      "send_order": "Send",
+      "confirm_order": "Confirm",
+      "receive": "Receive",
+      "cancel_order": "Cancel"
+    },
     "fields": {
       "name": "Supplier name",
       "contact": "Contact person",
@@ -319,11 +399,35 @@
       "lead_time": "Lead time (days)",
       "min_order": "Minimum order"
     },
+    "summary": {
+      "total_orders": "Total Orders",
+      "pending_orders": "Pending",
+      "total_spend": "Total Spend",
+      "received": "received",
+      "awaiting": "awaiting delivery",
+      "all_time": "all-time"
+    },
+    "orders": {
+      "title": "Purchase Orders",
+      "empty": "No purchase orders yet.",
+      "items": "Items",
+      "ordered": "Ordered",
+      "received": "Received",
+      "remaining": "Remaining",
+      "unit_price": "Unit price",
+      "total": "Total",
+      "expected": "Expected {date}"
+    },
+    "details": {
+      "days": "days",
+      "min_order": "Min. order"
+    },
     "order_status": {
       "draft": "Draft",
       "sent": "Sent",
       "confirmed": "Confirmed",
       "partial": "Partially received",
+      "partially_received": "Partially received",
       "received": "Received",
       "cancelled": "Cancelled"
     },
@@ -366,11 +470,14 @@
   "admin": {
     "users": {
       "title": "User Management",
+      "description": "Manage user accounts and access roles.",
       "create": "Create user",
+      "all_roles": "All roles",
       "fields": {
         "name": "Full name",
         "email": "Email address",
         "role": "Role",
+        "phone": "Phone",
         "password": "Password",
         "password_confirmation": "Confirm password"
       },
@@ -381,13 +488,25 @@
         "warehouse": "Warehouse",
         "accountant": "Accountant"
       },
+      "actions": {
+        "restore": "Restore"
+      },
+      "edit_title": "Edit User",
       "empty": "No users found."
     },
     "settings": {
       "title": "System Settings",
+      "description": "Configure company information, VAT rates, and alert thresholds.",
       "company": "Company Information",
       "vat_rates": "VAT Rates",
       "alert_thresholds": "Alert Thresholds",
+      "new_rate": "New rate",
+      "groups": {
+        "company": "Company Information",
+        "alerts": "Alert Thresholds",
+        "invoices": "Invoice Settings",
+        "tax": "Tax Settings"
+      },
       "fields": {
         "company_name": "Company name",
         "company_address": "Address",
@@ -398,8 +517,21 @@
         "expiry_days": "Expiry alert (days before expiry)"
       }
     },
+    "vat_rates": {
+      "create": "New VAT Rate",
+      "edit": "Edit VAT Rate",
+      "fields": {
+        "name": "Name",
+        "rate": "Rate (%)",
+        "is_default": "Default rate",
+        "is_active": "Active"
+      }
+    },
     "audit": {
       "title": "Audit Trail",
+      "description": "Review all actions performed in the system.",
+      "before": "Before",
+      "after": "After",
       "fields": {
         "user": "User",
         "action": "Action",
@@ -407,7 +539,9 @@
         "old_value": "Before",
         "new_value": "After",
         "ip": "IP Address",
-        "date": "Date & Time"
+        "date": "Date & Time",
+        "method": "Method",
+        "status_code": "Status"
       },
       "empty": "No audit entries found."
     }

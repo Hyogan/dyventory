@@ -249,6 +249,7 @@
       "credit": "Crédit"
     },
     "status": {
+      "draft": "Brouillon",
       "pending": "En attente",
       "confirmed": "Confirmé",
       "delivered": "Livré",
@@ -276,39 +277,118 @@
       "quantity_label": "Qté",
       "remove": "Retirer du panier"
     },
+    "new": {
+      "order_summary": "Récapitulatif",
+      "client_placeholder": "Sélectionner un client (optionnel)",
+      "no_client": "Anonyme / Passage",
+      "save_draft": "Enregistrer en brouillon",
+      "confirm_sale": "Confirmer la vente",
+      "discount_amount": "Remise globale (TTC)",
+      "due_date_hint": "Requis pour un paiement à crédit",
+      "add_to_cart": "Ajouter au panier",
+      "stock_available": "{qty} disponible",
+      "out_of_stock": "Rupture de stock",
+      "kg_hint": "Quantité en kg (ex. 2.500)",
+      "items_count": "{count} article",
+      "items_count_plural": "{count} articles"
+    },
+    "detail": {
+      "items_title": "Articles",
+      "payment_history": "Historique des paiements",
+      "returns_title": "Retours",
+      "no_payments": "Aucun paiement enregistré.",
+      "no_returns": "Aucun retour enregistré.",
+      "financials": "Finances",
+      "print_invoice": "Imprimer la facture"
+    },
+    "return": {
+      "title": "Traiter le retour",
+      "description": "Sélectionnez les articles à retourner et choisissez la résolution.",
+      "items_title": "Articles à retourner",
+      "reason": "Motif du retour",
+      "resolution": "Résolution",
+      "restock": "Remettre en stock",
+      "refund_amount": "Montant remboursé (TTC)",
+      "notes": "Notes internes",
+      "resolutions": {
+        "refund": "Remboursement client",
+        "credit_note": "Avoir",
+        "exchange": "Échange"
+      },
+      "submit": "Valider le retour"
+    },
+    "filters": {
+      "all_statuses": "Tous les statuts",
+      "all_payment_statuses": "Tous les paiements",
+      "date_from": "Date début",
+      "date_to": "Date fin"
+    },
+    "stats": {
+      "revenue": "Chiffre d'affaires (TTC)",
+      "overdue": "En retard",
+      "pending": "En attente",
+      "confirmed": "Confirmées"
+    },
     "empty": "Aucune vente trouvée."
   },
 
   "clients": {
     "title": "Clients",
+    "description": "Gérez votre portefeuille client et suivez l'historique des achats.",
     "create": { "title": "Nouveau client" },
     "edit": { "title": "Modifier le client" },
+    "actions": {
+      "new": "Nouveau client"
+    },
     "fields": {
       "name": "Nom / Entreprise",
       "phone": "Téléphone",
       "email": "E-mail",
       "address": "Adresse",
       "type": "Type de client",
-      "notes": "Notes"
+      "notes": "Notes",
+      "credit_limit": "Limite de crédit",
+      "is_active": "Compte actif"
     },
     "types": {
       "individual": "Particulier",
+      "company": "Entreprise",
       "reseller": "Revendeur",
       "wholesaler": "Grossiste",
       "retailer": "Détaillant"
     },
+    "filters": {
+      "all_types": "Tous les types",
+      "active_only": "Actifs seulement"
+    },
     "summary": {
       "total_revenue": "Chiffre d'affaires total",
+      "total_paid": "Total payé",
+      "outstanding": "Solde impayé",
+      "sale_count": "{count} achats",
       "credit_balance": "Solde impayé",
-      "purchases": "Achats totaux"
+      "purchases": "Achats totaux",
+      "available_credit": "Crédit disponible"
     },
+    "contact_info": "Informations de contact",
+    "credit_info": "Informations de crédit",
+    "purchase_history": "Historique des achats",
     "empty": "Aucun client trouvé."
   },
 
   "suppliers": {
     "title": "Fournisseurs",
+    "description": "Gérez vos relations fournisseurs et vos bons de commande.",
     "create": { "title": "Nouveau fournisseur" },
     "edit": { "title": "Modifier le fournisseur" },
+    "actions": {
+      "new": "Nouveau fournisseur",
+      "new_order": "Nouvelle commande",
+      "send_order": "Envoyer",
+      "confirm_order": "Confirmer",
+      "receive": "Réceptionner",
+      "cancel_order": "Annuler"
+    },
     "fields": {
       "name": "Nom du fournisseur",
       "contact": "Personne de contact",
@@ -318,11 +398,35 @@
       "lead_time": "Délai de livraison (jours)",
       "min_order": "Commande minimum"
     },
+    "summary": {
+      "total_orders": "Commandes totales",
+      "pending_orders": "En attente",
+      "total_spend": "Dépenses totales",
+      "received": "reçues",
+      "awaiting": "en attente de livraison",
+      "all_time": "depuis toujours"
+    },
+    "orders": {
+      "title": "Bons de commande",
+      "empty": "Aucun bon de commande pour l'instant.",
+      "items": "Articles",
+      "ordered": "Commandé",
+      "received": "Reçu",
+      "remaining": "Restant",
+      "unit_price": "Prix unitaire",
+      "total": "Total",
+      "expected": "Prévu le {date}"
+    },
+    "details": {
+      "days": "jours",
+      "min_order": "Commande min."
+    },
     "order_status": {
       "draft": "Brouillon",
       "sent": "Envoyé",
       "confirmed": "Confirmé",
       "partial": "Partiellement reçu",
+      "partially_received": "Partiellement reçu",
       "received": "Reçu",
       "cancelled": "Annulé"
     },
@@ -365,11 +469,14 @@
   "admin": {
     "users": {
       "title": "Gestion des utilisateurs",
+      "description": "Gérez les comptes utilisateurs et les rôles d'accès.",
       "create": "Créer un utilisateur",
+      "all_roles": "Tous les rôles",
       "fields": {
         "name": "Nom complet",
         "email": "Adresse e-mail",
         "role": "Rôle",
+        "phone": "Téléphone",
         "password": "Mot de passe",
         "password_confirmation": "Confirmer le mot de passe"
       },
@@ -380,13 +487,25 @@
         "warehouse": "Magasinier",
         "accountant": "Comptable"
       },
+      "actions": {
+        "restore": "Restaurer"
+      },
+      "edit_title": "Modifier l'utilisateur",
       "empty": "Aucun utilisateur trouvé."
     },
     "settings": {
       "title": "Paramètres système",
+      "description": "Configurez les informations de l'entreprise, les taux de TVA et les seuils d'alerte.",
       "company": "Informations de l'entreprise",
       "vat_rates": "Taux de TVA",
       "alert_thresholds": "Seuils d'alerte",
+      "new_rate": "Nouveau taux",
+      "groups": {
+        "company": "Informations de l'entreprise",
+        "alerts": "Seuils d'alerte",
+        "invoices": "Paramètres de facturation",
+        "tax": "Paramètres fiscaux"
+      },
       "fields": {
         "company_name": "Nom de l'entreprise",
         "company_address": "Adresse",
@@ -397,8 +516,21 @@
         "expiry_days": "Alerte expiration (jours avant péremption)"
       }
     },
+    "vat_rates": {
+      "create": "Nouveau taux de TVA",
+      "edit": "Modifier le taux de TVA",
+      "fields": {
+        "name": "Nom",
+        "rate": "Taux (%)",
+        "is_default": "Taux par défaut",
+        "is_active": "Actif"
+      }
+    },
     "audit": {
       "title": "Journal d'audit",
+      "description": "Consultez toutes les actions effectuées dans le système.",
+      "before": "Avant",
+      "after": "Après",
       "fields": {
         "user": "Utilisateur",
         "action": "Action",
@@ -406,7 +538,9 @@
         "old_value": "Avant",
         "new_value": "Après",
         "ip": "Adresse IP",
-        "date": "Date et heure"
+        "date": "Date et heure",
+        "method": "Méthode",
+        "status_code": "Statut"
       },
       "empty": "Aucune entrée d'audit trouvée."
     }

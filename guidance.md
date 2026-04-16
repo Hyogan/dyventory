@@ -1,6 +1,6 @@
 # Dyventory — Project Guidance (Auto-generated)
 
-**Last updated:** 2026-04-10
+**Last updated:** 2026-04-16
 **Project:** Stock & Sales Management App for a business with diversified catalogue (clothing, electronics, perishable food, live snails)
 **Core architecture:** Dynamic Field Schema per category (no hardcoded product types)
 
@@ -185,7 +185,74 @@ stocky/
 - Backend: notifications.php routes (list, read, read-all) ✅
 - types/index.ts: Batch extended with expiry computed fields ✅
 
-### Phase 5–9: Sales, Clients/Suppliers, Reports, Dashboard, Deployment — NOT STARTED ← NEXT
+### Phase 5 — Sales Engine
+
+**5.1 Backend — Sales: ✅ COMPLETE**
+
+- 5.1.1 SaleService (create/confirm/cancel/deliver, HT/TVA/TTC calc, FEFO stock decrement, sale number generation) ✅
+- 5.1.1 SaleConfirmed event + DecrementStockOnSale queued listener (registered in AppServiceProvider) ✅
+- 5.1.2 SaleController (index, store, show, confirm, deliver, cancel) + SaleResource + SaleItemResource + SalePaymentResource ✅
+- 5.1.2 StoreSaleRequest (items, discount_percent, payment_method, due_date, credit validation) ✅
+- 5.1.2 PaymentController (GET/POST /sales/{sale}/payments) — record partial payments, recompute payment_status ✅
+- 5.1.2 ReturnService (validate items vs original sale, restock via in_return movement) + ReturnController ✅
+- 5.1.2 CheckOverdueCredits job — scheduled daily at 07:00 (marks due_date-exceeded credit sales as overdue) ✅
+- 5.1.2 routes/api/v1/sales.php — wired in bootstrap/app.php, SalePolicy registered ✅
+
+**5.2 Frontend — Sales: ✅ COMPLETE**
+
+- 5.2.1 Sales list page (RSC): SaleSummaryCards (4 stat cards), SaleFilters (status/payment/date range), SalesTable (DataTable with confirm/cancel quick actions) ✅
+- 5.2.2 New sale page: split-panel POS layout — ProductSearch (debounced autocomplete dropdown, stock display), SaleCart, SaleCartItem (qty stepper with kg support, per-item discount, line total) ✅
+- 5.2.3 ClientSelector (debounced search, dropdown, anonymous option), PaymentSection (4-icon method picker, credit due date), OrderSummary (global discount input, live totals, notes), NewSaleForm (orchestrator + submit with draft/confirm) ✅
+- 5.2.4 SaleDetail (status bar, items table, financials breakdown, client card, payment timeline, returns list, action buttons), AddPaymentModal, ReturnForm (item selection, restock toggle, resolution radio) ✅
+- useSaleStore (Zustand) — cart state, quantities, discounts, computeLineTotal, selectCartTotals ✅
+- src/features/sales/actions.ts — getSales, getSale, createSale, confirmSale, cancelSale, deliverSale, recordPayment, processReturn ✅
+- src/stores/useSaleStore.ts — full cart state management ✅
+- i18n: sales.new, sales.detail, sales.return, sales.filters, sales.stats namespaces added to en.json + fr.json ✅
+- Types: SalePayment, SaleReturn interfaces added; Sale extended with payments? returns? ✅
+
+### Phase 6 — Clients, Suppliers & Settings
+
+**6.1 Backend — ✅ COMPLETE**
+
+- 6.1.1 ClientService (CRUD, autocomplete search, financial summary: CA + credit + sale count) ✅
+- 6.1.1 ClientController + ClientResource + StoreClientRequest + UpdateClientRequest ✅
+- 6.1.1 SupplierService (CRUD, autocomplete search, procurement summary) ✅
+- 6.1.1 SupplierController + SupplierResource + StoreSupplierRequest + UpdateSupplierRequest ✅
+- 6.1.1 SupplierOrderService (order lifecycle: draft→sent→confirmed→partially_received|received + cancel; receive creates Batch + in_purchase StockMovement for full audit trail) ✅
+- 6.1.1 SupplierOrderController (index, store, show, update, send, confirm, cancel, receive) + SupplierOrderResource + SupplierOrderItemResource ✅
+- 6.1.1 StoreSupplierOrderRequest + UpdateSupplierOrderRequest + ReceiveSupplierOrderRequest ✅
+- 6.1.1 routes/api/v1/clients.php + routes/api/v1/suppliers.php ✅
+- 6.1.2 UserController (admin-only: index, store, show, update, destroy, restore) ✅
+- 6.1.2 StoreUserRequest + UpdateUserRequest (Password::min(8)->letters()->numbers()) ✅
+- 6.1.2 Setting model (typed key/value, typedValue() accessor) + 2026_04_15_000001_create_settings_table.php migration (seeded with 13 defaults) ✅
+- 6.1.2 SettingService (Redis-cached reads, bulk update, logo upload with old-file cleanup) ✅
+- 6.1.2 SettingController + SettingResource + UpdateSettingRequest ✅
+- 6.1.2 VatRateController (admin write, read-all for any auth) + VatRateResource + StoreVatRateRequest + UpdateVatRateRequest ✅
+- 6.1.2 routes/api/v1/users.php + routes/api/v1/settings.php ✅
+- 6.1.2 VatRatePolicy + SettingPolicy — registered in AppServiceProvider ✅
+- 6.1.2 AppServiceProvider: Client, Supplier, User, VatRate, Setting policies registered ✅
+- 6.1.2 bootstrap/app.php: clients, suppliers, users, settings routes activated ✅
+
+**6.2 Frontend — ✅ COMPLETE**
+
+- 6.2.1 Clients list page (RSC + ClientsPageClient + ClientsTable + ClientFilters + ClientModal) ✅
+- 6.2.1 Client detail page (contact info, credit info, purchase history, ClientSummaryCards) ✅
+- 6.2.1 src/features/clients/actions.ts (getClients, getClient, getClientSummary, searchClients, createClient, updateClient, deleteClient) ✅
+- 6.2.2 Suppliers list page (RSC + SuppliersPageClient + SuppliersTable + SupplierFilters + SupplierModal) ✅
+- 6.2.2 Supplier detail page (summary cards, contact info, OrderTimeline, ReceiveOrderForm, NewOrderModal) ✅
+- 6.2.2 src/features/suppliers/actions.ts (full CRUD + order lifecycle: create, send, confirm, cancel, receive) ✅
+- 6.2.3 Admin users page (UsersTable + UserModal + role filter) ✅
+- 6.2.3 Admin settings page (SettingsForm with grouped settings, VatRatesTable + VatRateModal) ✅
+- 6.2.3 Admin audit page (AuditTable with expandable rows showing before/after diff, AuditFilters) ✅
+- 6.2.3 src/features/admin/actions.ts (user CRUD + restore, settings update, VAT rates CRUD, audit log query) ✅
+- 6.2.4 i18n completion pass: all missing keys added to en.json + fr.json ✅
+  - clients: description, actions.new, fields.credit_limit/is_active, types.company, filters, summary keys, contact_info, credit_info, purchase_history
+  - suppliers: description, actions (new/new_order/send_order/confirm_order/receive/cancel_order), summary, orders namespace, details namespace, partially_received status
+  - admin: users.description/all_roles/edit_title/fields.phone/actions.restore, settings.description/groups/new_rate, vat_rates namespace, audit.description/before/after/fields.method/status_code
+  - sales: fr.json missing draft status added
+- 6.2.4 Hardcoded strings fixed: ClientSummaryCards, SupplierDetail, OrderTimeline, SettingsForm, AuditTable, UsersPageClient, UsersTable, UserModal, VatRateModal ✅
+
+---
 
 ---
 
