@@ -1,0 +1,140 @@
+services:
+  # ── PostgreSQL 17 ──────────────────────────────────────────────────────────
+  dyventory_db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dyventory
+      POSTGRES_USER: dyventory_user # matches DB_USERNAME in .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD} # injected from .env at runtime
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./infra/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    # No ports exposed to the host — only other containers can reach this
+    env_file:
+      - ./dyventory-api/.env.main
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dyventory_user -d dyventory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dyventory_net
+
+  # ── Redis 7 ────────────────────────────────────────────────────────────────
+  dyventory_redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    # No ports exposed to the host
+    env_file:
+      - ./dyventory-api/.env.main
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - dyventory_net
+
+  # ── Laravel API (PHP-FPM) ──────────────────────────────────────────────────
+  dyventory_api:
+    build:
+      context: .
+      dockerfile: infra/api/Dockerfile # same Dockerfile as dev
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      # Mount only the storage directory — code is baked into the image
+      - api_storage:/var/www/html/storage
+    env_file:
+      - ./dyventory-api/.env # the production .env you created
+    depends_on:
+      dyventory_db:
+        condition: service_healthy
+      dyventory_redis:
+        condition: service_healthy
+    networks:
+      - dyventory_net
+
+  # ── Nginx (proxies HTTP to PHP-FPM) ───────────────────────────────────────
+  dyventory_nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:80" # Only reachable from localhost — host Nginx proxies here
+    volumes:
+      - api_storage:/var/www/html/storage:ro
+      - ./dyventory-api/public:/var/www/html/public:ro
+      - ./infra/nginx/default.prod.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - dyventory_api
+    networks:
+      - dyventory_net
+
+  # ── Laravel Horizon (queue worker) ────────────────────────────────────────
+  dyventory_horizon:
+    build:
+      context: .
+      dockerfile: infra/api/Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: php artisan horizon
+    volumes:
+      - api_storage:/var/www/html/storage
+    env_file:
+      - ./dyventory-api/.env
+    depends_on:
+      - dyventory_api
+      - dyventory_redis
+    networks:
+      - dyventory_net
+
+  # ── Laravel Scheduler ────────────────────────────────────────────────────
+  dyventory_scheduler:
+    build:
+      context: .
+      dockerfile: infra/api/Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: >
+      sh -c "while true; do php artisan schedule:run --verbose --no-interaction & sleep 60; done"
+    volumes:
+      - api_storage:/var/www/html/storage
+    env_file:
+      - ./dyventory-api/.env
+    depends_on:
+      - dyventory_api
+    networks:
+      - dyventory_net
+
+  # ── Next.js Frontend ──────────────────────────────────────────────────────
+  dyventory_frontend:
+    build:
+      context: ./dyventory-web
+      dockerfile: Dockerfile.prod # see section B below
+      args:
+        NEXT_PUBLIC_API_URL: https://api.dyventory.littlestarshaven.com
+        NEXT_PUBLIC_APP_NAME: Dyventory
+        API_HOSTNAME: api.dyventory.littlestarshaven.com
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3000" # Only reachable from localhost — host Nginx proxies here
+    environment:
+      - NODE_ENV=production
+      - API_INTERNAL_URL=http://dyventory_nginx:80
+    depends_on:
+      - dyventory_nginx
+    networks:
+      - dyventory_net
+
+volumes:
+  db_data:
+  redis_data:
+  api_storage: # Named volume for Laravel storage (uploads, logs, cache)
+
+networks:
+  dyventory_net:
+    driver: bridge
