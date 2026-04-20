@@ -27,7 +27,7 @@ export async function updateCategorySchema(
       body: JSON.stringify({ schema }),
     });
 
-    revalidateTag("categories", "");
+    revalidateTag("categories", "seconds");
     return { ok: true };
   } catch (err) {
     if (err instanceof ApiError) {

@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Events\SaleConfirmed;
+use App\Events\StockMovementRecorded;
 use App\Listeners\DecrementStockOnSale;
+use App\Listeners\InvalidateDashboardCache;
 use App\Models\AuditLog;
+use App\Models\Promotion;
 use App\Models\Batch;
 use App\Models\Category;
 use App\Models\Client;
@@ -19,11 +22,13 @@ use App\Models\Supplier;
 use App\Models\User;
 use App\Models\VatRate;
 use App\Policies\AuditLogPolicy;
+use App\Policies\PromotionPolicy;
 use App\Policies\BatchPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\ClientPolicy;
 use App\Policies\InventorySessionPolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\ReportPolicy;
 use App\Policies\SalePolicy;
 use App\Policies\SettingPolicy;
 use App\Policies\StockMovementPolicy;
@@ -63,6 +68,9 @@ class AppServiceProvider extends ServiceProvider
         // Phase 5 policies
         Gate::policy(Sale::class, SalePolicy::class);
 
+        // Promotions
+        Gate::policy(Promotion::class, PromotionPolicy::class);
+
         // Phase 6.1 policies
         Gate::policy(Client::class, ClientPolicy::class);
         Gate::policy(AuditLog::class, AuditLogPolicy::class);
@@ -72,6 +80,19 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Setting::class, SettingPolicy::class);
 
         Event::listen(SaleConfirmed::class, DecrementStockOnSale::class);
+        Event::listen(SaleConfirmed::class, InvalidateDashboardCache::class);
+        Event::listen(StockMovementRecorded::class, InvalidateDashboardCache::class);
+
+        // Phase 7 — Report gates (non-model-bound)
+        Gate::define('viewDashboard',    [ReportPolicy::class, 'viewDashboard']);
+        Gate::define('viewSalesReports', [ReportPolicy::class, 'viewSalesReports']);
+        Gate::define('viewStockReports', [ReportPolicy::class, 'viewStockReports']);
+        Gate::define('viewTvaReports',   [ReportPolicy::class, 'viewTvaReports']);
+        Gate::define('viewCreditReports', [ReportPolicy::class, 'viewCreditReports']);
+        Gate::define('viewLossReports',  [ReportPolicy::class, 'viewLossReports']);
+        Gate::define('exportReports',    [ReportPolicy::class, 'export']);
+        Gate::define('viewAuditTrail',   [ReportPolicy::class, 'viewAuditTrail']);
+        Gate::define('configureAlerts',  [ReportPolicy::class, 'configureAlerts']);
 
         Model::preventLazyLoading(! app()->isProduction());
 

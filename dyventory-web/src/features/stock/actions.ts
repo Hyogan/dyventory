@@ -91,8 +91,8 @@ export async function createBatch(
       body: JSON.stringify(body),
     });
 
-    revalidateTag("batches");
-    revalidateTag("products");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
 
     return { success: true };
   } catch (error: unknown) {
@@ -103,7 +103,7 @@ export async function createBatch(
 export async function expireBatch(batchId: number): Promise<StockFormState> {
   try {
     await authFetch(`/batches/${batchId}/expire`, { method: "POST" });
-    revalidateTag("batches");
+    revalidateTag("batches", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -124,9 +124,9 @@ export async function recordStockEntry(
       body: JSON.stringify(body),
     });
 
-    revalidateTag("batches");
-    revalidateTag("products");
-    revalidateTag("movements");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
+    revalidateTag("movements", "seconds");
 
     return { success: true };
   } catch (error: unknown) {
@@ -146,9 +146,9 @@ export async function recordStockExit(
       body: JSON.stringify(body),
     });
 
-    revalidateTag("batches");
-    revalidateTag("products");
-    revalidateTag("movements");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
+    revalidateTag("movements", "seconds");
 
     return { success: true };
   } catch (error: unknown) {
@@ -168,9 +168,9 @@ export async function recordAdjustment(
       body: JSON.stringify(body),
     });
 
-    revalidateTag("batches");
-    revalidateTag("products");
-    revalidateTag("movements");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
+    revalidateTag("movements", "seconds");
 
     return { success: true };
   } catch (error: unknown) {
@@ -224,9 +224,9 @@ export async function getInventoryDiscrepancies(sessionId: number): Promise<Disc
 export async function validateInventorySession(sessionId: number): Promise<StockFormState> {
   try {
     await authFetch(`/stock/inventory/${sessionId}/validate`, { method: "POST" });
-    revalidateTag("batches");
-    revalidateTag("products");
-    revalidateTag("movements");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
+    revalidateTag("movements", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);

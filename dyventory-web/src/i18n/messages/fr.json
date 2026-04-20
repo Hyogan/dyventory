@@ -101,17 +101,26 @@
 
   "dashboard": {
     "title": "Tableau de bord",
+    "description": "Vue d'ensemble de l'activité",
     "revenue_today": "CA aujourd'hui",
     "revenue_week": "CA cette semaine",
     "revenue_month": "CA ce mois",
     "sales_today": "Ventes aujourd'hui",
+    "sales_today_sub": "confirmées aujourd'hui",
     "stock_value": "Valeur totale du stock",
-    "low_stock_alerts": "Alertes stock faible",
+    "stock_value_ht": "au coût (HT)",
+    "stock_value_ttc": "prix de vente (TTC)",
+    "low_stock_alerts": "Stock faible",
     "expiry_alerts": "Expirations proches",
     "overdue_credits": "Créances en retard",
+    "alerts_title": "Alertes actives",
     "recent_sales": "Ventes récentes",
+    "top_products": "Top produits ce mois",
     "vs_prior": "vs. période précédente",
-    "see_all": "Voir tout"
+    "no_change": "Aucune donnée antérieure",
+    "see_all": "Voir tout",
+    "no_recent_sales": "Aucune vente récente",
+    "no_top_products": "Aucune vente ce mois"
   },
 
   "products": {
@@ -433,8 +442,47 @@
     "empty": "Aucun fournisseur trouvé."
   },
 
+  "promotions": {
+    "title": "Promotions",
+    "description": "Gérez les remises et campagnes promotionnelles",
+    "create": "Nouvelle promotion",
+    "edit": "Modifier la promotion",
+    "empty": "Aucune promotion trouvée.",
+    "fields": {
+      "name": "Nom de la promotion",
+      "type": "Type",
+      "value": "Valeur",
+      "starts_at": "Date de début",
+      "ends_at": "Date de fin",
+      "is_active": "Active",
+      "conditions": "Conditions",
+      "min_quantity": "Quantité minimale"
+    },
+    "types": {
+      "percentage": "Pourcentage",
+      "fixed_value": "Montant fixe",
+      "bundle": "Bundle"
+    },
+    "status": {
+      "running": "En cours",
+      "scheduled": "Planifiée",
+      "expired": "Expirée",
+      "inactive": "Inactive"
+    },
+    "filters": {
+      "all_types": "Tous les types",
+      "all_status": "Tous les statuts",
+      "active_only": "Actives seulement"
+    },
+    "hints": {
+      "percentage": "Entrez une valeur entre 0 et 100.",
+      "min_quantity_optional": "Optionnel — laisser vide pour aucun minimum."
+    }
+  },
+
   "reports": {
     "title": "Rapports",
+    "description": "Analyses et indicateurs de performance",
     "nav": {
       "sales": "Rapport des ventes",
       "stock": "Rapport de stock",
@@ -449,7 +497,16 @@
       "group_by": "Regrouper par",
       "vendor": "Vendeur",
       "category": "Catégorie",
-      "client": "Client"
+      "client": "Client",
+      "apply": "Appliquer",
+      "granularity": "Granularité"
+    },
+    "granularity": {
+      "day": "Jour",
+      "week": "Semaine",
+      "month": "Mois",
+      "quarter": "Trimestre",
+      "year": "Année"
     },
     "periods": {
       "today": "Aujourd'hui",
@@ -460,9 +517,90 @@
       "custom": "Période personnalisée"
     },
     "export": {
+      "csv": "Exporter CSV",
       "pdf": "Exporter en PDF",
       "excel": "Exporter en Excel",
       "preparing": "Préparation de l'export…"
+    },
+    "summary": {
+      "sale_count": "Ventes",
+      "revenue_ttc": "CA TTC",
+      "revenue_ht": "CA HT",
+      "total_tva": "Total TVA",
+      "total_discount": "Remises",
+      "total_outstanding": "En attente",
+      "avg_ticket": "Ticket moyen",
+      "total_ht": "Total HT",
+      "total_ttc": "Total TTC",
+      "total_invoiced": "Facturé",
+      "total_collected": "Encaissé",
+      "total_overdue": "En retard"
+    },
+    "cols": {
+      "period": "Période",
+      "sales": "Ventes",
+      "revenue_ttc": "CA TTC",
+      "revenue_ht": "CA HT",
+      "tva": "TVA",
+      "discount": "Remise",
+      "vendor": "Vendeur",
+      "avg_ticket": "Ticket moyen",
+      "category": "Catégorie",
+      "qty_sold": "Qté vendue",
+      "client": "Client",
+      "outstanding": "Impayé",
+      "overdue": "En retard",
+      "payment_method": "Mode de paiement",
+      "ht": "HT",
+      "ttc": "TTC",
+      "rate": "Taux",
+      "product": "Produit",
+      "sku": "SKU",
+      "current_stock": "Stock actuel",
+      "avg_daily": "Moy./jour",
+      "days_left": "Jours restants",
+      "urgency": "Urgence",
+      "value_ht": "Valeur HT",
+      "value_ttc": "Valeur TTC",
+      "products": "Produits",
+      "sale_number": "Facture",
+      "due_date": "Échéance",
+      "days_overdue": "Jours de retard",
+      "amount_due": "Montant dû",
+      "total": "Total"
+    },
+    "urgency": {
+      "critical": "Critique",
+      "warning": "Attention",
+      "ok": "OK"
+    },
+    "sales": {
+      "title": "Rapport des ventes",
+      "description": "Chiffre d'affaires, tendances et ventilations par période, vendeur, catégorie et client",
+      "by_period": "Par période",
+      "by_vendor": "Par vendeur",
+      "by_category": "Par catégorie",
+      "by_client": "Meilleurs clients",
+      "by_payment": "Par mode de paiement"
+    },
+    "stock": {
+      "title": "Rapport de stock",
+      "description": "Valeur du stock, produits dormants et prévisions",
+      "value_by_category": "Valeur par catégorie",
+      "forecast": "Prévision de stock",
+      "forecast_sub": "Basé sur 90 jours de consommation"
+    },
+    "tva": {
+      "title": "Rapport TVA",
+      "description": "TVA collectée par période et par taux",
+      "by_period": "Par période",
+      "by_rate": "Par taux de TVA"
+    },
+    "credits": {
+      "title": "Rapport des créances",
+      "description": "Soldes impayés, factures en retard et encaissements",
+      "by_client": "Impayés par client",
+      "overdue": "Factures en retard"
     }
   },
 

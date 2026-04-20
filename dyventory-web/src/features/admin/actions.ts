@@ -37,7 +37,7 @@ export async function createUser(data: {
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("users");
+    revalidateTag("users", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -61,7 +61,7 @@ export async function updateUser(
       method: "PUT",
       body: JSON.stringify(data),
     });
-    revalidateTag("users");
+    revalidateTag("users", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -71,7 +71,7 @@ export async function updateUser(
 export async function deleteUser(id: number): Promise<AdminFormState> {
   try {
     await authFetch(`/users/${id}`, { method: "DELETE" });
-    revalidateTag("users");
+    revalidateTag("users", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -81,7 +81,7 @@ export async function deleteUser(id: number): Promise<AdminFormState> {
 export async function restoreUser(id: number): Promise<AdminFormState> {
   try {
     await authFetch(`/users/${id}/restore`, { method: "POST" });
-    revalidateTag("users");
+    revalidateTag("users", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -105,7 +105,7 @@ export async function updateSettings(
       method: "PUT",
       body: JSON.stringify({ settings }),
     });
-    revalidateTag("settings");
+    revalidateTag("settings", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -132,7 +132,7 @@ export async function createVatRate(data: {
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("vat-rates");
+    revalidateTag("vat-rates", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -148,7 +148,7 @@ export async function updateVatRate(
       method: "PUT",
       body: JSON.stringify(data),
     });
-    revalidateTag("vat-rates");
+    revalidateTag("vat-rates", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -158,7 +158,7 @@ export async function updateVatRate(
 export async function deleteVatRate(id: number): Promise<AdminFormState> {
   try {
     await authFetch(`/vat-rates/${id}`, { method: "DELETE" });
-    revalidateTag("vat-rates");
+    revalidateTag("vat-rates", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);

@@ -73,9 +73,9 @@ export async function createSale(data: StoreSaleInput): Promise<SaleFormState> {
       body: JSON.stringify(data),
     });
 
-    revalidateTag("sales");
-    revalidateTag("batches");
-    revalidateTag("products");
+    revalidateTag("sales", "seconds");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
 
     return { success: true, saleId: res.data.id };
   } catch (error: unknown) {
@@ -87,10 +87,10 @@ export async function confirmSale(saleId: number): Promise<SaleFormState> {
   try {
     await authFetch(`/sales/${saleId}/confirm`, { method: "POST" });
 
-    revalidateTag("sales");
-    revalidateTag(`sale-${saleId}`);
-    revalidateTag("batches");
-    revalidateTag("products");
+    revalidateTag("sales", "seconds");
+    revalidateTag(`sale-${saleId}`, "seconds");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
 
     return { success: true, saleId };
   } catch (error: unknown) {
@@ -102,8 +102,8 @@ export async function cancelSale(saleId: number): Promise<SaleFormState> {
   try {
     await authFetch(`/sales/${saleId}/cancel`, { method: "POST" });
 
-    revalidateTag("sales");
-    revalidateTag(`sale-${saleId}`);
+    revalidateTag("sales", "seconds");
+    revalidateTag(`sale-${saleId}`, "seconds");
 
     return { success: true, saleId };
   } catch (error: unknown) {
@@ -115,8 +115,8 @@ export async function deliverSale(saleId: number): Promise<SaleFormState> {
   try {
     await authFetch(`/sales/${saleId}/deliver`, { method: "POST" });
 
-    revalidateTag("sales");
-    revalidateTag(`sale-${saleId}`);
+    revalidateTag("sales", "seconds");
+    revalidateTag(`sale-${saleId}`, "seconds");
 
     return { success: true, saleId };
   } catch (error: unknown) {
@@ -144,8 +144,8 @@ export async function recordPayment(
       { method: "POST", body: JSON.stringify(data) },
     );
 
-    revalidateTag("sales");
-    revalidateTag(`sale-${saleId}`);
+    revalidateTag("sales", "seconds");
+    revalidateTag(`sale-${saleId}`, "seconds");
 
     return { success: true, payment: res.data };
   } catch (error: unknown) {
@@ -179,9 +179,9 @@ export async function processReturn(
       body: JSON.stringify(data),
     });
 
-    revalidateTag("sales");
-    revalidateTag(`sale-${saleId}`);
-    revalidateTag("batches");
+    revalidateTag("sales", "seconds");
+    revalidateTag(`sale-${saleId}`, "seconds");
+    revalidateTag("batches", "seconds");
 
     return { success: true, saleId };
   } catch (error: unknown) {

@@ -4,7 +4,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  //   output: "standalone",
+  output: "standalone",
 
   // Allow images from the API server
   images: {
@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
       {
         // Production API on Hostinger VPS
         protocol: "https",
-        hostname: process.env.API_HOSTNAME ?? "api.dyventory.app",
+        hostname: process.env.API_HOSTNAME ?? "api.dyventory.littlestarshaven.com",
         pathname: "/storage/**",
       },
     ],

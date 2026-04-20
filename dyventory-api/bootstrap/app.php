@@ -34,7 +34,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     require __DIR__ . '/../routes/api/v1/sales.php';
                     require __DIR__ . '/../routes/api/v1/clients.php';
                     require __DIR__ . '/../routes/api/v1/suppliers.php';
-                    // require __DIR__ . '/../routes/api/v1/reports.php'; // Phase 7
+                    require __DIR__ . '/../routes/api/v1/promotions.php';
+                    require __DIR__ . '/../routes/api/v1/reports.php';
                     require __DIR__ . '/../routes/api/v1/users.php';
                     require __DIR__ . '/../routes/api/v1/settings.php';
                 });

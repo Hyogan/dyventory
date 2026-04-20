@@ -54,7 +54,7 @@ export async function createClient(data: Partial<Client>): Promise<ClientFormSta
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("clients");
+    revalidateTag("clients", "seconds");
     return { success: true, clientId: res.data.id };
   } catch (error: unknown) {
     return handleError(error);
@@ -70,8 +70,8 @@ export async function updateClient(
       method: "PUT",
       body: JSON.stringify(data),
     });
-    revalidateTag("clients");
-    revalidateTag(`client-${id}`);
+    revalidateTag("clients", "seconds");
+    revalidateTag(`client-${id}`, "seconds");
     return { success: true, clientId: id };
   } catch (error: unknown) {
     return handleError(error);
@@ -81,7 +81,7 @@ export async function updateClient(
 export async function deleteClient(id: number): Promise<ClientFormState> {
   try {
     await authFetch(`/clients/${id}`, { method: "DELETE" });
-    revalidateTag("clients");
+    revalidateTag("clients", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);

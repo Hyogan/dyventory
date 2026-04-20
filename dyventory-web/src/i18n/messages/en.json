@@ -102,17 +102,26 @@
 
   "dashboard": {
     "title": "Dashboard",
+    "description": "Business overview",
     "revenue_today": "Revenue today",
     "revenue_week": "Revenue this week",
     "revenue_month": "Revenue this month",
     "sales_today": "Sales today",
+    "sales_today_sub": "confirmed today",
     "stock_value": "Total stock value",
-    "low_stock_alerts": "Low stock alerts",
+    "stock_value_ht": "at cost (HT)",
+    "stock_value_ttc": "retail (TTC)",
+    "low_stock_alerts": "Low stock",
     "expiry_alerts": "Expiring soon",
     "overdue_credits": "Overdue credits",
+    "alerts_title": "Active alerts",
     "recent_sales": "Recent sales",
+    "top_products": "Top products this month",
     "vs_prior": "vs. prior period",
-    "see_all": "See all"
+    "no_change": "No prior data",
+    "see_all": "See all",
+    "no_recent_sales": "No recent sales",
+    "no_top_products": "No sales this month yet"
   },
 
   "products": {
@@ -434,8 +443,47 @@
     "empty": "No suppliers found."
   },
 
+  "promotions": {
+    "title": "Promotions",
+    "description": "Manage discounts and promotional campaigns",
+    "create": "New promotion",
+    "edit": "Edit promotion",
+    "empty": "No promotions found.",
+    "fields": {
+      "name": "Promotion name",
+      "type": "Type",
+      "value": "Value",
+      "starts_at": "Start date",
+      "ends_at": "End date",
+      "is_active": "Active",
+      "conditions": "Conditions",
+      "min_quantity": "Minimum quantity"
+    },
+    "types": {
+      "percentage": "Percentage",
+      "fixed_value": "Fixed amount",
+      "bundle": "Bundle"
+    },
+    "status": {
+      "running": "Running",
+      "scheduled": "Scheduled",
+      "expired": "Expired",
+      "inactive": "Inactive"
+    },
+    "filters": {
+      "all_types": "All types",
+      "all_status": "All status",
+      "active_only": "Active only"
+    },
+    "hints": {
+      "percentage": "Enter a value between 0 and 100.",
+      "min_quantity_optional": "Optional — leave blank for no minimum."
+    }
+  },
+
   "reports": {
     "title": "Reports",
+    "description": "Analytics and business intelligence",
     "nav": {
       "sales": "Sales Report",
       "stock": "Stock Report",
@@ -450,7 +498,16 @@
       "group_by": "Group by",
       "vendor": "Vendor",
       "category": "Category",
-      "client": "Client"
+      "client": "Client",
+      "apply": "Apply",
+      "granularity": "Granularity"
+    },
+    "granularity": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "quarter": "Quarter",
+      "year": "Year"
     },
     "periods": {
       "today": "Today",
@@ -461,9 +518,90 @@
       "custom": "Custom range"
     },
     "export": {
+      "csv": "Export CSV",
       "pdf": "Export PDF",
       "excel": "Export Excel",
       "preparing": "Preparing export…"
+    },
+    "summary": {
+      "sale_count": "Sales",
+      "revenue_ttc": "Revenue TTC",
+      "revenue_ht": "Revenue HT",
+      "total_tva": "Total VAT",
+      "total_discount": "Discounts",
+      "total_outstanding": "Outstanding",
+      "avg_ticket": "Avg ticket",
+      "total_ht": "Total HT",
+      "total_ttc": "Total TTC",
+      "total_invoiced": "Invoiced",
+      "total_collected": "Collected",
+      "total_overdue": "Overdue"
+    },
+    "cols": {
+      "period": "Period",
+      "sales": "Sales",
+      "revenue_ttc": "Revenue TTC",
+      "revenue_ht": "Revenue HT",
+      "tva": "VAT",
+      "discount": "Discount",
+      "vendor": "Vendor",
+      "avg_ticket": "Avg ticket",
+      "category": "Category",
+      "qty_sold": "Qty sold",
+      "client": "Client",
+      "outstanding": "Outstanding",
+      "overdue": "Overdue",
+      "payment_method": "Payment method",
+      "ht": "HT",
+      "ttc": "TTC",
+      "rate": "Rate",
+      "product": "Product",
+      "sku": "SKU",
+      "current_stock": "Current stock",
+      "avg_daily": "Avg/day",
+      "days_left": "Days left",
+      "urgency": "Urgency",
+      "value_ht": "Value HT",
+      "value_ttc": "Value TTC",
+      "products": "Products",
+      "sale_number": "Invoice",
+      "due_date": "Due date",
+      "days_overdue": "Days overdue",
+      "amount_due": "Amount due",
+      "total": "Total"
+    },
+    "urgency": {
+      "critical": "Critical",
+      "warning": "Warning",
+      "ok": "OK"
+    },
+    "sales": {
+      "title": "Sales Report",
+      "description": "Revenue, trends, and breakdowns by period, vendor, category, and client",
+      "by_period": "By period",
+      "by_vendor": "By vendor",
+      "by_category": "By category",
+      "by_client": "Top clients",
+      "by_payment": "By payment method"
+    },
+    "stock": {
+      "title": "Stock Report",
+      "description": "Inventory value, dormant products, and stock forecast",
+      "value_by_category": "Value by category",
+      "forecast": "Stock forecast",
+      "forecast_sub": "Based on 90-day consumption"
+    },
+    "tva": {
+      "title": "VAT Report",
+      "description": "VAT collected by period and tax rate",
+      "by_period": "By period",
+      "by_rate": "By VAT rate"
+    },
+    "credits": {
+      "title": "Credit Report",
+      "description": "Outstanding balances, overdue invoices, and collections",
+      "by_client": "Outstanding by client",
+      "overdue": "Overdue invoices"
     }
   },
 

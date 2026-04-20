@@ -78,7 +78,7 @@ export async function createSupplier(data: Partial<Supplier>): Promise<SupplierF
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("suppliers");
+    revalidateTag("suppliers", "seconds");
     return { success: true, supplierId: res.data.id };
   } catch (error: unknown) {
     return handleError(error);
@@ -94,8 +94,8 @@ export async function updateSupplier(
       method: "PUT",
       body: JSON.stringify(data),
     });
-    revalidateTag("suppliers");
-    revalidateTag(`supplier-${id}`);
+    revalidateTag("suppliers", "seconds");
+    revalidateTag(`supplier-${id}`, "seconds");
     return { success: true, supplierId: id };
   } catch (error: unknown) {
     return handleError(error);
@@ -105,7 +105,7 @@ export async function updateSupplier(
 export async function deleteSupplier(id: number): Promise<SupplierFormState> {
   try {
     await authFetch(`/suppliers/${id}`, { method: "DELETE" });
-    revalidateTag("suppliers");
+    revalidateTag("suppliers", "seconds");
     return { success: true };
   } catch (error: unknown) {
     return handleError(error);
@@ -134,8 +134,8 @@ export async function createOrder(
       `/suppliers/${supplierId}/orders`,
       { method: "POST", body: JSON.stringify(data) },
     );
-    revalidateTag("orders");
-    revalidateTag(`supplier-${supplierId}`);
+    revalidateTag("orders", "seconds");
+    revalidateTag(`supplier-${supplierId}`, "seconds");
     return { success: true, orderId: res.data.id };
   } catch (error: unknown) {
     return handleError(error);
@@ -145,8 +145,8 @@ export async function createOrder(
 export async function sendOrder(orderId: number): Promise<OrderFormState> {
   try {
     await authFetch(`/supplier-orders/${orderId}/send`, { method: "POST" });
-    revalidateTag("orders");
-    revalidateTag(`order-${orderId}`);
+    revalidateTag("orders", "seconds");
+    revalidateTag(`order-${orderId}`, "seconds");
     return { success: true, orderId };
   } catch (error: unknown) {
     return handleError(error);
@@ -156,8 +156,8 @@ export async function sendOrder(orderId: number): Promise<OrderFormState> {
 export async function confirmOrder(orderId: number): Promise<OrderFormState> {
   try {
     await authFetch(`/supplier-orders/${orderId}/confirm`, { method: "POST" });
-    revalidateTag("orders");
-    revalidateTag(`order-${orderId}`);
+    revalidateTag("orders", "seconds");
+    revalidateTag(`order-${orderId}`, "seconds");
     return { success: true, orderId };
   } catch (error: unknown) {
     return handleError(error);
@@ -167,8 +167,8 @@ export async function confirmOrder(orderId: number): Promise<OrderFormState> {
 export async function cancelOrder(orderId: number): Promise<OrderFormState> {
   try {
     await authFetch(`/supplier-orders/${orderId}/cancel`, { method: "POST" });
-    revalidateTag("orders");
-    revalidateTag(`order-${orderId}`);
+    revalidateTag("orders", "seconds");
+    revalidateTag(`order-${orderId}`, "seconds");
     return { success: true, orderId };
   } catch (error: unknown) {
     return handleError(error);
@@ -194,10 +194,10 @@ export async function receiveOrder(
       method: "POST",
       body: JSON.stringify(data),
     });
-    revalidateTag("orders");
-    revalidateTag(`order-${orderId}`);
-    revalidateTag("batches");
-    revalidateTag("products");
+    revalidateTag("orders", "seconds");
+    revalidateTag(`order-${orderId}`, "seconds");
+    revalidateTag("batches", "seconds");
+    revalidateTag("products", "seconds");
     return { success: true, orderId };
   } catch (error: unknown) {
     return handleError(error);

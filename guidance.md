@@ -252,6 +252,40 @@ stocky/
   - sales: fr.json missing draft status added
 - 6.2.4 Hardcoded strings fixed: ClientSummaryCards, SupplierDetail, OrderTimeline, SettingsForm, AuditTable, UsersPageClient, UsersTable, UserModal, VatRateModal ✅
 
+### Phase 7 — Dashboard & Reports
+
+**7.1 Backend — ✅ COMPLETE (2026-04-15)**
+
+- 7.1.1 `DashboardService` (cached 5min via `Cache::remember`; revenue today/week/month with % vs prior period, sales_today, stock value HT+TTC, alerts summary — low stock/expiry-soon/overdue credits, top 5 products this month, last 10 recent sales) ✅
+- 7.1.1 `DashboardController` (GET /dashboard; Gate::authorize('viewDashboard')) ✅
+- 7.1.1 `InvalidateDashboardCache` listener — registered for both `SaleConfirmed` + `StockMovementRecorded` events ✅
+- 7.1.1 Report gates registered in `AppServiceProvider`: viewDashboard, viewSalesReports, viewStockReports, viewTvaReports, viewCreditReports, viewLossReports, exportReports, viewAuditTrail, configureAlerts ✅
+- 7.1.2 `SalesReportService`: summary, byPeriod (date_trunc), byVendor, byCategory (via sale_items→products→categories), byClient, byPaymentMethod ✅
+- 7.1.2 `StockReportService`: valueByCategory (active batch qty × prices), lossesByPeriod (out_loss/out_expiry/out_mortality), dormantProducts (no out_sale in last N days), rotationRate (sold/current_stock) ✅
+- 7.1.2 `TvaReportService`: summary, byPeriod (date_trunc), byRate (joins vat_rates via sale_items.vat_rate_id) ✅
+- 7.1.2 `CreditReportService`: summary, outstandingByClient, overdueInvoices (with days_overdue), collectedByPeriod (via payments table) ✅
+- 7.1.2 `StockForecastService`: forecast using 90-day avg daily consumption; urgency = critical|warning|ok ✅
+- 7.1.2 `ReportController` — all report endpoints delegating to the five services ✅
+- 7.1.3 `ExportService` (CSV + XLSX via openspout/openspout, PDF via barryvdh/laravel-dompdf) ✅
+- 7.1.3 Export endpoints: GET /reports/export/sales, /reports/export/stock-forecast, /reports/export/tva ✅
+- 7.1.3 Blade templates: `resources/views/reports/sales.blade.php` + `tva.blade.php` ✅
+- `routes/api/v1/reports.php` — all report + export routes wired, activated in `bootstrap/app.php` ✅
+- New composer packages: `barryvdh/laravel-dompdf ^3.1`, `openspout/openspout ^4.0` ✅
+
+**7.2 Frontend — Dashboard & Reports ✅ COMPLETE (2026-04-15)**
+
+- 7.2.1 Dashboard page rewritten as RSC: fetches `/dashboard`, renders `DashboardKpiCards` (revenue today/week/month + % change chips, alerts bar), `DashboardTopProducts`, `DashboardRecentSales` ✅
+- 7.2.2 `src/features/dashboard/components/`: DashboardKpiCards, DashboardTopProducts, DashboardRecentSales ✅
+- 7.2.3 Reports hub page (`/reports`): nav cards linking to each report type ✅
+- 7.2.4 Sales report page (`/reports/sales`): summary cards, by-period table, by-vendor, by-category, by-client tables ✅
+- 7.2.5 TVA report page (`/reports/tva`): summary cards, by-period, by-rate tables ✅
+- 7.2.6 Credit report page (`/reports/credits`): summary cards, outstanding by client, overdue invoices (with days badge) ✅
+- 7.2.7 Stock report page (`/reports/stock`): value by category, forecast table with urgency colour coding (critical/warning/ok) ✅
+- 7.2.8 `src/features/reports/components/`: ReportFiltersBar (client - presets + from/to + granularity + apply), ExportButtons (client - `<a download>` via Next.js proxy handlers) ✅
+- 7.2.9 Next.js route handlers at `/api/export/{sales,tva,stock-forecast}`: proxy to Laravel with Bearer token ✅
+- i18n: expanded dashboard.* + reports.* namespaces in en.json + fr.json ✅
+- Types: DashboardStats, SalesReport*, TvaReport*, CreditReport*, StockValueCategoryRow, StockForecastRow added to types/index.ts ✅
+
 ---
 
 ---

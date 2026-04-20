@@ -380,3 +380,199 @@ export interface ApiResponse<T> {
   data: T;
   message?: string;
 }
+
+// ── Promotion ─────────────────────────────────────────────────────────────────
+
+export type PromotionType = "percentage" | "fixed_value" | "bundle";
+
+export interface PromotionConditions {
+  min_quantity?: number;
+  category_ids?: number[];
+  product_ids?: number[];
+}
+
+export interface Promotion {
+  id: number;
+  name: string;
+  type: PromotionType;
+  value: string;
+  discount_label: string;
+  conditions: PromotionConditions;
+  starts_at: string;
+  ends_at: string;
+  is_active: boolean;
+  is_running: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+
+export interface DashboardRevenue {
+  today: number;
+  today_change: number | null;
+  week: number;
+  week_change: number | null;
+  month: number;
+  month_change: number | null;
+}
+
+export interface DashboardAlerts {
+  low_stock: number;
+  expiry_soon: number;
+  overdue_credits: number;
+}
+
+export interface DashboardTopProduct {
+  id: number;
+  name: string;
+  sku: string;
+  unit: string;
+  revenue: number;
+  quantity_sold: number;
+}
+
+export interface DashboardRecentSale {
+  id: number;
+  sale_number: string;
+  status: SaleStatus;
+  payment_status: PaymentStatus;
+  total_ttc: number;
+  amount_due: number;
+  client_name: string | null;
+  created_at: string;
+}
+
+export interface DashboardStats {
+  revenue: DashboardRevenue;
+  sales_today: number;
+  stock_value: { value_ht: number; value_ttc: number };
+  alerts: DashboardAlerts;
+  top_products: DashboardTopProduct[];
+  recent_sales: DashboardRecentSale[];
+}
+
+// ── Sales Report ──────────────────────────────────────────────────────────────
+
+export interface SalesReportSummary {
+  sale_count: number;
+  revenue_ttc: number;
+  revenue_ht: number;
+  total_tva: number;
+  total_discount: number;
+  total_outstanding: number;
+  avg_ticket: number;
+}
+
+export interface SalesReportPeriodRow {
+  period: string;
+  sale_count: number;
+  revenue_ttc: number;
+  revenue_ht: number;
+  total_tva: number;
+  total_discount: number;
+}
+
+export interface SalesReportVendorRow {
+  user_id: number;
+  user_name: string;
+  sale_count: number;
+  revenue_ttc: number;
+  avg_ticket: number;
+}
+
+export interface SalesReportCategoryRow {
+  category_id: number;
+  category_name: string;
+  sale_count: number;
+  revenue_ttc: number;
+  quantity_sold: number;
+}
+
+export interface SalesReportClientRow {
+  client_id: number | null;
+  client_name: string;
+  sale_count: number;
+  revenue_ttc: number;
+  outstanding: number;
+}
+
+// ── TVA Report ────────────────────────────────────────────────────────────────
+
+export interface TvaReportSummary {
+  sale_count: number;
+  total_ht: number;
+  total_tva: number;
+  total_ttc: number;
+}
+
+export interface TvaReportPeriodRow {
+  period: string;
+  sale_count: number;
+  total_ht: number;
+  total_tva: number;
+  total_ttc: number;
+}
+
+export interface TvaReportRateRow {
+  vat_rate_id: number | null;
+  vat_rate_name: string;
+  rate: number;
+  sale_count: number;
+  total_ht: number;
+  total_tva: number;
+  total_ttc: number;
+}
+
+// ── Credit Report ─────────────────────────────────────────────────────────────
+
+export interface CreditReportSummary {
+  sale_count: number;
+  total_invoiced: number;
+  total_collected: number;
+  total_outstanding: number;
+  total_overdue: number;
+}
+
+export interface CreditReportClientRow {
+  client_id: number | null;
+  client_name: string;
+  sale_count: number;
+  total_invoiced: number;
+  outstanding: number;
+  overdue: number;
+}
+
+export interface OverdueInvoice {
+  id: number;
+  sale_number: string;
+  created_at: string;
+  due_date: string;
+  total_ttc: number;
+  amount_due: number;
+  client_id: number | null;
+  client_name: string;
+  days_overdue: number;
+}
+
+// ── Stock Report ──────────────────────────────────────────────────────────────
+
+export interface StockValueCategoryRow {
+  category_id: number;
+  category_name: string;
+  product_count: number;
+  total_quantity: number;
+  value_ht: number;
+  value_ttc: number;
+}
+
+export interface StockForecastRow {
+  id: number;
+  name: string;
+  sku: string;
+  unit: string;
+  current_stock: number;
+  avg_daily_consumption: number;
+  days_to_stockout: number | null;
+  urgency: "critical" | "warning" | "ok";
+}
