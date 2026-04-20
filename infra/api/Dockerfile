@@ -46,6 +46,16 @@ COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 # ── Working directory ────────────────────────────────────────────────
 WORKDIR /var/www/html
 
+# ── Application code ─────────────────────────────────────────────────
+COPY dyventory-api/ /var/www/html/
+
+# ── Install PHP dependencies (production, no dev) ────────────────────
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+# ── Fix permissions for storage & cache ──────────────────────────────
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 # ── PHP-FPM config ───────────────────────────────────────────────────
 COPY infra/api/php.ini /usr/local/etc/php/conf.d/dyventory.ini
 

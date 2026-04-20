@@ -9,7 +9,13 @@ import { Badge } from "@/components/ui/Badge";
 import type { AuditLog, PaginationMeta } from "@/types";
 import { cn } from "@/lib/utils";
 
-type BadgeVariant = "default" | "primary" | "success" | "warning" | "danger" | "secondary";
+type BadgeVariant =
+  | "default"
+  | "primary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "secondary";
 
 function methodVariant(method: string): BadgeVariant {
   const map: Record<string, BadgeVariant> = {
@@ -34,7 +40,13 @@ interface AuditTableProps {
   meta: PaginationMeta;
 }
 
-function DiffViewer({ label, data }: { label: string; data: Record<string, unknown> | null }) {
+function DiffViewer({
+  label,
+  data,
+}: {
+  label: string;
+  data: Record<string, unknown> | null;
+}) {
   if (!data) return null;
   return (
     <div>
@@ -46,16 +58,26 @@ function DiffViewer({ label, data }: { label: string; data: Record<string, unkno
   );
 }
 
-function ExpandedRow({ log, before, after }: { log: AuditLog; before: string; after: string }) {
+function ExpandedRow({
+  log,
+  before,
+  after,
+}: {
+  log: AuditLog;
+  before: string;
+  after: string;
+}) {
   return (
     <div className="grid grid-cols-2 gap-4 px-4 py-3 bg-surface-muted/40 border-t border-border">
       <DiffViewer label={before} data={log.old_values} />
       <DiffViewer label={after} data={log.new_values} />
       <div className="text-xs text-fg-muted">
-        <span className="font-medium">Route: </span>{log.route ?? "—"}
+        <span className="font-medium">Route: </span>
+        {log.route ?? "—"}
       </div>
       <div className="text-xs text-fg-muted">
-        <span className="font-medium">IP: </span>{log.ip_address ?? "—"}
+        <span className="font-medium">IP: </span>
+        {log.ip_address ?? "—"}
       </div>
     </div>
   );
@@ -106,14 +128,18 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
       key: "user",
       header: t("fields.user"),
       render: (log) => (
-        <span className="text-sm text-fg">{log.user?.name ?? `User #${log.user_id}`}</span>
+        <span className="text-sm text-fg">
+          {log.user?.name ?? `User #${log.user_id}`}
+        </span>
       ),
     },
     {
       key: "action",
       header: t("fields.action"),
       render: (log) => (
-        <code className="text-xs bg-surface-muted px-1.5 py-0.5 rounded text-fg">{log.action}</code>
+        <code className="text-xs bg-surface-muted px-1.5 py-0.5 rounded text-fg">
+          {log.action}
+        </code>
       ),
     },
     {
@@ -122,7 +148,9 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
       render: (log) => (
         <span className="text-sm text-fg-muted">
           {log.entity_type ?? "—"}
-          {log.entity_id && <span className="text-xs ml-1">#{log.entity_id}</span>}
+          {log.entity_id && (
+            <span className="text-xs ml-1">#{log.entity_id}</span>
+          )}
         </span>
       ),
     },
@@ -131,7 +159,9 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
       header: t("fields.method"),
       align: "center",
       render: (log) => (
-        <Badge variant={methodVariant(log.http_method)}>{log.http_method}</Badge>
+        <Badge variant={methodVariant(log.http_method)}>
+          {log.http_method}
+        </Badge>
       ),
     },
     {
@@ -139,7 +169,9 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
       header: tc("status"),
       align: "center",
       render: (log) => (
-        <Badge variant={statusVariant(log.status_code)}>{log.status_code}</Badge>
+        <Badge variant={statusVariant(log.status_code)}>
+          {log.status_code}
+        </Badge>
       ),
     },
     {
@@ -155,7 +187,9 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
 
   if (!logs.length) {
     return (
-      <div className="card p-8 text-center text-sm text-fg-muted">{t("empty")}</div>
+      <div className="card p-8 text-center text-sm text-fg-muted">
+        {t("empty")}
+      </div>
     );
   }
 
@@ -200,14 +234,24 @@ export function AuditTable({ logs, meta }: AuditTableProps) {
                         col.align === "right" && "text-right",
                       )}
                     >
-                      {col.render ? col.render(log) : String((log as Record<string, unknown>)[col.key] ?? "—")}
+                      {col.render
+                        ? col.render(log)
+                        : String(
+                            (log as unknown as Record<string, unknown>)[
+                              col.key
+                            ] ?? "—",
+                          )}
                     </td>
                   ))}
                 </tr>
                 {expanded.has(log.id) && (
                   <tr key={`${log.id}-expanded`}>
                     <td colSpan={columns.length} className="p-0">
-                      <ExpandedRow log={log} before={t("before")} after={t("after")} />
+                      <ExpandedRow
+                        log={log}
+                        before={t("before")}
+                        after={t("after")}
+                      />
                     </td>
                   </tr>
                 )}
