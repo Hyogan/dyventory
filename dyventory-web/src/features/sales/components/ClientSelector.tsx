@@ -67,7 +67,9 @@ export function ClientSelector() {
           <User className="size-4 text-primary-600" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-fg truncate">{selectedClient.name}</p>
+          <p className="text-sm font-medium text-fg truncate">
+            {selectedClient.name}
+          </p>
           <p className="text-xs text-fg-muted">
             {selectedClient.email ?? selectedClient.phone ?? "No contact info"}
           </p>
@@ -99,7 +101,9 @@ export function ClientSelector() {
         )}
       >
         <User className="size-4 text-fg-muted shrink-0" />
-        <span className="flex-1 text-fg-muted">{t("new.client_placeholder")}</span>
+        <span className="flex-1 text-fg-muted">
+          {t("new.client_placeholder")}
+        </span>
         <ChevronDown className="size-4 text-fg-muted shrink-0" />
       </button>
 
@@ -142,7 +146,9 @@ export function ClientSelector() {
             {loading ? (
               <li className="px-4 py-3 text-sm text-fg-muted">Loading…</li>
             ) : results.length === 0 ? (
-              <li className="px-4 py-3 text-sm text-fg-muted">No clients found.</li>
+              <li className="px-4 py-3 text-sm text-fg-muted">
+                No clients found.
+              </li>
             ) : (
               results.map((client) => (
                 <li key={client.id}>
@@ -162,9 +168,17 @@ export function ClientSelector() {
                         {client.email ?? client.phone ?? "—"}
                       </p>
                     </div>
-                    {parseFloat(client.outstanding_balance) > 0 && (
+                    {/* {parseFloat(client.outstanding_balance) > 0 && (
                       <span className="text-xs text-warning-600 tabular-nums shrink-0">
-                        {parseFloat(client.outstanding_balance).toLocaleString("fr-FR")} F
+                        {parseFloat(client.outstanding_balance).toLocaleString(
+                          "fr-FR",
+                        )}{" "}
+                        F
+                      </span>
+                    )} */}
+                    {client.outstanding_balance > 0 && (
+                      <span className="text-xs text-warning-600 tabular-nums shrink-0">
+                        {client.outstanding_balance.toLocaleString("fr-FR")} F
                       </span>
                     )}
                   </button>

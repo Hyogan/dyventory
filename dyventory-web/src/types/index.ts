@@ -160,7 +160,12 @@ export interface StockMovement {
 
 // ── Client ────────────────────────────────────────────────────────────────────
 
-export type ClientType = "individual" | "company" | "reseller" | "wholesaler" | "retailer";
+export type ClientType =
+  | "individual"
+  | "company"
+  | "reseller"
+  | "wholesaler"
+  | "retailer";
 
 export interface Client {
   id: number;
@@ -322,7 +327,11 @@ export interface SaleReturn {
   resolution: "refund" | "credit_note" | "exchange";
   refund_amount: string;
   restock: boolean;
-  items: Array<{ product_id: number; quantity: number; batch_id: number | null }>;
+  items: Array<{
+    product_id: number;
+    quantity: number;
+    batch_id: number | null;
+  }>;
   notes: string | null;
   created_at: string;
 }

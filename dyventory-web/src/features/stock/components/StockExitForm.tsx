@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useActionState, startTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
@@ -49,7 +49,7 @@ export function StockExitForm({ products, preselectedBatchId }: StockExitFormPro
     watch,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as Resolver<FormValues>,
     defaultValues: {
       type: "out_sale",
       batch_id: preselectedBatchId ?? undefined,

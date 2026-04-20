@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { createClient, updateClient } from "../actions";
-import type { Client } from "@/types";
+import type { Client, ClientType } from "@/types";
 
 const CLIENT_TYPES = ["individual", "company", "reseller", "wholesaler", "retailer"] as const;
 
@@ -21,7 +21,7 @@ interface FormData {
   email: string;
   phone: string;
   address: string;
-  type: string;
+  type: ClientType;
   credit_limit: string;
   notes: string;
   is_active: boolean;
@@ -158,7 +158,7 @@ export function ClientModal({ open, onClose, client }: ClientModalProps) {
             <label className="label">{t("clients.fields.type")}</label>
             <select
               value={form.type}
-              onChange={(e) => set("type", e.target.value)}
+              onChange={(e) => set("type", e.target.value as ClientType)}
               className="input-select mt-1"
             >
               {CLIENT_TYPES.map((type) => (

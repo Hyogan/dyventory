@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useActionState, startTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
@@ -40,7 +40,10 @@ interface StockEntryFormProps {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export function StockEntryForm({ products, preselectedProductId }: StockEntryFormProps) {
+export function StockEntryForm({
+  products,
+  preselectedProductId,
+}: StockEntryFormProps) {
   const t = useTranslations();
   const router = useRouter();
 
@@ -56,7 +59,7 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
     setValue,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as Resolver<FormValues>,
     defaultValues: {
       product_id: preselectedProductId ?? 0,
       type: "in_purchase",
@@ -64,7 +67,9 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
   });
 
   const selectedProductId = watch("product_id");
-  const selectedProduct = products.find((p) => p.id === Number(selectedProductId));
+  const selectedProduct = products.find(
+    (p) => p.id === Number(selectedProductId),
+  );
 
   // Batch-level dynamic fields from category schema
   const batchFields: FieldDefinition[] = (
@@ -93,11 +98,16 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
     // Collect dynamic batch attributes from form DOM
     const attrFields = batchFields.map((f) => f.key);
     const attributes: Record<string, unknown> = {};
-    const form = document.getElementById("stock-entry-form") as HTMLFormElement | null;
+    const form = document.getElementById(
+      "stock-entry-form",
+    ) as HTMLFormElement | null;
     if (form) {
       for (const key of attrFields) {
-        const el = form.elements.namedItem(`attributes.${key}`) as HTMLInputElement | null;
-        if (el) attributes[key] = el.type === "checkbox" ? el.checked : el.value;
+        const el = form.elements.namedItem(
+          `attributes.${key}`,
+        ) as HTMLInputElement | null;
+        if (el)
+          attributes[key] = el.type === "checkbox" ? el.checked : el.value;
       }
     }
     fd.set("attributes", JSON.stringify(attributes));
@@ -106,7 +116,11 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
   };
 
   return (
-    <form id="stock-entry-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5 max-w-2xl">
+    <form
+      id="stock-entry-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-5 max-w-2xl"
+    >
       {/* Global error */}
       {!state.success && state.message && (
         <div className="rounded-lg bg-danger-50 border border-danger-200 px-4 py-3 text-sm text-danger-700">
@@ -123,7 +137,8 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
           {/* Product select */}
           <div>
             <label className="block text-sm font-medium text-fg mb-1">
-              {t("stock.fields.product")} <span className="text-danger-500">*</span>
+              {t("stock.fields.product")}{" "}
+              <span className="text-danger-500">*</span>
             </label>
             <select
               {...register("product_id", { valueAsNumber: true })}
@@ -140,7 +155,9 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
               ))}
             </select>
             {errors.product_id && (
-              <p className="mt-1 text-xs text-danger-600">{errors.product_id.message}</p>
+              <p className="mt-1 text-xs text-danger-600">
+                {errors.product_id.message}
+              </p>
             )}
           </div>
 
@@ -153,15 +170,21 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
               {...register("type")}
               className="w-full h-10 rounded-lg border border-border bg-surface px-3 text-sm text-fg focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
-              <option value="in_purchase">{t("stock.movement_types.in_purchase")}</option>
-              <option value="in_return">{t("stock.movement_types.in_return")}</option>
+              <option value="in_purchase">
+                {t("stock.movement_types.in_purchase")}
+              </option>
+              <option value="in_return">
+                {t("stock.movement_types.in_return")}
+              </option>
             </select>
           </div>
 
           {/* Quantity */}
           <div>
             <label className="block text-sm font-medium text-fg mb-1">
-              {isKg ? t("stock.fields.quantity_kg") : t("stock.fields.quantity")}{" "}
+              {isKg
+                ? t("stock.fields.quantity_kg")
+                : t("stock.fields.quantity")}{" "}
               <span className="text-danger-500">*</span>
             </label>
             <Input
@@ -223,22 +246,32 @@ export function StockEntryForm({ products, preselectedProductId }: StockEntryFor
       {batchFields.length > 0 && (
         <BatchFieldsSection
           batchFields={batchFields}
-          register={register as unknown as Parameters<typeof BatchFieldsSection>[0]["register"]}
-          control={control}
+          register={
+            register as unknown as Parameters<
+              typeof BatchFieldsSection
+            >[0]["register"]
+          }
+          control={
+            control as unknown as Parameters<
+              typeof BatchFieldsSection
+            >[0]["control"]
+          }
           errors={errors}
         />
       )}
 
       {/* Submit */}
       <div className="flex items-center gap-3 pt-1">
-        <Button type="submit" disabled={isPending} icon={isPending ? <Loader2 className="size-4 animate-spin" /> : undefined}>
+        <Button
+          type="submit"
+          disabled={isPending}
+          icon={
+            isPending ? <Loader2 className="size-4 animate-spin" /> : undefined
+          }
+        >
           {isPending ? t("common.loading") : t("stock.entry.title")}
         </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={() => router.back()}
-        >
+        <Button type="button" variant="ghost" onClick={() => router.back()}>
           {t("common.cancel")}
         </Button>
       </div>
