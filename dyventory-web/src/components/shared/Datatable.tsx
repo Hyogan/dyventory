@@ -48,14 +48,14 @@ export function DataTable<T extends { id: number | string }>({
     <div className={cn("space-y-4", className)}>
       <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-sm">
-          <thead className="bg-surface-muted border-b border-border">
+          <thead className="bg-surface-muted/70 border-b-2 border-border">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
                   scope="col"
                   className={cn(
-                    "px-4 py-3 font-medium text-fg-subtle text-left whitespace-nowrap",
+                    "px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest text-fg-muted text-left whitespace-nowrap",
                     col.align === "center" && "text-center",
                     col.align === "right" && "text-right",
                     col.width,
@@ -70,7 +70,7 @@ export function DataTable<T extends { id: number | string }>({
             {data.map((row) => (
               <tr
                 key={row.id}
-                className="hover:bg-surface-muted/40 transition-colors"
+                className="hover:bg-primary-50/30 transition-colors"
               >
                 {columns.map((col) => (
                   <td

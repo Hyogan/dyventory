@@ -64,11 +64,10 @@
   --radius-full: 9999px;
 
   /* ── Shadows ─────────────────────────────────────────────────────────── */
-  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.08), 0 4px 16px oklch(0 0 0 / 0.06);
-  --shadow-card-hover: 0 4px 8px oklch(0 0 0 / 0.1), 0 16px 40px oklch(0 0 0 / 0.1);
-  --shadow-modal: 0 32px 80px oklch(0 0 0 / 0.22), 0 8px 24px oklch(0 0 0 / 0.14);
-  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.08), 0 2px 8px oklch(0 0 0 / 0.05);
-  --shadow-floating: 0 4px 8px oklch(0 0 0 / 0.08), 0 12px 40px oklch(0 0 0 / 0.12);
+  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.07), 0 1px 2px oklch(0 0 0 / 0.05);
+  --shadow-modal:
+    0 20px 40px oklch(0 0 0 / 0.16), 0 4px 12px oklch(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.06);
 
   /* ── Custom breakpoints ──────────────────────────────────────────────── */
   --breakpoint-xs: 30rem; /* 480px */
@@ -85,52 +84,52 @@
 
 :root {
   /* Surfaces */
-  --surface-bg: oklch(0.97 0.005 250);
-  --surface-card: oklch(1 0 0);
-  --surface-sidebar: oklch(0.14 0.03 250);
-  --surface-muted: oklch(0.94 0.005 250);
-  --surface-header: oklch(1 0 0);
-  --surface-hover: oklch(0.95 0.01 250);
+  --surface-bg:       oklch(0.97 0.005 250);
+  --surface-card:     oklch(1 0 0);
+  --surface-sidebar:  oklch(0.14 0.03 250);
+  --surface-muted:    oklch(0.94 0.005 250);
+  --surface-header:   oklch(1 0 0);
+  --surface-hover:    oklch(0.95 0.01 250);
   --surface-selected: oklch(0.92 0.03 250);
 
   /* Foreground / text */
-  --fg: oklch(0.15 0.015 250);
-  --fg-subtle: oklch(0.42 0.01 250);
-  --fg-muted: oklch(0.6 0.01 250);
+  --fg:         oklch(0.15 0.015 250);
+  --fg-subtle:  oklch(0.42 0.01 250);
+  --fg-muted:   oklch(0.6 0.01 250);
   --fg-inverse: oklch(0.98 0 0);
 
   /* Borders */
-  --border: oklch(0.88 0.01 250);
+  --border:        oklch(0.88 0.01 250);
   --border-strong: oklch(0.75 0.015 250);
-  --border-focus: var(--color-primary);
+  --border-focus:  var(--color-primary);
 
   /* Sidebar-specific */
-  --sidebar-fg: oklch(0.75 0.02 250);
+  --sidebar-fg:        oklch(0.75 0.02 250);
   --sidebar-fg-active: oklch(1 0 0);
-  --sidebar-active: oklch(0.55 0.2 250 / 0.25);
-  --sidebar-hover: oklch(1 0 0 / 0.07);
+  --sidebar-active:    oklch(0.55 0.2 250 / 0.25);
+  --sidebar-hover:     oklch(1 0 0 / 0.07);
 }
 
 /* Dark mode — override semantics only */
 .dark {
   color-scheme: dark;
 
-  --surface-bg: oklch(0.1 0.02 250);
-  --surface-card: oklch(0.15 0.025 250);
-  --surface-sidebar: oklch(0.08 0.02 250);
-  --surface-muted: oklch(0.2 0.02 250);
-  --surface-header: oklch(0.15 0.025 250);
-  --surface-hover: oklch(0.18 0.02 250);
+  --surface-bg:       oklch(0.1 0.02 250);
+  --surface-card:     oklch(0.15 0.025 250);
+  --surface-sidebar:  oklch(0.08 0.02 250);
+  --surface-muted:    oklch(0.2 0.02 250);
+  --surface-header:   oklch(0.15 0.025 250);
+  --surface-hover:    oklch(0.18 0.02 250);
   --surface-selected: oklch(0.22 0.03 250);
 
-  --fg: oklch(0.95 0.01 250);
+  --fg:        oklch(0.95 0.01 250);
   --fg-subtle: oklch(0.7 0.01 250);
-  --fg-muted: oklch(0.52 0.01 250);
+  --fg-muted:  oklch(0.52 0.01 250);
 
-  --border: oklch(0.25 0.02 250);
+  --border:        oklch(0.25 0.02 250);
   --border-strong: oklch(0.35 0.02 250);
 
-  --sidebar-fg: oklch(0.72 0.02 250);
+  --sidebar-fg:        oklch(0.72 0.02 250);
   --sidebar-fg-active: oklch(1 0 0);
 }
 
@@ -142,29 +141,29 @@
 
 @theme inline {
   /* Surfaces → bg-surface-bg, bg-surface-card, bg-surface-muted … */
-  --color-surface-bg: var(--surface-bg);
-  --color-surface-card: var(--surface-card);
-  --color-surface-sidebar: var(--surface-sidebar);
-  --color-surface-muted: var(--surface-muted);
-  --color-surface-hover: var(--surface-hover);
+  --color-surface-bg:       var(--surface-bg);
+  --color-surface-card:     var(--surface-card);
+  --color-surface-sidebar:  var(--surface-sidebar);
+  --color-surface-muted:    var(--surface-muted);
+  --color-surface-hover:    var(--surface-hover);
   --color-surface-selected: var(--surface-selected);
-  --color-surface-header: var(--surface-header);
+  --color-surface-header:   var(--surface-header);
 
   /* Foreground → text-fg, text-fg-muted, text-fg-subtle, text-fg-inverse */
-  --color-fg: var(--fg);
-  --color-fg-subtle: var(--fg-subtle);
-  --color-fg-muted: var(--fg-muted);
+  --color-fg:         var(--fg);
+  --color-fg-subtle:  var(--fg-subtle);
+  --color-fg-muted:   var(--fg-muted);
   --color-fg-inverse: var(--fg-inverse);
 
   /* Borders → border-border, border-border-strong */
-  --color-border: var(--border);
+  --color-border:        var(--border);
   --color-border-strong: var(--border-strong);
 
   /* Sidebar → text-sidebar-fg, text-sidebar-fg-active, bg-sidebar-active, bg-sidebar-hover */
-  --color-sidebar-fg: var(--sidebar-fg);
+  --color-sidebar-fg:        var(--sidebar-fg);
   --color-sidebar-fg-active: var(--sidebar-fg-active);
-  --color-sidebar-active: var(--sidebar-active);
-  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active:    var(--sidebar-active);
+  --color-sidebar-hover:     var(--sidebar-hover);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -239,27 +238,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
-  }
-
-  .card-interactive {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    transition:
-      box-shadow 200ms ease,
-      transform 200ms ease;
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: var(--shadow-card-hover);
-      transform: translateY(-2px);
-    }
-
-    &:active {
-      transform: translateY(0);
-      box-shadow: var(--shadow-card);
-    }
   }
 
   /* ── Badge ─────────────────────────────────────────────────────────── */
@@ -349,24 +327,6 @@
   }
   100% {
     background-position: -200% 0;
-  }
-}
-
-/* Modal entrance */
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@layer utilities {
-  .animate-modal-in {
-    animation: modal-in 200ms ease-out both;
   }
 }
 

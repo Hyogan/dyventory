@@ -46,7 +46,7 @@ export function PageHeader({
 
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-fg truncate">
+          <h1 className="text-2xl font-bold tracking-tight text-fg truncate">
             {title}
           </h1>
           {description && (

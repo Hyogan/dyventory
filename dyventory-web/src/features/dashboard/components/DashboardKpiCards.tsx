@@ -5,7 +5,6 @@ import {
   AlertTriangle,
   ArrowUpRight,
   ArrowDownRight,
-  Minus,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
@@ -32,11 +31,17 @@ function ChangeChip({ change, label }: { change: number | null; label: string })
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-0.5 text-xs font-medium",
-        positive ? "text-success-600" : "text-danger-600",
+        "inline-flex items-center gap-0.5 text-xs font-semibold px-1.5 py-0.5 rounded-md",
+        positive
+          ? "bg-success-50 text-success-700 border border-success-200"
+          : "bg-danger-50 text-danger-700 border border-danger-200",
       )}
     >
-      {positive ? <ArrowUpRight className="size-3" /> : <ArrowDownRight className="size-3" />}
+      {positive ? (
+        <ArrowUpRight className="size-3" />
+      ) : (
+        <ArrowDownRight className="size-3" />
+      )}
       {Math.abs(change)}%
     </span>
   );
@@ -47,54 +52,50 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
   const tc = await getTranslations("common");
 
   const alertCount =
-    stats.alerts.low_stock + stats.alerts.expiry_soon + stats.alerts.overdue_credits;
+    stats.alerts.low_stock +
+    stats.alerts.expiry_soon +
+    stats.alerts.overdue_credits;
 
   const cards = [
     {
       label: t("revenue_today"),
       value: `${fmt(stats.revenue.today)} F`,
-      sub: (
-        <ChangeChip
-          change={stats.revenue.today_change}
-          label={t("no_change")}
-        />
-      ),
+      change: stats.revenue.today_change,
+      changeLabel: t("no_change"),
       subText: t("vs_prior"),
       icon: TrendingUp,
-      color: "text-primary-600",
-      bg: "bg-primary-50 border-primary-100",
+      accent: "border-t-primary-500",
+      iconBg: "bg-gradient-to-br from-primary-500 to-primary-600",
     },
     {
       label: t("revenue_month"),
       value: `${fmt(stats.revenue.month)} F`,
-      sub: (
-        <ChangeChip
-          change={stats.revenue.month_change}
-          label={t("no_change")}
-        />
-      ),
+      change: stats.revenue.month_change,
+      changeLabel: t("no_change"),
       subText: t("vs_prior"),
       icon: TrendingUp,
-      color: "text-violet-600",
-      bg: "bg-violet-50 border-violet-100",
+      accent: "border-t-violet-500",
+      iconBg: "bg-gradient-to-br from-violet-500 to-violet-600",
     },
     {
       label: t("sales_today"),
       value: String(stats.sales_today),
-      sub: null,
+      change: null,
+      changeLabel: "",
       subText: t("sales_today_sub"),
       icon: ShoppingCart,
-      color: "text-success-600",
-      bg: "bg-success-50 border-success-100",
+      accent: "border-t-success-600",
+      iconBg: "bg-gradient-to-br from-success-600 to-success-700",
     },
     {
       label: t("stock_value"),
       value: `${fmt(stats.stock_value.value_ttc)} F`,
-      sub: null,
+      change: null,
+      changeLabel: "",
       subText: `${fmt(stats.stock_value.value_ht)} F ${t("stock_value_ht")}`,
       icon: Package,
-      color: "text-amber-600",
-      bg: "bg-amber-50 border-amber-100",
+      accent: "border-t-warning-600",
+      iconBg: "bg-gradient-to-br from-warning-600 to-warning-700",
     },
   ];
 
@@ -106,22 +107,37 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
           return (
             <div
               key={card.label}
-              className={cn("rounded-xl border p-4 flex items-start gap-3", card.bg)}
+              className={cn(
+                "card p-5 border-t-2 flex flex-col gap-3",
+                card.accent,
+              )}
             >
-              <div className={cn("mt-0.5 shrink-0", card.color)}>
-                <Icon className="size-5" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-medium text-fg-muted uppercase tracking-wide">
+              {/* Top row: label + icon */}
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-fg-muted leading-tight">
                   {card.label}
                 </p>
-                <p className={cn("text-xl font-bold mt-0.5 tabular-nums truncate", card.color)}>
-                  {card.value}
-                </p>
-                <div className="flex items-center gap-1 mt-0.5">
-                  {card.sub}
-                  <span className="text-xs text-fg-muted">{card.subText}</span>
+                <div
+                  className={cn(
+                    "size-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
+                    card.iconBg,
+                  )}
+                >
+                  <Icon className="size-4.5 text-white" />
                 </div>
+              </div>
+
+              {/* Value */}
+              <p className="text-2xl font-bold tabular-nums text-fg truncate">
+                {card.value}
+              </p>
+
+              {/* Trend / sub-label */}
+              <div className="flex items-center gap-2 flex-wrap">
+                {card.change !== null && (
+                  <ChangeChip change={card.change} label={card.changeLabel} />
+                )}
+                <span className="text-xs text-fg-muted truncate">{card.subText}</span>
               </div>
             </div>
           );
@@ -129,25 +145,31 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
       </div>
 
       {alertCount > 0 && (
-        <div className="rounded-xl border border-danger-200 bg-danger-50 px-4 py-3 flex items-center justify-between gap-4">
+        <div className="rounded-xl border border-danger-200 bg-danger-50 px-4 py-3 flex items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-2 text-danger-700">
             <AlertTriangle className="size-4 shrink-0" />
             <span className="text-sm font-medium">
               {t("alerts_title")}:&nbsp;
               {stats.alerts.low_stock > 0 && (
-                <span className="mr-3">{stats.alerts.low_stock} {t("low_stock_alerts")}</span>
+                <span className="mr-3">
+                  {stats.alerts.low_stock} {t("low_stock_alerts")}
+                </span>
               )}
               {stats.alerts.expiry_soon > 0 && (
-                <span className="mr-3">{stats.alerts.expiry_soon} {t("expiry_alerts")}</span>
+                <span className="mr-3">
+                  {stats.alerts.expiry_soon} {t("expiry_alerts")}
+                </span>
               )}
               {stats.alerts.overdue_credits > 0 && (
-                <span>{stats.alerts.overdue_credits} {t("overdue_credits")}</span>
+                <span>
+                  {stats.alerts.overdue_credits} {t("overdue_credits")}
+                </span>
               )}
             </span>
           </div>
           <Link
             href={`/${locale}/stock`}
-            className="text-xs font-medium text-danger-700 underline underline-offset-2 shrink-0"
+            className="text-xs font-semibold text-danger-700 underline underline-offset-2 shrink-0 hover:text-danger-800"
           >
             {tc("view")}
           </Link>

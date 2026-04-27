@@ -9,12 +9,12 @@ type Variant =
   | "secondary";
 
 const variantClasses: Record<Variant, string> = {
-  default:   "bg-surface-muted text-fg-subtle",
-  primary:   "bg-primary-100 text-primary-700",
-  success:   "bg-success-100 text-success-700",
-  warning:   "bg-warning-100 text-warning-600",
-  danger:    "bg-danger-100 text-danger-700",
-  secondary: "bg-secondary-50 text-secondary-600",
+  default:   "bg-surface-muted   text-fg-subtle      border border-border",
+  primary:   "bg-primary-50      text-primary-700    border border-primary-200",
+  success:   "bg-success-50      text-success-700    border border-success-200",
+  warning:   "bg-warning-50      text-warning-700    border border-warning-200",
+  danger:    "bg-danger-50       text-danger-700     border border-danger-200",
+  secondary: "bg-secondary-50    text-secondary-600  border border-secondary-100",
 };
 
 interface BadgeProps {

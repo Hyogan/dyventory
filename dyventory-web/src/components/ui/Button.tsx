@@ -7,15 +7,27 @@ type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-primary-500 text-white hover:bg-primary-600 focus-visible:outline-primary-500",
+    "bg-gradient-to-b from-primary-500 to-primary-600 text-white " +
+    "shadow-sm hover:shadow hover:from-primary-400 hover:to-primary-500 " +
+    "hover:-translate-y-px active:translate-y-0 active:shadow-none " +
+    "focus-visible:outline-primary-500",
   secondary:
-    "bg-primary-50 text-primary-700 hover:bg-primary-100 focus-visible:outline-primary-500",
+    "bg-primary-50 text-primary-700 border border-primary-200 " +
+    "hover:bg-primary-100 active:bg-primary-200 " +
+    "focus-visible:outline-primary-500",
   ghost:
-    "bg-transparent text-fg-subtle hover:bg-surface-muted hover:text-fg focus-visible:outline-primary-500",
+    "bg-transparent text-fg-subtle " +
+    "hover:bg-surface-muted hover:text-fg active:bg-surface-selected " +
+    "focus-visible:outline-primary-500",
   danger:
-    "bg-danger-500 text-white hover:bg-danger-600 focus-visible:outline-danger-500",
+    "bg-gradient-to-b from-danger-500 to-danger-600 text-white " +
+    "shadow-sm hover:shadow hover:from-danger-400 hover:to-danger-500 " +
+    "hover:-translate-y-px active:translate-y-0 active:shadow-none " +
+    "focus-visible:outline-danger-500",
   outline:
-    "bg-transparent border border-border text-fg hover:bg-surface-muted focus-visible:outline-primary-500",
+    "bg-transparent border border-border-strong text-fg " +
+    "hover:bg-surface-muted active:bg-surface-selected " +
+    "focus-visible:outline-primary-500",
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -46,9 +58,9 @@ export function Button({
       disabled={disabled || loading}
       className={cn(
         "inline-flex items-center justify-center font-medium rounded-md",
-        "transition-colors duration-150",
+        "transition-all duration-150",
         "focus-visible:outline-2 focus-visible:outline-offset-2",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
         variantClasses[variant],
         sizeClasses[size],
         className,

@@ -1,0 +1,19 @@
+# Git
+.git
+.gitignore
+
+# Node
+dyventory-web/node_modules
+dyventory-web/.next
+
+# Laravel storage symlink (created by artisan storage:link — causes Docker build errors)
+dyventory-api/public/storage
+
+# Laravel local caches
+dyventory-api/bootstrap/cache/*.php
+dyventory-api/storage/logs/*.log
+dyventory-api/.env
+
+# OS
+.DS_Store
+Thumbs.db

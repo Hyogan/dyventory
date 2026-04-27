@@ -87,7 +87,7 @@ export function Modal({
       <div
         ref={dialogRef}
         className={cn(
-          "card relative w-full z-10 shadow-xl flex flex-col max-h-[90vh]",
+          "card animate-modal-in relative w-full z-10 shadow-xl flex flex-col max-h-[90vh]",
           sizes[size],
         )}
       >

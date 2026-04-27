@@ -30,7 +30,7 @@ export function Header() {
   };
 
   return (
-    <header className="h-14 border-b border-border bg-surface-header flex items-center justify-between px-4 sm:px-6 shrink-0">
+    <header className="h-14 border-b border-border bg-surface-header flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-sm">
       {/* Left — hamburger on mobile */}
       <button
         onClick={toggle}
@@ -76,7 +76,7 @@ export function Header() {
             aria-haspopup="true"
           >
             {/* Avatar */}
-            <div className="size-7 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold shrink-0">
+            <div className="size-7 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-sm">
               {user ? initials(user.name) : "?"}
             </div>
             <div className="text-left hidden sm:block">
