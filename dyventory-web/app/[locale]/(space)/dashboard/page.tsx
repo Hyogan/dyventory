@@ -24,25 +24,37 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title={t("title")}
-        description={t("description")}
-        breadcrumb={[{ label: t("title") }]}
-        actions={
-          <Link href={`/${locale}/reports`}>
-            <Button variant="outline" icon={<BarChart3 className="size-4" />}>
-              {(await getTranslations("reports"))("title")}
-            </Button>
-          </Link>
-        }
-      />
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+      {/* Header section with more air */}
+      <div className="pb-2">
+        <PageHeader
+          title={t("title")}
+          description={t("description")}
+          breadcrumb={[{ label: t("title") }]}
+          actions={
+            <Link href={`/${locale}/reports`}>
+              <Button
+                variant="outline"
+                className="bg-surface-card shadow-sm hover:shadow-md transition-all"
+                icon={<BarChart3 className="size-4" />}
+              >
+                {(await getTranslations("reports"))("title")}
+              </Button>
+            </Link>
+          }
+        />
+      </div>
 
       <DashboardKpiCards stats={stats} locale={locale} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <DashboardTopProducts products={stats.top_products} locale={locale} />
-        <DashboardRecentSales sales={stats.recent_sales} locale={locale} />
+      {/* Grid with better responsive scaling and gaps */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <div className="xl:col-span-2">
+          <DashboardRecentSales sales={stats.recent_sales} locale={locale} />
+        </div>
+        <div className="xl:col-span-1">
+          <DashboardTopProducts products={stats.top_products} locale={locale} />
+        </div>
       </div>
     </div>
   );

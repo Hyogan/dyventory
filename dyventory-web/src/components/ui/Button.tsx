@@ -7,33 +7,33 @@ type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-b from-primary-500 to-primary-600 text-white " +
-    "shadow-sm hover:shadow hover:from-primary-400 hover:to-primary-500 " +
-    "hover:-translate-y-px active:translate-y-0 active:shadow-none " +
+    "bg-primary-600 text-white shadow-sm " +
+    "hover:bg-primary-700 active:bg-primary-800 " +
+    "active:scale-[0.97] " +
     "focus-visible:outline-primary-500",
   secondary:
     "bg-primary-50 text-primary-700 border border-primary-200 " +
-    "hover:bg-primary-100 active:bg-primary-200 " +
+    "hover:bg-primary-100 active:bg-primary-200 active:scale-[0.97] " +
     "focus-visible:outline-primary-500",
   ghost:
     "bg-transparent text-fg-subtle " +
-    "hover:bg-surface-muted hover:text-fg active:bg-surface-selected " +
+    "hover:bg-surface-muted hover:text-fg active:bg-surface-selected active:scale-[0.97] " +
     "focus-visible:outline-primary-500",
   danger:
-    "bg-gradient-to-b from-danger-500 to-danger-600 text-white " +
-    "shadow-sm hover:shadow hover:from-danger-400 hover:to-danger-500 " +
-    "hover:-translate-y-px active:translate-y-0 active:shadow-none " +
+    "bg-danger-600 text-white shadow-sm " +
+    "hover:bg-danger-700 active:bg-danger-800 " +
+    "active:scale-[0.97] " +
     "focus-visible:outline-danger-500",
   outline:
-    "bg-transparent border border-border-strong text-fg " +
-    "hover:bg-surface-muted active:bg-surface-selected " +
+    "bg-surface-card border border-border-strong text-fg " +
+    "hover:bg-surface-muted active:bg-surface-selected active:scale-[0.97] " +
     "focus-visible:outline-primary-500",
 };
 
 const sizeClasses: Record<Size, string> = {
   sm: "h-8 px-3 text-xs gap-1.5",
   md: "h-9 px-4 text-sm gap-2",
-  lg: "h-11 px-5 text-base gap-2",
+  lg: "h-10 px-5 text-sm gap-2",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -57,10 +57,10 @@ export function Button({
     <button
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center font-medium rounded-md",
+        "inline-flex items-center justify-center font-medium rounded-lg",
         "transition-all duration-150",
         "focus-visible:outline-2 focus-visible:outline-offset-2",
-        "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100",
         variantClasses[variant],
         sizeClasses[size],
         className,

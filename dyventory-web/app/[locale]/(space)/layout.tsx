@@ -26,12 +26,14 @@ export default async function DashboardLayout({
   return (
     <SessionProvider user={user}>
       <SidebarProvider>
-        <div className="flex h-screen overflow-hidden bg-surface-bg">
+        {/* Changed bg-surface-bg to be the foundation */}
+        <div className="flex h-screen overflow-hidden bg-surface-bg text-fg">
           <Sidebar />
           <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
             <Header />
-            <main className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-              {children}
+            {/* Added max-width and centered container for better wide-screen look */}
+            <main className="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-thin">
+              <div className="max-w-[1600px] mx-auto">{children}</div>
             </main>
           </div>
         </div>
