@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/providers/SidebarProvider";
 import { getCurrentUser } from "@/lib/auth";
 import { Sidebar } from "@/components/nav/Sidebar";
 import { Header } from "@/components/nav/Header";
+import { NavigationProgress } from "@/components/shared/NavigationProgress";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
             <Header />
             {/* Added max-width and centered container for better wide-screen look */}
             <main className="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-thin">
+              <NavigationProgress />
               <div className="max-w-[1600px] mx-auto">{children}</div>
             </main>
           </div>

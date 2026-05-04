@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { ProductTable } from "@/features/products/components/ProductTable";
 import { ProductFilters } from "@/features/products/components/ProductFilters";
+import { ProductsLoadingProvider } from "@/features/products/components/ProductsLoadingContext";
 import type { Product, Category, PaginatedResponse } from "@/types";
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
@@ -70,13 +71,15 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         }
       />
 
-      <div className="space-y-5">
-        <ProductFilters categories={categories} />
-        <ProductTable
-          products={productData.data}
-          meta={productData.meta}
-        />
-      </div>
+      <ProductsLoadingProvider>
+        <div className="space-y-5">
+          <ProductFilters categories={categories} />
+          <ProductTable
+            products={productData.data}
+            meta={productData.meta}
+          />
+        </div>
+      </ProductsLoadingProvider>
     </div>
   );
 }

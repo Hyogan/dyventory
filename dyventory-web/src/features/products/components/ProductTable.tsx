@@ -11,15 +11,15 @@ import {
   MoreHorizontal,
   Package,
   AlertTriangle,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { DataTable, type Column } from "@/components/shared/Datatable";
 import { StatusBadge } from "@/components/shared/StatusBadge";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
 import type { Product, PaginationMeta } from "@/types";
 import { archiveProduct, restoreProduct, deleteProduct } from "../actions";
+import { useProductsLoading } from "./ProductsLoadingContext";
 import { cn } from "@/lib/utils";
 
 interface ProductTableProps {
@@ -33,6 +33,7 @@ export function ProductTable({ products, meta }: ProductTableProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { isPending } = useProductsLoading();
 
   const [confirmAction, setConfirmAction] = useState<{
     type: "archive" | "restore" | "delete";
@@ -64,9 +65,9 @@ export function ProductTable({ products, meta }: ProductTableProps) {
       key: "name",
       header: t("products.fields.name"),
       render: (product) => (
-        <div className="flex items-center gap-3">
-          {/* Product image thumbnail or icon */}
-          <div className="size-10 rounded-lg bg-surface-muted border border-border flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="flex items-center gap-4 py-1 group/item">
+          {/* DEPTH: Inset shadow makes the container look carved into the row */}
+          <div className="size-12 rounded-2xl bg-slate-100 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] border border-slate-200/50 flex items-center justify-center shrink-0 overflow-hidden transition-transform group-hover/item:scale-105">
             {product.images?.length ? (
               <img
                 src={`${process.env.NEXT_PUBLIC_API_URL ?? ""}/storage/${product.images[0]}`}
@@ -74,23 +75,18 @@ export function ProductTable({ products, meta }: ProductTableProps) {
                 className="size-full object-cover"
               />
             ) : (
-              <Package className="size-5 text-fg-muted" />
+              <Package className="size-6 text-slate-400" />
             )}
           </div>
-          <div className="min-w-0">
-            <p className="font-medium text-fg truncate">{product.name}</p>
-            <p className="text-xs text-fg-muted font-mono">{product.sku}</p>
+          <div className="min-w-0 flex flex-col gap-0.5">
+            <p className="font-bold text-slate-900 truncate tracking-tight">
+              {product.name}
+            </p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              {product.sku}
+            </p>
           </div>
         </div>
-      ),
-    },
-    {
-      key: "category",
-      header: t("products.fields.category"),
-      render: (product) => (
-        <span className="text-sm text-fg-subtle">
-          {product.category?.name ?? "—"}
-        </span>
       ),
     },
     {
@@ -104,21 +100,28 @@ export function ProductTable({ products, meta }: ProductTableProps) {
         const isOut = stock <= 0;
 
         return (
-          <div className="flex items-center justify-end gap-2">
-            {isLow && <AlertTriangle className="size-3.5 text-warning-500" />}
-            <span
+          <div className="flex items-center justify-end">
+            <div
               className={cn(
-                "font-medium tabular-nums",
-                isOut && "text-danger-600",
-                isLow && "text-warning-600",
-                !isOut && !isLow && "text-fg",
+                "flex items-center gap-2 px-3 py-1.5 rounded-xl border font-bold tabular-nums shadow-sm",
+                isOut && "bg-rose-50 border-rose-100 text-rose-600",
+                isLow &&
+                  "bg-amber-50 border-amber-100 text-amber-600 shadow-amber-100/50",
+                !isOut &&
+                  !isLow &&
+                  "bg-slate-50 border-slate-200 text-slate-700",
               )}
             >
-              {Number(stock).toFixed(product.unit_of_measure === "kg" ? 3 : 0)}
-            </span>
-            <span className="text-xs text-fg-muted">
-              {product.unit_of_measure}
-            </span>
+              {isLow && <AlertTriangle className="size-3.5" />}
+              <span>
+                {Number(stock).toFixed(
+                  product.unit_of_measure === "kg" ? 3 : 0,
+                )}
+              </span>
+              <span className="text-[10px] opacity-60 uppercase">
+                {product.unit_of_measure}
+              </span>
+            </div>
           </div>
         );
       },
@@ -128,13 +131,12 @@ export function ProductTable({ products, meta }: ProductTableProps) {
       header: t("common.price"),
       align: "right",
       render: (product) => (
-        <span className="font-medium tabular-nums text-fg">
-          {Number(product.price_sell_ttc).toLocaleString(locale, {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          })}{" "}
-          <span className="text-xs text-fg-muted">XAF</span>
-        </span>
+        <div className="flex flex-col items-end">
+          <span className="text-base font-black text-slate-900 tabular-nums tracking-tight">
+            {Number(product.price_sell_ttc).toLocaleString(locale)}
+          </span>
+          <span className="text-[10px] font-bold text-slate-400">XAF</span>
+        </div>
       ),
     },
     {
@@ -155,19 +157,24 @@ export function ProductTable({ products, meta }: ProductTableProps) {
               e.stopPropagation();
               setOpenMenu(openMenu === product.id ? null : product.id);
             }}
-            className="p-1.5 rounded-md hover:bg-surface-muted transition-colors text-fg-muted hover:text-fg"
+            className={cn(
+              "p-2 rounded-xl transition-all duration-200 border",
+              openMenu === product.id
+                ? "bg-slate-900 text-white border-slate-900 shadow-lg scale-110"
+                : "bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-sm active:scale-95",
+            )}
           >
-            <MoreHorizontal className="size-4" />
+            <MoreHorizontal className="size-5" />
           </button>
 
           {openMenu === product.id && (
             <>
-              {/* Click-away overlay */}
               <div
                 className="fixed inset-0 z-10"
                 onClick={() => setOpenMenu(null)}
               />
-              <div className="absolute right-0 top-full mt-1 z-20 w-48 bg-surface border border-border rounded-lg shadow-lg py-1 animate-in fade-in slide-in-from-top-1 duration-150">
+              {/* GLASSMORPHISM: Backdrop blur and white transparency */}
+              <div className="absolute right-0 top-full mt-2 z-20 w-56 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl py-1.5 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
                 <MenuLink
                   href={`/${locale}/products/${product.id}`}
                   icon={<Eye className="size-4" />}
@@ -180,7 +187,7 @@ export function ProductTable({ products, meta }: ProductTableProps) {
                   label={t("common.edit")}
                   onClick={() => setOpenMenu(null)}
                 />
-                <div className="h-px bg-border my-1" />
+                <div className="h-px bg-slate-100 my-1.5 mx-2" />
                 {product.status === "active" ? (
                   <MenuButton
                     icon={<Archive className="size-4" />}
@@ -218,17 +225,19 @@ export function ProductTable({ products, meta }: ProductTableProps) {
   ];
 
   return (
-    <>
+    <div className="bg-slate-50/50  rounded-[2rem] border border-slate-200/60 shadow-sm">
       <DataTable
         data={products}
         columns={columns}
+        loading={isPending}
         meta={meta}
         onPageChange={handlePageChange}
         emptyTitle={t("nav.products")}
         emptyMessage={t("products.empty")}
+        // {/* TABLE LOGIC: Using border-separate creates the "floating slab" look for rows */}
+        className="border-separate border-spacing-y-3"
       />
 
-      {/* Confirm Dialog */}
       {confirmAction && (
         <ConfirmDialog
           open
@@ -251,11 +260,11 @@ export function ProductTable({ products, meta }: ProductTableProps) {
           variant={confirmAction.type === "delete" ? "danger" : "primary"}
         />
       )}
-    </>
+    </div>
   );
 }
 
-// ── Menu sub-components ──────────────────────────────────────────────────────
+// ── Refined Menu Components ──────────────────────────────────────────────────
 
 function MenuLink({
   href,
@@ -272,10 +281,15 @@ function MenuLink({
     <a
       href={href}
       onClick={onClick}
-      className="flex items-center gap-2.5 px-3 py-2 text-sm text-fg hover:bg-surface-muted transition-colors"
+      className="flex items-center justify-between group px-3 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-all mx-1"
     >
-      <span className="text-fg-muted">{icon}</span>
-      {label}
+      <div className="flex items-center gap-3">
+        <span className="text-slate-400 group-hover:scale-110 transition-transform">
+          {icon}
+        </span>
+        {label}
+      </div>
+      <ChevronRight className="size-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-slate-400" />
     </a>
   );
 }
@@ -296,13 +310,15 @@ function MenuButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex items-center gap-2.5 px-3 py-2 text-sm w-full text-left transition-colors",
+        "flex items-center gap-3 px-3 py-2.5 text-sm font-semibold w-full text-left transition-all rounded-xl mx-1 w-[calc(100%-8px)]",
         danger
-          ? "text-danger-600 hover:bg-danger-50"
-          : "text-fg hover:bg-surface-muted",
+          ? "text-rose-600 hover:bg-rose-50"
+          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
       )}
     >
-      <span className={danger ? "text-danger-500" : "text-fg-muted"}>{icon}</span>
+      <span className={cn(danger ? "text-rose-500" : "text-slate-400")}>
+        {icon}
+      </span>
       {label}
     </button>
   );
