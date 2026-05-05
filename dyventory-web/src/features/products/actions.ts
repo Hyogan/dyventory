@@ -177,8 +177,14 @@ function formDataToProductPayload(formData: FormData): Record<string, unknown> {
   // Numeric fields
   const numericFields = [
     "category_id", "vat_rate_id", "price_buy_ht",
-    "price_sell_ttc", "stock_alert_threshold",
+    "price_sell_ttc", "stock_alert_threshold", "transport_cost",
   ];
+
+  // initial_stock is create-only; skip if absent
+  const initialStock = formData.get("initial_stock");
+  if (initialStock !== null && initialStock !== "" && Number(initialStock) > 0) {
+    payload.initial_stock = Number(initialStock);
+  }
   for (const field of numericFields) {
     const value = formData.get(field);
     if (value !== null && value !== "") {

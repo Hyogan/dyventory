@@ -38,7 +38,9 @@ type FormValues = {
   vat_rate_id: number;
   unit_of_measure: string;
   price_buy_ht: number;
+  transport_cost: number;
   price_sell_ttc: number;
+  initial_stock?: number;
   barcode?: string;
   stock_alert_threshold: number;
   has_variants: boolean;
@@ -55,7 +57,9 @@ const baseSchema = z.object({
   vat_rate_id: z.coerce.number().min(1, "VAT rate is required."),
   unit_of_measure: z.string().default("piece"),
   price_buy_ht: z.coerce.number().min(0, "Must be 0 or more."),
+  transport_cost: z.coerce.number().min(0).default(0),
   price_sell_ttc: z.coerce.number().min(0, "Must be 0 or more."),
+  initial_stock: z.coerce.number().min(0).optional(),
   barcode: z.string().max(50).optional().or(z.literal("")),
   stock_alert_threshold: z.coerce.number().min(0).default(0),
   has_variants: z.boolean().default(false),
@@ -117,7 +121,9 @@ export function ProductForm({
         product?.vat_rate_id ?? vatRates.find((v) => v.is_default)?.id ?? 0,
       unit_of_measure: product?.unit_of_measure ?? "piece",
       price_buy_ht: Number(product?.price_buy_ht ?? 0),
+      transport_cost: Number(product?.transport_cost ?? 0),
       price_sell_ttc: Number(product?.price_sell_ttc ?? 0),
+      initial_stock: 0,
       barcode: product?.barcode ?? "",
       stock_alert_threshold: Number(product?.stock_alert_threshold ?? 0),
       has_variants: product?.has_variants ?? false,
@@ -143,6 +149,13 @@ export function ProductForm({
     }
   }, [state.success, state.productId, router, locale]);
 
+  // Auto-calculate total purchase cost
+  const watchedBuyPrice = watch("price_buy_ht");
+  const watchedTransport = watch("transport_cost");
+  const watchedInitialStock = watch("initial_stock") ?? 0;
+  const totalPurchaseCost =
+    (watchedBuyPrice || 0) * (watchedInitialStock || 0) + (watchedTransport || 0);
+
   // Reset dynamic attributes when category changes
   const watchedCategory = watch("category_id");
   useEffect(() => {
@@ -163,9 +176,13 @@ export function ProductForm({
     formData.set("vat_rate_id", String(data.vat_rate_id));
     formData.set("unit_of_measure", data.unit_of_measure);
     formData.set("price_buy_ht", String(data.price_buy_ht));
+    formData.set("transport_cost", String(data.transport_cost));
     formData.set("price_sell_ttc", String(data.price_sell_ttc));
     formData.set("stock_alert_threshold", String(data.stock_alert_threshold));
     formData.set("has_variants", String(data.has_variants));
+    if (!isEdit && data.initial_stock) {
+      formData.set("initial_stock", String(data.initial_stock));
+    }
 
     if (data.sku) formData.set("sku", data.sku);
     if (data.description) formData.set("description", data.description);
@@ -344,6 +361,7 @@ export function ProductForm({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Row 1: cost inputs + sell price */}
             <Input
               label={t("products.fields.buy_price")}
               type="number"
@@ -355,6 +373,16 @@ export function ProductForm({
                 errors.price_buy_ht?.message || state.errors?.price_buy_ht?.[0]
               }
               {...register("price_buy_ht", { valueAsNumber: true })}
+            />
+
+            <Input
+              label={t("products.fields.transport_cost")}
+              type="number"
+              step="0.01"
+              min="0"
+              suffix="XAF"
+              error={errors.transport_cost?.message}
+              {...register("transport_cost", { valueAsNumber: true })}
             />
 
             <Input
@@ -371,6 +399,18 @@ export function ProductForm({
               {...register("price_sell_ttc", { valueAsNumber: true })}
             />
 
+            {/* Row 2: stock fields + total cost summary */}
+            {!isEdit && (
+              <Input
+                label={t("products.fields.initial_stock")}
+                type="number"
+                step="1"
+                min="0"
+                error={errors.initial_stock?.message}
+                {...register("initial_stock", { valueAsNumber: true })}
+              />
+            )}
+
             <Input
               label={t("products.fields.threshold")}
               type="number"
@@ -379,6 +419,26 @@ export function ProductForm({
               error={errors.stock_alert_threshold?.message}
               {...register("stock_alert_threshold", { valueAsNumber: true })}
             />
+
+            {/* Total purchase cost — read-only summary, create only */}
+            {!isEdit && (
+              <div className="flex flex-col gap-1">
+                <label className="label text-fg-muted">
+                  {t("products.fields.total_purchase_cost")}
+                </label>
+                <div className="flex items-center gap-2 h-9 px-3 rounded-lg border border-primary-200 bg-primary-50 text-primary-700 font-bold tabular-nums text-sm select-none">
+                  <span className="flex-1">
+                    {totalPurchaseCost.toLocaleString()}
+                  </span>
+                  <span className="text-[11px] font-bold text-primary-400 uppercase tracking-wider">
+                    XAF
+                  </span>
+                </div>
+                <p className="text-[11px] text-fg-muted">
+                  = ({t("products.fields.buy_price")} × {t("products.fields.initial_stock")}) + {t("products.fields.transport_cost")}
+                </p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

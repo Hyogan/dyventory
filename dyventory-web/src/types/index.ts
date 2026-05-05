@@ -84,6 +84,7 @@ export interface Product {
   unit_of_measure: string;
   price_buy_ht: string; // Laravel decimal returns as string
   price_sell_ttc: string;
+  transport_cost: string;
   barcode: string | null;
   stock_alert_threshold: string;
   has_variants: boolean;
