@@ -30,14 +30,17 @@ class SettingController extends Controller implements HasMiddleware
         return [new Middleware('auth:sanctum')];
     }
 
-    /** GET /api/v1/settings — all settings (admin-only). */
+    /** GET /api/v1/settings — all settings grouped by group (admin-only). */
     public function index(): JsonResponse
     {
         $this->authorize('viewAny', Setting::class);
 
-        return response()->json([
-            'data' => SettingResource::collection($this->settings->all()),
-        ]);
+        $grouped = [];
+        foreach ($this->settings->all() as $setting) {
+            $grouped[$setting->group][] = (new SettingResource($setting))->toArray(request());
+        }
+
+        return response()->json(['data' => $grouped]);
     }
 
     /**
@@ -51,8 +54,13 @@ class SettingController extends Controller implements HasMiddleware
 
         $this->settings->update($request->validated()['settings']);
 
+        $grouped = [];
+        foreach ($this->settings->all() as $setting) {
+            $grouped[$setting->group][] = (new SettingResource($setting))->toArray(request());
+        }
+
         return response()->json([
-            'data'    => SettingResource::collection($this->settings->all()),
+            'data'    => $grouped,
             'message' => 'Settings updated.',
         ]);
     }

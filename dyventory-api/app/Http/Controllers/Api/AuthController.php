@@ -13,6 +13,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Attributes\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 /**
  * Handles Sanctum token-based authentication.
@@ -111,6 +113,43 @@ class AuthController extends Controller implements HasMiddleware
             'data' => [
                 'user' => new UserResource($request->user()),
             ],
+        ]);
+    }
+
+    /**
+     * PUT /api/v1/auth/profile — update the authenticated user's own profile.
+     *
+     * Body (all fields optional):
+     *   name, email, phone, password, password_confirmation
+     */
+    public function updateProfile(Request $request): JsonResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $data = $request->validate([
+            'name'                  => ['sometimes', 'required', 'string', 'max:255'],
+            'email'                 => ['sometimes', 'required', 'email', Rule::unique('users')->ignore($user->id)],
+            'phone'                 => ['nullable', 'string', 'max:50'],
+            'password'              => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['nullable', 'string'],
+        ]);
+
+        if (! empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        unset($data['password_confirmation']);
+
+        $user->update($data);
+
+        return response()->json([
+            'data' => [
+                'user' => new UserResource($user->refresh()),
+            ],
+            'message' => 'Profile updated.',
         ]);
     }
 }

@@ -667,6 +667,21 @@
         "is_active": "Actif"
       }
     },
+    "profile": {
+      "title": "Mon profil",
+      "description": "Mettez à jour vos informations personnelles et votre mot de passe.",
+      "personal_info": "Informations personnelles",
+      "change_password": "Changer le mot de passe",
+      "fields": {
+        "name": "Nom complet",
+        "email": "Adresse e-mail",
+        "phone": "Téléphone",
+        "current_password_hint": "Laissez vide pour conserver votre mot de passe actuel",
+        "password": "Nouveau mot de passe",
+        "password_confirmation": "Confirmer le nouveau mot de passe"
+      },
+      "saved": "Profil mis à jour avec succès."
+    },
     "audit": {
       "title": "Journal d'audit",
       "description": "Consultez toutes les actions effectuées dans le système.",

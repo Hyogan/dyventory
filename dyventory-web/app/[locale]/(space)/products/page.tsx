@@ -72,12 +72,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       />
 
       <ProductsLoadingProvider>
-        <div className="space-y-5">
+        <div className="space-y-5 ">
           <ProductFilters categories={categories} />
-          <ProductTable
-            products={productData.data}
-            meta={productData.meta}
-          />
+          <ProductTable products={productData.data} meta={productData.meta} />
         </div>
       </ProductsLoadingProvider>
     </div>

@@ -668,6 +668,21 @@
         "is_active": "Active"
       }
     },
+    "profile": {
+      "title": "My Profile",
+      "description": "Update your personal information and password.",
+      "personal_info": "Personal Information",
+      "change_password": "Change Password",
+      "fields": {
+        "name": "Full name",
+        "email": "Email address",
+        "phone": "Phone",
+        "current_password_hint": "Leave blank to keep your current password",
+        "password": "New password",
+        "password_confirmation": "Confirm new password"
+      },
+      "saved": "Profile updated successfully."
+    },
     "audit": {
       "title": "Audit Trail",
       "description": "Review all actions performed in the system.",

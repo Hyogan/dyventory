@@ -31,3 +31,6 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])
 
 Route::get('/auth/me', [AuthController::class, 'me'])
     ->name('auth.me');
+
+Route::put('/auth/profile', [AuthController::class, 'updateProfile'])
+    ->name('auth.profile.update');

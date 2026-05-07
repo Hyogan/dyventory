@@ -40,7 +40,11 @@ export function ProductTable({ products, meta }: ProductTableProps) {
     product: Product;
   } | null>(null);
 
-  const [openMenu, setOpenMenu] = useState<number | null>(null);
+  const [openMenu, setOpenMenu] = useState<{
+    id: number;
+    top: number;
+    right: number;
+  } | null>(null);
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -155,11 +159,20 @@ export function ProductTable({ products, meta }: ProductTableProps) {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              setOpenMenu(openMenu === product.id ? null : product.id);
+              if (openMenu?.id === product.id) {
+                setOpenMenu(null);
+              } else {
+                const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+                setOpenMenu({
+                  id: product.id,
+                  top: rect.bottom + 8,
+                  right: window.innerWidth - rect.right,
+                });
+              }
             }}
             className={cn(
               "p-2 rounded-xl transition-all duration-200 border",
-              openMenu === product.id
+              openMenu?.id === product.id
                 ? "bg-slate-900 text-white border-slate-900 shadow-lg scale-110"
                 : "bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-sm active:scale-95",
             )}
@@ -167,14 +180,17 @@ export function ProductTable({ products, meta }: ProductTableProps) {
             <MoreHorizontal className="size-5" />
           </button>
 
-          {openMenu === product.id && (
+          {openMenu?.id === product.id && (
             <>
               <div
                 className="fixed inset-0 z-10"
                 onClick={() => setOpenMenu(null)}
               />
               {/* GLASSMORPHISM: Backdrop blur and white transparency */}
-              <div className="absolute right-0 top-full mt-2 z-20 w-56 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl py-1.5 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+              <div
+                className="fixed z-20 w-56 bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl py-1.5 animate-in fade-in zoom-in-95 duration-200 origin-top-right"
+                style={{ top: openMenu.top, right: openMenu.right }}
+              >
                 <MenuLink
                   href={`/${locale}/products/${product.id}`}
                   icon={<Eye className="size-4" />}

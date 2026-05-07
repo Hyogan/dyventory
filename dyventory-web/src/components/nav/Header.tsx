@@ -3,7 +3,8 @@
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Bell, ChevronDown, LogOut, Menu, Search } from "lucide-react";
+import Link from "next/link";
+import { Bell, ChevronDown, LogOut, Menu, Search, UserCog } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { initials } from "@/lib/utils";
@@ -121,6 +122,14 @@ export function Header() {
                     {user?.email}
                   </p>
                 </div>
+                <Link
+                  href={`/${locale}/profile`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-4 py-2 text-sm text-fg-subtle hover:text-fg hover:bg-surface-muted transition-colors"
+                >
+                  <UserCog className="size-4" />
+                  {t("profile")}
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-fg-subtle hover:text-danger-600 hover:bg-danger-50 transition-colors"

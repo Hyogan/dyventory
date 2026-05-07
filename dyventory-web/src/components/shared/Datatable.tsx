@@ -45,7 +45,7 @@ export function DataTable<T extends { id: number | string }>({
   }
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 min-h-[200px]", className)}>
       <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-sm">
           <thead className="bg-surface-muted/70 border-b-2 border-border">
