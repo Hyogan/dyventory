@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(
+#[Fillable([
     'supplier_id',
     'user_id',
     'order_number',
@@ -21,8 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'total_amount',
     'expected_at',
     'received_at',
-    'notes'
-)]
+    'notes',
+])]
 class SupplierOrder extends Model
 {
     use HasFactory, SoftDeletes;

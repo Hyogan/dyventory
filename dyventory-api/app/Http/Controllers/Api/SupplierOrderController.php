@@ -42,6 +42,16 @@ class SupplierOrderController extends Controller implements HasMiddleware
         return [new Middleware('auth:sanctum')];
     }
 
+    /** GET /supplier-orders — list all orders across all suppliers */
+    public function indexAll(Request $request): AnonymousResourceCollection
+    {
+        $this->authorize('viewAny', Supplier::class);
+
+        return SupplierOrderResource::collection(
+            $this->orders->listAll($request->only(['status', 'supplier_id', 'per_page']))
+        );
+    }
+
     /** GET /suppliers/{supplier}/orders */
     public function index(Request $request, Supplier $supplier): AnonymousResourceCollection
     {

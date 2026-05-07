@@ -9,9 +9,12 @@ use App\Http\Requests\StoreSaleRequest;
 use App\Http\Resources\SaleResource;
 use App\Models\Sale;
 use App\Services\SaleService;
+use App\Services\SettingService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -29,6 +32,7 @@ class SaleController extends Controller implements HasMiddleware
 {
     public function __construct(
         private readonly SaleService $sales,
+        private readonly SettingService $settings,
     ) {}
 
     public static function middleware(): array
@@ -121,5 +125,28 @@ class SaleController extends Controller implements HasMiddleware
         $cancelled = $this->sales->cancel($sale);
 
         return new SaleResource($cancelled);
+    }
+
+    /**
+     * GET /api/v1/sales/{sale}/invoice — generate & stream the invoice PDF.
+     */
+    public function invoice(Sale $sale): Response
+    {
+        $this->authorize('view', $sale);
+
+        $sale->load(['items.product', 'client', 'user', 'payments']);
+
+        $pdf = Pdf::loadView('pdf.invoice', [
+            'sale'          => $sale,
+            'companyName'   => $this->settings->get('company_name'),
+            'companyEmail'  => $this->settings->get('company_email'),
+            'companyPhone'  => $this->settings->get('company_phone'),
+            'companyAddress'=> $this->settings->get('company_address'),
+            'invoiceFooter' => $this->settings->get('invoice_footer'),
+        ]);
+
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->download("invoice-{$sale->sale_number}.pdf");
     }
 }

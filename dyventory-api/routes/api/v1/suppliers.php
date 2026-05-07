@@ -23,6 +23,7 @@ Route::prefix('suppliers')->group(static function (): void {
 
 // ── Supplier order lifecycle (standalone) ────────────────────────────────────
 Route::prefix('supplier-orders')->group(static function (): void {
+    Route::get('/',                          [SupplierOrderController::class, 'indexAll']);
     Route::get('/{supplierOrder}',           [SupplierOrderController::class, 'show']);
     Route::put('/{supplierOrder}',           [SupplierOrderController::class, 'update']);
     Route::post('/{supplierOrder}/send',     [SupplierOrderController::class, 'send']);

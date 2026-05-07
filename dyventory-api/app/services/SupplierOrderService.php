@@ -38,6 +38,29 @@ class SupplierOrderService
     // ─────────────────────────────────────────────
 
     /**
+     * Paginated orders across all suppliers.
+     *
+     * Filters (all optional): status, supplier_id, per_page
+     */
+    public function listAll(array $filters = []): LengthAwarePaginator
+    {
+        $query = SupplierOrder::with(['supplier', 'user', 'items.product', 'items.variant'])
+            ->orderBy('created_at', 'desc');
+
+        if (! empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (! empty($filters['supplier_id'])) {
+            $query->where('supplier_id', (int) $filters['supplier_id']);
+        }
+
+        $perPage = min((int) ($filters['per_page'] ?? 20), 50);
+
+        return $query->paginate($perPage);
+    }
+
+    /**
      * Paginated orders for a given supplier.
      *
      * Filters (all optional): status, per_page

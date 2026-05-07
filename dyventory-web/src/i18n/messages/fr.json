@@ -96,7 +96,8 @@
     "admin": "Administration",
     "users": "Utilisateurs",
     "settings": "Paramètres",
-    "audit": "Journal d'audit"
+    "audit": "Journal d'audit",
+    "supplier_orders": "Bons de commande"
   },
 
   "dashboard": {

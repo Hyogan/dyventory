@@ -41,9 +41,8 @@ export function BarcodeDisplay({ productId, barcode, sku }: BarcodeDisplayProps)
   }, [productId]);
 
   const handlePrintLabels = () => {
-    // Open label sheet PDF in new tab
-    const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "";
-    window.open(`${apiBase}/api/v1/products/${productId}/label-sheet`, "_blank");
+    // Route through Next.js proxy so the auth cookie is forwarded
+    window.open(`/api/export/label-sheet/${productId}`, "_blank");
   };
 
   return (

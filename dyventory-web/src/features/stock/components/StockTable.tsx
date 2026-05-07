@@ -3,7 +3,9 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import { Package, Plus, ArrowUpRight, AlertTriangle } from "lucide-react";
+import { useTransition } from "react";
+import { Package, Plus, ArrowUpRight, AlertTriangle, Ban } from "lucide-react";
+import { expireBatch } from "../actions";
 import { DataTable, type Column } from "@/components/shared/Datatable";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -17,12 +19,51 @@ interface StockTableProps {
   meta: PaginationMeta;
 }
 
+function BatchActions({ batch, locale, onExpire }: { batch: Batch; locale: string; onExpire: (id: number) => void }) {
+  return (
+    <div className="flex items-center justify-end gap-1.5">
+      <a
+        href={`/${locale}/stock/entry?batch_id=${batch.id}`}
+        title="Add stock"
+        className="p-1.5 rounded-md text-fg-muted hover:text-primary-600 hover:bg-primary-50 transition-colors"
+      >
+        <Plus className="size-3.5" />
+      </a>
+      <a
+        href={`/${locale}/stock/exit?batch_id=${batch.id}`}
+        title="Remove stock"
+        className="p-1.5 rounded-md text-fg-muted hover:text-warning-600 hover:bg-warning-50 transition-colors"
+      >
+        <ArrowUpRight className="size-3.5" />
+      </a>
+      {batch.status === "active" && (
+        <button
+          title="Mark as expired"
+          onClick={() => onExpire(batch.id)}
+          className="p-1.5 rounded-md text-fg-muted hover:text-danger-600 hover:bg-danger-50 transition-colors"
+        >
+          <Ban className="size-3.5" />
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function StockTable({ batches, meta }: StockTableProps) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
+
+  const handleExpire = (batchId: number) => {
+    if (!confirm("Mark this batch as expired? This cannot be undone.")) return;
+    startTransition(async () => {
+      await expireBatch(batchId);
+      router.refresh();
+    });
+  };
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -118,24 +159,9 @@ export function StockTable({ batches, meta }: StockTableProps) {
       key: "actions",
       header: "",
       align: "right",
-      width: "w-24",
+      width: "w-28",
       render: (batch) => (
-        <div className="flex items-center justify-end gap-1.5">
-          <a
-            href={`/${locale}/stock/entry?batch_id=${batch.id}`}
-            title="Add stock"
-            className="p-1.5 rounded-md text-fg-muted hover:text-primary-600 hover:bg-primary-50 transition-colors"
-          >
-            <Plus className="size-3.5" />
-          </a>
-          <a
-            href={`/${locale}/stock/exit?batch_id=${batch.id}`}
-            title="Remove stock"
-            className="p-1.5 rounded-md text-fg-muted hover:text-warning-600 hover:bg-warning-50 transition-colors"
-          >
-            <ArrowUpRight className="size-3.5" />
-          </a>
-        </div>
+        <BatchActions batch={batch} locale={locale} onExpire={handleExpire} />
       ),
     },
   ];

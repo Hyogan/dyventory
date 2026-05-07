@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { Bell, ChevronDown, LogOut, Menu, Search, UserCog } from "lucide-react";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
@@ -24,6 +24,13 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const { unreadCount } = useAlerts();
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchRef.current?.value.trim();
+    if (q) router.push(`/${locale}/search?q=${encodeURIComponent(q)}`);
+  };
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -42,16 +49,17 @@ export function Header() {
       </button>
 
       {/* Search bar — desktop */}
-      <div className="hidden lg:flex flex-1 max-w-sm">
+      <form onSubmit={handleSearch} className="hidden lg:flex flex-1 max-w-sm">
         <div className="relative w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-fg-muted pointer-events-none" />
           <input
+            ref={searchRef}
             type="search"
             placeholder={`${t("search") ?? "Search"}…`}
             className="w-full h-9 pl-9 pr-4 rounded-lg border border-border bg-surface-muted text-sm text-fg placeholder:text-fg-muted focus:outline-none focus:border-primary-400 focus:bg-surface-card focus:shadow-sm transition-all duration-150"
           />
         </div>
-      </div>
+      </form>
 
       {/* Mobile: spacer */}
       <div className="flex-1 lg:hidden" />

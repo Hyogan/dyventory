@@ -15,6 +15,7 @@ import {
   Layers,
   Settings,
   ShieldCheck,
+  ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
@@ -70,6 +71,13 @@ const navItems: NavItem[] = [
     key: "suppliers",
     href: "/suppliers",
     icon: Truck,
+    roles: ["admin", "manager", "warehouse"],
+    group: "inventory",
+  },
+  {
+    key: "supplier_orders",
+    href: "/supplier-orders",
+    icon: ClipboardList,
     roles: ["admin", "manager", "warehouse"],
     group: "inventory",
   },

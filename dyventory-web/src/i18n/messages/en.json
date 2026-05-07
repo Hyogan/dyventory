@@ -97,7 +97,8 @@
     "admin": "Administration",
     "users": "Users",
     "settings": "Settings",
-    "audit": "Audit Trail"
+    "audit": "Audit Trail",
+    "supplier_orders": "Purchase Orders"
   },
 
   "dashboard": {

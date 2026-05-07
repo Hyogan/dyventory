@@ -22,7 +22,7 @@ export async function updateProfile(data: {
       method: "PUT",
       body: JSON.stringify(data),
     });
-    revalidateTag("me");
+    revalidateTag("me", "seconds");
     return { success: true };
   } catch (error: unknown) {
     if (error && typeof error === "object" && "data" in error) {
@@ -38,7 +38,10 @@ export async function updateProfile(data: {
     }
     return {
       success: false,
-      message: error instanceof Error ? error.message : "An unexpected error occurred.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred.",
     };
   }
 }

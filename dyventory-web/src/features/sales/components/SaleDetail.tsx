@@ -15,6 +15,7 @@ import {
   CreditCard,
   Clock,
   Receipt,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/shared/StatusBadge";
@@ -80,6 +81,11 @@ export function SaleDetail({ sale: initialSale }: SaleDetailProps) {
           <StatusBadge status={sale.payment_status} />
         </div>
         <div className="flex items-center gap-2 flex-wrap">
+          <a href={`/api/export/invoice/${sale.id}`} target="_blank" rel="noreferrer">
+            <Button size="sm" variant="ghost" icon={<Download className="size-3.5" />}>
+              Invoice PDF
+            </Button>
+          </a>
           {canPay && (
             <Button
               size="sm"

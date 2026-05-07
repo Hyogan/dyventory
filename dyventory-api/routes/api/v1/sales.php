@@ -54,6 +54,9 @@ Route::post('sales/{sale}/deliver', [SaleController::class, 'deliver'])
 Route::post('sales/{sale}/cancel', [SaleController::class, 'cancel'])
     ->name('sales.cancel');
 
+Route::get('sales/{sale}/invoice', [SaleController::class, 'invoice'])
+    ->name('sales.invoice');
+
 // ─────────────────────────────────────────────
 // Payments
 // ─────────────────────────────────────────────
