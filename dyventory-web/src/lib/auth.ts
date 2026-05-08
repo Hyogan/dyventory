@@ -10,7 +10,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import { apiFetch, type FetchOptions } from "./api";
+import { apiFetch, ApiError, type FetchOptions } from "./api";
 import type { AuthUser } from "@/types/auth";
 import { routing } from "@/i18n/routing";
 
@@ -46,51 +46,14 @@ export const getAuthToken = cache(async (): Promise<string> => {
   return token;
 });
 
-// ── Current user ──────────────────────────────────────────────────────────────
-
-/**
- * Fetch the authenticated user from GET /auth/me.
- *
- * - React `cache()` ensures this runs at most once per request, even if
- *   called from multiple Server Components on the same page.
- * - Uses `cache: 'no-store'` so the user profile is always fresh.
- * - Throws (and redirects to login) if the token is missing or invalid.
- *
- * Usage in Server Components:
- *   const user = await getCurrentUser();
- *
- * Usage in Dashboard layout (passed down as a prop to SessionProvider):
- *   <SessionProvider user={user}>...</SessionProvider>
- */
-// export const getCurrentUser = cache(async (): Promise<AuthUser> => {
-//   const token = await getAuthToken();
-
-//   return apiFetch<AuthUser>("/auth/me", {
-//     method: "GET",
-//     headers: { Authorization: `Bearer ${token}` },
-//     // Always fetch fresh — never cache the user object at CDN/ISR level
-//     // revalidate: false,
-//   });
-// });
-export const getCurrentUser = cache(async (): Promise<AuthUser> => {
-  const token = await getAuthToken();
-
-  const res = await apiFetch<{ data: { user: AuthUser } }>("/auth/me", {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  return res.data.user; // ✅ THIS is the fix
-});
-
 // ── Authenticated fetch ───────────────────────────────────────────────────────
 
 /**
  * Drop-in replacement for `apiFetch` that automatically attaches
  * the `Authorization: Bearer <token>` header.
  *
- * Use this in Server Components and Server Actions for any authenticated
- * API call, instead of manually reading the token each time.
+ * Handles both "cookie missing" (via getAuthToken redirect) and
+ * "token expired/revoked" (catches 401, clears cookie, redirects to login).
  *
  * @example
  *   const products = await authFetch<PaginatedResponse<Product>>(
@@ -104,15 +67,51 @@ export async function authFetch<T>(
 ): Promise<T> {
   const token = await getAuthToken();
 
-  return apiFetch<T>(path, {
-    ...options,
-    headers: {
-      // Allow callers to add extra headers without clobbering Authorization
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    return await apiFetch<T>(path, {
+      ...options,
+      headers: {
+        // Allow callers to add extra headers without clobbering Authorization
+        ...options.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (err) {
+    // If the token is expired or revoked server-side, the API returns 401.
+    // getAuthToken() only catches the "cookie missing" case — handle the
+    // "token invalid" case here by clearing the stale cookie and redirecting.
+    if (err instanceof ApiError && err.isUnauthorized) {
+      await clearAuthCookie();
+      const cookieStore = await cookies();
+      const locale = cookieStore.get("NEXT_LOCALE")?.value ?? DEFAULT_LOCALE;
+      redirect(`/${locale}/login`);
+    }
+    throw err;
+  }
 }
+
+// ── Current user ──────────────────────────────────────────────────────────────
+
+/**
+ * Fetch the authenticated user from GET /auth/me.
+ *
+ * - React `cache()` ensures this runs at most once per request, even if
+ *   called from multiple Server Components on the same page.
+ * - Throws (and redirects to login) if the token is missing or invalid.
+ *
+ * Usage in Server Components:
+ *   const user = await getCurrentUser();
+ *
+ * Usage in Dashboard layout (passed down as a prop to SessionProvider):
+ *   <SessionProvider user={user}>...</SessionProvider>
+ */
+export const getCurrentUser = cache(async (): Promise<AuthUser> => {
+  const res = await authFetch<{ data: { user: AuthUser } }>("/auth/me", {
+    method: "GET",
+  });
+
+  return res.data.user;
+});
 
 // ── Cookie helpers (for use in Server Actions) ────────────────────────────────
 
