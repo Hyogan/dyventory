@@ -1,8 +1,12 @@
 "use client";
 
-import { Trash2, Minus, Plus } from "lucide-react";
+import { Trash2, Minus, Plus, Package } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSaleStore, computeLineTotal, type CartItem } from "@/stores/useSaleStore";
+import {
+  useSaleStore,
+  computeLineTotal,
+  type CartItem,
+} from "@/stores/useSaleStore";
 import { cn } from "@/lib/utils";
 
 interface SaleCartItemProps {
@@ -24,7 +28,11 @@ export function SaleCartItem({ item }: SaleCartItemProps) {
   const adjustQty = (delta: number) => {
     const step = isKg ? 0.1 : 1;
     const newQty = Math.round((item.quantity + delta * step) * 1000) / 1000;
-    updateQuantity(item.product.id, item.variant_id, Math.max(isKg ? 0.001 : 1, newQty));
+    updateQuantity(
+      item.product.id,
+      item.variant_id,
+      Math.max(isKg ? 0.001 : 1, newQty),
+    );
   };
 
   return (
@@ -33,10 +41,23 @@ export function SaleCartItem({ item }: SaleCartItemProps) {
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
+            <div className="size-20 rounded-lg bg-surface-muted border border-border flex items-center justify-center shrink-0 overflow-hidden">
+              {item.product.images?.length ? (
+                <img
+                  src={`${process.env.NEXT_PUBLIC_API_URL ?? ""}/storage/${item.product.images[0]}`}
+                  alt=""
+                  className="size-full object-cover"
+                />
+              ) : (
+                <Package className="size-4 text-fg-muted" />
+              )}
+            </div>
             <p className="text-sm font-medium text-fg truncate">
               {item.product.name}
             </p>
-            <p className="text-xs text-fg-muted font-mono">{item.product.sku}</p>
+            <p className="text-xs text-fg-muted font-mono">
+              {item.product.sku}
+            </p>
           </div>
           <button
             onClick={() => removeItem(item.product.id, item.variant_id)}

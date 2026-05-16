@@ -81,11 +81,32 @@ export function ProductSearch() {
   return (
     <div className="relative">
       {/* Input */}
-      <div className="relative">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-fg-muted pointer-events-none" />
+      <div className="relative group w-full">
+        {/* Search Icon */}
+        <Search
+          className="
+      absolute left-4 top-1/2 z-10 -translate-y-1/2
+      size-4
+      text-fg-muted
+      transition-colors duration-200
+      pointer-events-none
+      group-focus-within:text-primary
+    "
+        />
+
+        {/* Loading Spinner */}
         {loading && (
-          <Loader2 className="absolute right-3.5 top-1/2 -translate-y-1/2 size-4 text-fg-muted animate-spin pointer-events-none" />
+          <Loader2
+            className="
+        absolute right-4 top-1/2 z-10 -translate-y-1/2
+        size-4
+        text-primary
+        animate-spin
+        pointer-events-none
+      "
+          />
         )}
+
         <input
           ref={inputRef}
           type="search"
@@ -95,7 +116,30 @@ export function ProductSearch() {
           onFocus={() => results.length > 0 && setIsOpen(true)}
           onBlur={() => setTimeout(() => setIsOpen(false), 150)}
           placeholder={t("cart.search_products")}
-          className="input pl-10 pr-10 h-11 text-sm w-full"
+          className="
+      w-full
+      h-12
+      rounded-2xl
+      border border-border
+      bg-surface-card
+      backdrop-blur-md
+      pl-12
+      pr-12
+      text-sm
+      text-fg
+      placeholder:text-fg-muted
+      shadow-sm
+      transition-all duration-200
+      outline-none
+
+      hover:border-border-strong
+      hover:shadow-card
+
+      focus:border-primary
+      focus:ring-4
+      focus:ring-primary/15
+      focus:shadow-card-hover
+    "
           aria-label="Search products"
           aria-autocomplete="list"
           aria-expanded={isOpen}
@@ -129,9 +173,17 @@ export function ProductSearch() {
                 )}
                 onMouseDown={() => !outOfStock && handleSelect(product)}
               >
-                {/* Icon */}
-                <div className="size-9 rounded-lg bg-surface-muted border border-border flex items-center justify-center shrink-0">
-                  <Package className="size-4 text-fg-muted" />
+                {/* Thumbnail */}
+                <div className="size-14 rounded-lg bg-surface-muted border border-border flex items-center justify-center shrink-0 overflow-hidden">
+                  {product.images?.length ? (
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL ?? ""}/storage/${product.images[0]}`}
+                      alt=""
+                      className="size-full object-cover"
+                    />
+                  ) : (
+                    <Package className="size-4 text-fg-muted" />
+                  )}
                 </div>
 
                 {/* Info */}
@@ -139,15 +191,16 @@ export function ProductSearch() {
                   <p className="text-sm font-medium text-fg truncate">
                     {product.name}
                   </p>
-                  <p className="text-xs text-fg-muted">
+                  <p className="text-xs text-fg-muted truncate">
                     <span className="font-mono">{product.sku}</span>
+                    {product.category?.name && (
+                      <span className="ml-2">· {product.category.name}</span>
+                    )}
                     {s !== null && (
                       <span
                         className={cn(
                           "ml-2",
-                          outOfStock
-                            ? "text-danger-600"
-                            : "text-success-600",
+                          outOfStock ? "text-danger-600" : "text-success-600",
                         )}
                       >
                         · {s} {isKg(product) ? "kg" : "pcs"}
@@ -159,9 +212,12 @@ export function ProductSearch() {
                 {/* Price */}
                 <div className="shrink-0 text-right">
                   <p className="text-sm font-semibold text-fg tabular-nums">
-                    {parseFloat(product.price_sell_ttc).toLocaleString("fr-FR")} F
+                    {parseFloat(product.price_sell_ttc).toLocaleString("fr-FR")}{" "}
+                    F
                   </p>
-                  <p className="text-xs text-fg-muted">{product.unit_of_measure}</p>
+                  <p className="text-xs text-fg-muted">
+                    {product.unit_of_measure}
+                  </p>
                 </div>
 
                 {/* Add icon */}

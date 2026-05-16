@@ -71,7 +71,7 @@ export function ProductTable({ products, meta }: ProductTableProps) {
       render: (product) => (
         <div className="flex items-center gap-4 py-1 group/item">
           {/* DEPTH: Inset shadow makes the container look carved into the row */}
-          <div className="size-12 rounded-2xl bg-slate-100 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] border border-slate-200/50 flex items-center justify-center shrink-0 overflow-hidden transition-transform group-hover/item:scale-105">
+          <div className="size-20 rounded-2xl bg-slate-100 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] border border-slate-200/50 flex items-center justify-center shrink-0 overflow-hidden transition-transform group-hover/item:scale-105">
             {product.images?.length ? (
               <img
                 src={`${process.env.NEXT_PUBLIC_API_URL ?? ""}/storage/${product.images[0]}`}
@@ -162,7 +162,9 @@ export function ProductTable({ products, meta }: ProductTableProps) {
               if (openMenu?.id === product.id) {
                 setOpenMenu(null);
               } else {
-                const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+                const rect = (
+                  e.currentTarget as HTMLButtonElement
+                ).getBoundingClientRect();
                 setOpenMenu({
                   id: product.id,
                   top: rect.bottom + 8,
