@@ -122,7 +122,10 @@
     "no_change": "No prior data",
     "see_all": "See all",
     "no_recent_sales": "No recent sales",
-    "no_top_products": "No sales this month yet"
+    "no_top_products": "No sales this month yet",
+    "last_transactions": "Latest transactions",
+    "view_all_sales": "View all sales",
+    "by_revenue": "By revenue"
   },
 
   "products": {
@@ -274,7 +277,9 @@
       "unpaid": "Unpaid",
       "partial": "Partial",
       "paid": "Paid",
-      "overdue": "Overdue"
+      "overdue": "Overdue",
+      "pending": "Pending",
+      "refunded": "Refunded"
     },
     "actions": {
       "confirm": "Confirm sale",
@@ -289,7 +294,8 @@
       "empty": "Your cart is empty. Search for a product to add it.",
       "search_products": "Search products by name, SKU or barcode…",
       "quantity_label": "Qty",
-      "remove": "Remove from cart"
+      "remove": "Remove from cart",
+      "all_categories": "All categories"
     },
     "new": {
       "order_summary": "Order summary",

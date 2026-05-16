@@ -6,13 +6,15 @@ import { Search, Package, Plus, Loader2 } from "lucide-react";
 import { clientAuthFetch } from "@/lib/client-auth";
 import { useSaleStore } from "@/stores/useSaleStore";
 import { cn } from "@/lib/utils";
-import type { Product, PaginatedResponse } from "@/types";
+import type { Product, Category, PaginatedResponse } from "@/types";
 
 export function ProductSearch() {
   const t = useTranslations("sales");
   const addItem = useSaleStore((s) => s.addItem);
 
   const [query, setQuery] = useState("");
+  const [categoryId, setCategoryId] = useState<number | "">("");
+  const [categories, setCategories] = useState<Category[]>([]);
   const [results, setResults] = useState<Product[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,16 +24,26 @@ export function ProductSearch() {
   const listRef = useRef<HTMLUListElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const search = useCallback(async (q: string) => {
-    if (!q.trim()) {
+  // Fetch categories once on mount
+  useEffect(() => {
+    clientAuthFetch<{ data: Category[] }>("/categories?per_page=100")
+      .then((res) => setCategories(res.data))
+      .catch(() => {});
+  }, []);
+
+  const search = useCallback(async (q: string, catId: number | "") => {
+    if (!q.trim() && catId === "") {
       setResults([]);
       setIsOpen(false);
       return;
     }
     setLoading(true);
     try {
+      const params = new URLSearchParams({ status: "active", per_page: "8" });
+      if (q.trim()) params.set("search", q.trim());
+      if (catId !== "") params.set("category_id", String(catId));
       const res = await clientAuthFetch<PaginatedResponse<Product>>(
-        `/products?search=${encodeURIComponent(q)}&status=active&per_page=8`,
+        `/products?${params.toString()}`,
       );
       setResults(res.data);
       setIsOpen(true);
@@ -45,9 +57,9 @@ export function ProductSearch() {
 
   useEffect(() => {
     clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => search(query), 280);
+    debounceRef.current = setTimeout(() => search(query, categoryId), 280);
     return () => clearTimeout(debounceRef.current);
-  }, [query, search]);
+  }, [query, categoryId, search]);
 
   const handleSelect = (product: Product) => {
     addItem(product);
@@ -79,72 +91,95 @@ export function ProductSearch() {
     product.current_stock != null ? product.current_stock : null;
 
   return (
-    <div className="relative">
-      {/* Input */}
-      <div className="relative group w-full">
-        {/* Search Icon */}
-        <Search
-          className="
-      absolute left-4 top-1/2 z-10 -translate-y-1/2
-      size-4
-      text-fg-muted
-      transition-colors duration-200
-      pointer-events-none
-      group-focus-within:text-primary
-    "
-        />
-
-        {/* Loading Spinner */}
-        {loading && (
-          <Loader2
+    <div className="relative flex flex-col gap-2">
+      {/* Search input + category filter row */}
+      <div className="flex gap-2">
+        {/* Input */}
+        <div className="relative group flex-1">
+          <Search
             className="
-        absolute right-4 top-1/2 z-10 -translate-y-1/2
+        absolute left-4 top-1/2 z-10 -translate-y-1/2
         size-4
-        text-primary
-        animate-spin
+        text-fg-muted
+        transition-colors duration-200
         pointer-events-none
+        group-focus-within:text-primary
       "
           />
+
+          {loading && (
+            <Loader2
+              className="
+          absolute right-4 top-1/2 z-10 -translate-y-1/2
+          size-4
+          text-primary
+          animate-spin
+          pointer-events-none
+        "
+            />
+          )}
+
+          <input
+            ref={inputRef}
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => results.length > 0 && setIsOpen(true)}
+            onBlur={() => setTimeout(() => setIsOpen(false), 150)}
+            placeholder={t("cart.search_products")}
+            className="
+        w-full
+        h-12
+        rounded-2xl
+        border border-border
+        bg-surface-card
+        backdrop-blur-md
+        pl-12
+        pr-12
+        text-sm
+        text-fg
+        placeholder:text-fg-muted
+        shadow-sm
+        transition-all duration-200
+        outline-none
+
+        hover:border-border-strong
+        hover:shadow-card
+
+        focus:border-primary
+        focus:ring-4
+        focus:ring-primary/15
+        focus:shadow-card-hover
+      "
+            aria-label="Search products"
+            aria-autocomplete="list"
+            aria-expanded={isOpen}
+            aria-controls="product-results"
+          />
+        </div>
+
+        {/* Category filter */}
+        {categories.length > 0 && (
+          <select
+            value={categoryId}
+            onChange={(e) =>
+              setCategoryId(e.target.value === "" ? "" : Number(e.target.value))
+            }
+            className={cn(
+              "h-12 rounded-2xl border border-border bg-surface-card px-3 text-sm text-fg shadow-sm transition-all duration-200 outline-none",
+              "hover:border-border-strong focus:border-primary focus:ring-4 focus:ring-primary/15",
+              categoryId !== "" && "border-primary text-primary font-medium",
+            )}
+          >
+            <option value="">{t("cart.all_categories")}</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
         )}
-
-        <input
-          ref={inputRef}
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => results.length > 0 && setIsOpen(true)}
-          onBlur={() => setTimeout(() => setIsOpen(false), 150)}
-          placeholder={t("cart.search_products")}
-          className="
-      w-full
-      h-12
-      rounded-2xl
-      border border-border
-      bg-surface-card
-      backdrop-blur-md
-      pl-12
-      pr-12
-      text-sm
-      text-fg
-      placeholder:text-fg-muted
-      shadow-sm
-      transition-all duration-200
-      outline-none
-
-      hover:border-border-strong
-      hover:shadow-card
-
-      focus:border-primary
-      focus:ring-4
-      focus:ring-primary/15
-      focus:shadow-card-hover
-    "
-          aria-label="Search products"
-          aria-autocomplete="list"
-          aria-expanded={isOpen}
-          aria-controls="product-results"
-        />
       </div>
 
       {/* Dropdown */}
@@ -237,7 +272,7 @@ export function ProductSearch() {
         </ul>
       )}
 
-      {isOpen && !loading && results.length === 0 && query.trim() && (
+      {isOpen && !loading && results.length === 0 && (query.trim() || categoryId !== "") && (
         <div className="absolute z-30 top-full mt-1.5 w-full bg-surface-card border border-border rounded-xl shadow-lg px-4 py-6 text-center text-sm text-fg-muted">
           No products found for &ldquo;{query}&rdquo;
         </div>

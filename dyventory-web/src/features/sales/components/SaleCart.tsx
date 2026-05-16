@@ -21,7 +21,8 @@ export function SaleCart() {
       {items.length > 0 && (
         <div className="flex items-center justify-between mb-1 px-0.5">
           <span className="text-xs font-medium text-fg-muted uppercase tracking-wide">
-            {t("cart.title")} · {items.length} item{items.length !== 1 ? "s" : ""}
+            {t("cart.title")} · {items.length} item
+            {items.length !== 1 ? "s" : ""}
           </span>
         </div>
       )}

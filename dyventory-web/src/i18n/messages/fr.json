@@ -121,7 +121,10 @@
     "no_change": "Aucune donnée antérieure",
     "see_all": "Voir tout",
     "no_recent_sales": "Aucune vente récente",
-    "no_top_products": "Aucune vente ce mois"
+    "no_top_products": "Aucune vente ce mois",
+    "last_transactions": "Dernières transactions",
+    "view_all_sales": "Voir toutes les ventes",
+    "by_revenue": "Par chiffre d'affaires"
   },
 
   "products": {
@@ -273,7 +276,9 @@
       "unpaid": "Non payé",
       "partial": "Partiel",
       "paid": "Payé",
-      "overdue": "En retard"
+      "overdue": "En retard",
+      "pending": "En attente",
+      "refunded": "Remboursé"
     },
     "actions": {
       "confirm": "Confirmer la vente",
@@ -288,7 +293,8 @@
       "empty": "Le panier est vide. Recherchez un produit pour l'ajouter.",
       "search_products": "Rechercher par nom, référence ou code-barres…",
       "quantity_label": "Qté",
-      "remove": "Retirer du panier"
+      "remove": "Retirer du panier",
+      "all_categories": "Toutes les catégories"
     },
     "new": {
       "order_summary": "Récapitulatif",

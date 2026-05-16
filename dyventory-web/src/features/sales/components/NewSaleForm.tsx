@@ -77,9 +77,9 @@ export function NewSaleForm() {
   };
 
   return (
-    <div className="flex gap-6 h-[calc(100vh-10rem)]">
+    <div className="flex flex-col lg:flex-row gap-6 lg:h-[calc(100vh-10rem)]">
       {/* ── LEFT PANEL — Cart ────────────────────────────────────────────────── */}
-      <div className="flex-1 min-w-0 card p-5 flex flex-col overflow-hidden">
+      <div className="flex-1 h-[50vh] lg:h-auto min-w-0 card p-5 flex flex-col overflow-hidden">
         <h2 className="text-sm font-semibold text-fg mb-4 shrink-0">
           {t("cart.title")}
           {items.length > 0 && (
@@ -92,7 +92,7 @@ export function NewSaleForm() {
       </div>
 
       {/* ── RIGHT PANEL — Summary + actions ──────────────────────────────────── */}
-      <div className="w-80 xl:w-96 shrink-0 flex flex-col gap-4 overflow-y-auto scrollbar-thin pb-1">
+      <div className="shrink-0 flex flex-col gap-4 w-full lg:w-80 xl:w-96 overflow-y-none lg:overflow-y-auto scrollbar-thin pb-1">
         {/* Client selector */}
         <div className="card p-4 space-y-3">
           <p className="text-xs font-medium text-fg-muted uppercase tracking-wide">
@@ -124,9 +124,7 @@ export function NewSaleForm() {
         {Object.keys(fieldErrors).length > 0 && (
           <ul className="px-3 py-2.5 rounded-lg bg-danger-50 border border-danger-200 text-danger-700 text-xs space-y-1">
             {Object.entries(fieldErrors).flatMap(([key, msgs]) =>
-              msgs.map((msg, i) => (
-                <li key={`${key}-${i}`}>· {msg}</li>
-              )),
+              msgs.map((msg, i) => <li key={`${key}-${i}`}>· {msg}</li>),
             )}
           </ul>
         )}
