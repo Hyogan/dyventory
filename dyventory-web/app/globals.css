@@ -226,6 +226,16 @@
     padding-right: 2.5rem;
   }
 
+  /* Error state — overrides focus ring to use danger color */
+  .input-error {
+    border-color: var(--color-danger);
+
+    &:focus {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 3px oklch(from var(--color-danger) l c h / 0.15);
+    }
+  }
+
   /* ── Label ─────────────────────────────────────────────────────────── */
   .label {
     display: block;

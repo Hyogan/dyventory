@@ -84,7 +84,7 @@ Route::post('stock/inventory/{session}/counts', [InventoryController::class, 'su
 Route::get('stock/inventory/{session}/discrepancies', [InventoryController::class, 'discrepancies'])
     ->name('stock.inventory.discrepancies');
 
-Route::post('stock/inventory/{session}/validate', [InventoryController::class, 'validate'])
+Route::post('stock/inventory/{session}/validate', [InventoryController::class, 'apply'])
     ->name('stock.inventory.validate');
 
 Route::post('stock/inventory/{session}/cancel', [InventoryController::class, 'cancel'])

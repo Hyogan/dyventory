@@ -9,18 +9,12 @@ import {
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { fmtNumber } from "@/features/dashboard/utils";
 import type { DashboardStats } from "@/types";
 
 interface DashboardKpiCardsProps {
   stats: DashboardStats;
   locale: string;
-}
-
-function fmt(n: number) {
-  return new Intl.NumberFormat("fr-FR", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(n);
 }
 
 function ChangeChip({ change, label }: { change: number | null; label: string }) {
@@ -59,23 +53,23 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
   const cards = [
     {
       label: t("revenue_today"),
-      value: `${fmt(stats.revenue.today)} F`,
+      value: `${fmtNumber(stats.revenue.today, locale)} F`,
       change: stats.revenue.today_change,
       changeLabel: t("no_change"),
       subText: t("vs_prior"),
       icon: TrendingUp,
-      accent: "border-t-primary-500",
-      iconBg: "bg-gradient-to-br from-primary-500 to-primary-600",
+      iconBg: "bg-primary-50",
+      iconColor: "text-primary-600",
     },
     {
       label: t("revenue_month"),
-      value: `${fmt(stats.revenue.month)} F`,
+      value: `${fmtNumber(stats.revenue.month, locale)} F`,
       change: stats.revenue.month_change,
       changeLabel: t("no_change"),
       subText: t("vs_prior"),
       icon: TrendingUp,
-      accent: "border-t-violet-500",
-      iconBg: "bg-gradient-to-br from-violet-500 to-violet-600",
+      iconBg: "bg-secondary-50",
+      iconColor: "text-secondary-600",
     },
     {
       label: t("sales_today"),
@@ -84,18 +78,18 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
       changeLabel: "",
       subText: t("sales_today_sub"),
       icon: ShoppingCart,
-      accent: "border-t-success-600",
-      iconBg: "bg-gradient-to-br from-success-600 to-success-700",
+      iconBg: "bg-success-50",
+      iconColor: "text-success-600",
     },
     {
       label: t("stock_value"),
-      value: `${fmt(stats.stock_value.value_ttc)} F`,
+      value: `${fmtNumber(stats.stock_value.value_ttc, locale)} F`,
       change: null,
       changeLabel: "",
-      subText: `${fmt(stats.stock_value.value_ht)} F ${t("stock_value_ht")}`,
+      subText: `${fmtNumber(stats.stock_value.value_ht, locale)} F ${t("stock_value_ht")}`,
       icon: Package,
-      accent: "border-t-warning-600",
-      iconBg: "bg-gradient-to-br from-warning-600 to-warning-700",
+      iconBg: "bg-warning-50",
+      iconColor: "text-warning-700",
     },
   ];
 
@@ -105,25 +99,19 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
         {cards.map((card) => {
           const Icon = card.icon;
           return (
-            <div
-              key={card.label}
-              className={cn(
-                "card p-5 border-t-2 flex flex-col gap-3",
-                card.accent,
-              )}
-            >
+            <div key={card.label} className="card p-5 flex flex-col gap-3">
               {/* Top row: label + icon */}
               <div className="flex items-start justify-between gap-2">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-fg-muted leading-tight">
+                <p className="text-xs font-medium text-fg-muted leading-tight">
                   {card.label}
                 </p>
                 <div
                   className={cn(
-                    "size-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
+                    "size-9 rounded-xl flex items-center justify-center shrink-0",
                     card.iconBg,
                   )}
                 >
-                  <Icon className="size-4.5 text-white" />
+                  <Icon className={cn("size-4.5", card.iconColor)} />
                 </div>
               </div>
 
@@ -137,7 +125,9 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
                 {card.change !== null && (
                   <ChangeChip change={card.change} label={card.changeLabel} />
                 )}
-                <span className="text-xs text-fg-muted truncate">{card.subText}</span>
+                <span className="text-xs text-fg-muted truncate">
+                  {card.subText}
+                </span>
               </div>
             </div>
           );
@@ -145,7 +135,7 @@ export async function DashboardKpiCards({ stats, locale }: DashboardKpiCardsProp
       </div>
 
       {alertCount > 0 && (
-        <div className="rounded-xl border border-danger-200 bg-danger-50 px-4 py-3 flex items-center justify-between gap-4 shadow-sm">
+        <div className="rounded-xl border border-danger-200 bg-danger-50 px-4 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-danger-700">
             <AlertTriangle className="size-4 shrink-0" />
             <span className="text-sm font-medium">

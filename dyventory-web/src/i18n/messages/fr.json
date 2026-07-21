@@ -9,7 +9,15 @@
     "login_footer": "L'accès est réservé au personnel autorisé.",
     "invalid_credentials": "Email ou mot de passe invalide. Veuillez réessayer.",
     "session_expired": "Votre session a expiré. Veuillez vous reconnecter.",
-    "unauthenticated": "Vous devez être connecté pour accéder à cette page."
+    "unauthenticated": "Vous devez être connecté pour accéder à cette page.",
+    "show_password": "Afficher le mot de passe",
+    "hide_password": "Masquer le mot de passe",
+    "login_tagline": "Maîtrisez vos stocks. Pilotez vos ventes.",
+    "continue": "Continuer",
+    "step_of": "Étape {step} sur {total}",
+    "email_required": "L'adresse e-mail est requise",
+    "email_invalid": "Adresse e-mail invalide",
+    "logout" : "Se déconnecter"
   },
 
   "common": {

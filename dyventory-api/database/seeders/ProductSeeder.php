@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\VatRate;
@@ -16,10 +17,10 @@ class ProductSeeder extends Seeder
         $vat     = VatRate::where('is_default', true)->firstOrFail();
         $vatZero = VatRate::where('rate', 0)->first() ?? $vat;
 
-        $perishable = CategoryResource::where('slug', 'food-perishable')->firstOrFail();
-        $snails     = CategoryResource::where('slug', 'snails')->firstOrFail();
-        $clothing   = CategoryResource::where('slug', 'clothing')->firstOrFail();
-        $electronics = CategoryResource::where('slug', 'electronics')->firstOrFail();
+        $perishable = Category::where('slug', 'food-perishable')->firstOrFail();
+        $snails     = Category::where('slug', 'snails')->firstOrFail();
+        $clothing   = Category::where('slug', 'clothing')->firstOrFail();
+        $electronics = Category::where('slug', 'electronics')->firstOrFail();
 
         $products = [
             // ── Perishable ───────────────────────────────────────────

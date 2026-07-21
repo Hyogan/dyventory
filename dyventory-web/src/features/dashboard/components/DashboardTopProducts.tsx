@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Package } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { fmtNumber } from "@/features/dashboard/utils";
 import type { DashboardTopProduct } from "@/types";
 
 interface DashboardTopProductsProps {
@@ -9,17 +10,10 @@ interface DashboardTopProductsProps {
   locale: string;
 }
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("fr-FR", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(n);
-}
-
 const rankStyle: Record<number, string> = {
-  1: "bg-amber-50 text-amber-700 border-amber-200",
-  2: "bg-slate-100 text-slate-600 border-slate-200",
-  3: "bg-orange-50 text-orange-600 border-orange-200",
+  1: "bg-warning-100 text-warning-700 border-warning-200",
+  2: "bg-surface-muted text-fg-subtle border-border",
+  3: "bg-surface-muted text-fg-muted border-border",
 };
 
 const barColor: Record<number, string> = {
@@ -47,7 +41,7 @@ export async function DashboardTopProducts({
       <div className="px-5 py-4 border-b border-border flex items-center justify-between shrink-0">
         <div>
           <h3 className="text-sm font-semibold text-fg">{t("top_products")}</h3>
-          <p className="text-xs text-fg-muted mt-0.5">{t("by_revenue") ?? "By revenue"}</p>
+          <p className="text-xs text-fg-muted mt-0.5">{t("by_revenue")}</p>
         </div>
         <Link
           href={`/${locale}/reports/sales`}
@@ -99,7 +93,7 @@ export async function DashboardTopProducts({
                         {p.name}
                       </p>
                       <span className="text-sm font-semibold text-fg tabular-nums shrink-0">
-                        {fmt(p.revenue)} F
+                        {fmtNumber(p.revenue, locale)} F
                       </span>
                     </div>
 
@@ -115,7 +109,7 @@ export async function DashboardTopProducts({
                         />
                       </div>
                       <span className="text-[11px] text-fg-muted tabular-nums shrink-0 w-16 text-right">
-                        {fmt(p.quantity_sold)} {p.unit}
+                        {fmtNumber(p.quantity_sold, locale)} {p.unit}
                       </span>
                     </div>
                   </div>

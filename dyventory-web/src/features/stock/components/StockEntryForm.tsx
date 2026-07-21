@@ -191,7 +191,7 @@ export function StockEntryForm({
               {...register("initial_quantity", { valueAsNumber: true })}
               type="number"
               step={isKg ? "0.001" : "1"}
-              min="0.001"
+              min={isKg ? "0.001" : "1"}
               placeholder={isKg ? "0.000" : "0"}
               error={errors.initial_quantity?.message}
             />

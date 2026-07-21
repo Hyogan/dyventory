@@ -3,18 +3,12 @@ import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StatusBadge } from "@/components/shared/StatusBadge";
+import { fmtNumber } from "@/features/dashboard/utils";
 import type { DashboardRecentSale } from "@/types";
 
 interface DashboardRecentSalesProps {
   sales: DashboardRecentSale[];
   locale: string;
-}
-
-function fmt(n: number) {
-  return new Intl.NumberFormat("fr-FR", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(n);
 }
 
 /** Returns initials from a full name (up to 2 chars) */
@@ -25,15 +19,6 @@ function initials(name: string): string {
     .slice(0, 2)
     .map((w) => w[0].toUpperCase())
     .join("");
-}
-
-/** Deterministic background hue from a string */
-function avatarHue(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return Math.abs(hash) % 360;
 }
 
 const AVATAR_PALETTES = [
@@ -54,28 +39,6 @@ function clientPalette(name: string): string {
   return AVATAR_PALETTES[hash % AVATAR_PALETTES.length];
 }
 
-function formatTime(dateStr: string): string {
-  try {
-    return new Date(dateStr).toLocaleTimeString("fr-FR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  } catch {
-    return "";
-  }
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Date(dateStr).toLocaleDateString("fr-FR", {
-      day: "2-digit",
-      month: "short",
-    });
-  } catch {
-    return "";
-  }
-}
-
 export async function DashboardRecentSales({
   sales,
   locale,
@@ -88,9 +51,7 @@ export async function DashboardRecentSales({
       <div className="px-5 py-4 border-b border-border flex items-center justify-between shrink-0">
         <div>
           <h3 className="text-sm font-semibold text-fg">{t("recent_sales")}</h3>
-          <p className="text-xs text-fg-muted mt-0.5">
-            {t("last_transactions") ?? "Latest transactions"}
-          </p>
+          <p className="text-xs text-fg-muted mt-0.5">{t("last_transactions")}</p>
         </div>
         <Link
           href={`/${locale}/sales`}
@@ -146,10 +107,10 @@ export async function DashboardRecentSales({
                     </p>
                   </div>
 
-                  {/* Right side: amount + badge + time */}
+                  {/* Right side: amount + badge */}
                   <div className="shrink-0 flex flex-col items-end gap-1">
                     <span className="text-sm font-bold text-fg tabular-nums">
-                      {fmt(sale.total_ttc)} F
+                      {fmtNumber(sale.total_ttc, locale)} F
                     </span>
                     <StatusBadge status={sale.payment_status} />
                   </div>
@@ -158,18 +119,6 @@ export async function DashboardRecentSales({
             );
           })}
         </ul>
-      )}
-
-      {/* Footer */}
-      {sales.length > 0 && (
-        <div className="px-5 py-3 border-t border-border mt-auto shrink-0">
-          <Link
-            href={`/${locale}/sales`}
-            className="text-xs font-medium text-fg-muted hover:text-primary-600 transition-colors"
-          >
-            {t("view_all_sales") ?? "View all sales"} →
-          </Link>
-        </div>
       )}
     </div>
   );

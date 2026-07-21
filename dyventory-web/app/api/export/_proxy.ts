@@ -36,6 +36,8 @@ export async function proxyExport(
   });
 
   if (!upstream.ok) {
+    const body = await upstream.text().catch(() => "");
+    console.error(`[export-proxy] ${laravelPath} → ${upstream.status}`, body);
     return NextResponse.json(
       { error: "Export failed" },
       { status: upstream.status },

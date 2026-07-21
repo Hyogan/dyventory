@@ -99,7 +99,7 @@ class InventoryController extends Controller implements HasMiddleware
      *
      * Apply stock adjustments and mark session completed.
      */
-    public function validate(InventorySession $session): InventorySessionResource
+    public function apply(InventorySession $session): InventorySessionResource
     {
         $this->authorize('update', $session);
 

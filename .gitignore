@@ -92,3 +92,13 @@ dump.rdb
 *.bak
 *.tmp
 *.swp
+# Data import artefacts
+*.xlsx
+extracted_sample/
+scripts/
+
+dyventory.xlsx
+dyventory_data.xlsx 
+extracted_sample/*, 
+scripts/*
+

@@ -136,10 +136,16 @@ export async function apiFetch<T>(
 
   let data: unknown = null;
 
-  try {
-    data = await res.json();
-  } catch {
-    // API might return empty body
+  const isNoContent = res.status === 204 || res.status === 205;
+  if (!isNoContent) {
+    try {
+      data = await res.json();
+    } catch (parseErr) {
+      if (res.ok) {
+        // 2xx response with an unparseable body — surface this instead of returning null
+        throw new Error(`Failed to parse API response for ${res.url}: ${String(parseErr)}`);
+      }
+    }
   }
 
   if (!res.ok) {

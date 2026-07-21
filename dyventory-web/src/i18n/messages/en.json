@@ -10,7 +10,14 @@
     "login_footer": "Access is restricted to authorised personnel only.",
     "invalid_credentials": "Invalid email or password. Please try again.",
     "session_expired": "Your session has expired. Please sign in again.",
-    "unauthenticated": "You must be signed in to access this page."
+    "unauthenticated": "You must be signed in to access this page.",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "login_tagline": "Know your stock. Control your sales.",
+    "continue": "Continue",
+    "step_of": "Step {step} of {total}",
+    "email_required": "Email address is required",
+    "email_invalid": "Enter a valid email address"
   },
 
   "common": {

@@ -29,7 +29,7 @@ async function getCategories(): Promise<Category[]> {
   const res = await authFetch<{ data: Category[] }>("/categories?tree=1", {
     next: { tags: ["categories"] },
   });
-  return res.data;
+  return res?.data ?? [];
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────

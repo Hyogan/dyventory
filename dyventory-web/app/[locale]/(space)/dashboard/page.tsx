@@ -24,26 +24,22 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-      {/* Header section with more air */}
-      <div className="pb-2">
-        <PageHeader
-          title={t("title")}
-          description={t("description")}
-          breadcrumb={[{ label: t("title") }]}
-          actions={
-            <Link href={`/${locale}/reports`}>
-              <Button
-                variant="outline"
-                className="bg-surface-card shadow-sm hover:shadow-md transition-all"
-                icon={<BarChart3 className="size-4" />}
-              >
-                {(await getTranslations("reports"))("title")}
-              </Button>
-            </Link>
-          }
-        />
-      </div>
+    <div className="space-y-8">
+      <PageHeader
+        title={t("title")}
+        description={t("description")}
+        breadcrumb={[{ label: t("title") }]}
+        actions={
+          <Link href={`/${locale}/reports`}>
+            <Button
+              variant="outline"
+              icon={<BarChart3 className="size-4" />}
+            >
+              {(await getTranslations("reports"))("title")}
+            </Button>
+          </Link>
+        }
+      />
 
       <DashboardKpiCards stats={stats} locale={locale} />
 

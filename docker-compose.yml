@@ -45,6 +45,7 @@ services:
       - ./dyventory-api/storage:/var/www/html/storage
     environment:
       - APP_ENV=local
+      - DB_CONNECTION=pgsql
       - DB_HOST=dyventory_db
       - DB_PORT=5432
       - DB_DATABASE=dyventory
@@ -85,9 +86,16 @@ services:
       - ./dyventory-api:/var/www/html
     environment:
       - APP_ENV=local
+      - DB_CONNECTION=pgsql
       - DB_HOST=dyventory_db
+      - DB_PORT=5432
+      - DB_DATABASE=dyventory
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secret
       - REDIS_HOST=dyventory_redis
+      - CACHE_DRIVER=redis
       - QUEUE_CONNECTION=redis
+      - SESSION_DRIVER=redis
     depends_on:
       - dyventory_api
       - dyventory_redis
@@ -105,8 +113,16 @@ services:
       - ./dyventory-api:/var/www/html
     environment:
       - APP_ENV=local
+      - DB_CONNECTION=pgsql
       - DB_HOST=dyventory_db
+      - DB_PORT=5432
+      - DB_DATABASE=dyventory
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secret
       - REDIS_HOST=dyventory_redis
+      - CACHE_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - SESSION_DRIVER=redis
     depends_on:
       - dyventory_api
 
